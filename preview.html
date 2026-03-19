@@ -32,152 +32,180 @@
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <style>
-    body {
-      background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
-    }
+  html, body {
+    background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
+    background-size: cover;
+    overflow-x: hidden;
+    min-height: 100%;
+  }
 
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 10px;
-    }
+  body {
+    position: relative;
+  }
 
-    ::-webkit-scrollbar-thumb {
-      background: #30b7f0;
-    }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: #30b7f0;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: #30b7f0;
+  }
 
-    ::-webkit-scrollbar-track {
-      background: #000000;
-      border-radius: 0px;
-      box-shadow: inset 0px 0px 0px 0px #000000;
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #30b7f0;
+  }
 
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      pointer-events: none;
+  ::-webkit-scrollbar-track {
+    background: #000000;
+    border-radius: 0px;
+    box-shadow: inset 0px 0px 0px 0px #000000;
+  }
+
+  /* Force page sections to not cover the background */
+  section,
+  .container,
+  .row,
+  .col-12,
+  .col-lg-10 {
+    background-color: transparent !important;
+  }
+
+  /* Some Mobirise themes add white backgrounds here */
+  .cid-uJ9FbipEIh,
+  .cid-uJld2yUyAl,
+  .terms-section {
+    background: transparent !important;
+  }
+
+  #particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .navbar,
+  .navbar-dropdown,
+  .menu,
+  .footer3 {
+    background: transparent !important;
+  }
+
+  .terms-section {
+    position: relative;
+    z-index: 1;
+    padding-top: 140px;
+    padding-bottom: 90px;
+  }
+
+  .terms-wrapper {
+    background: rgba(8, 8, 12, 0.78);
+    border: 1px solid rgba(48, 183, 240, 0.25);
+    border-radius: 22px;
+    padding: 45px;
+    box-shadow:
+      0 0 30px rgba(48, 183, 240, 0.08),
+      0 0 80px rgba(48, 183, 240, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .terms-badge {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(48, 183, 240, 0.12);
+    border: 1px solid rgba(48, 183, 240, 0.35);
+    border-radius: 999px;
+    padding: 8px 14px;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+  }
+
+  .terms-title {
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .terms-title .accent {
+    color: #30b7f0;
+  }
+
+  .terms-updated {
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 28px;
+    font-size: 1rem;
+  }
+
+  .terms-intro {
+    color: rgba(255,255,255,0.92);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    margin-bottom: 28px;
+  }
+
+  .terms-block {
+    margin-bottom: 30px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .terms-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .terms-block h2 {
+    color: #30b7f0;
+    font-size: 1.45rem;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .terms-block p,
+  .terms-block li {
+    color: rgba(255,255,255,0.92);
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+
+  .terms-block ul {
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .terms-block li {
+    margin-bottom: 10px;
+  }
+
+  .terms-highlight {
+    color: #30b7f0;
+    font-weight: 700;
+  }
+
+  .terms-note {
+    margin-top: 12px;
+    color: rgba(255,255,255,0.82);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .terms-wrapper {
+      padding: 28px 22px;
     }
 
     .terms-section {
-      position: relative;
-      z-index: 1;
-      padding-top: 140px;
-      padding-bottom: 90px;
+      padding-top: 120px;
+      padding-bottom: 70px;
     }
-
-    .terms-wrapper {
-      background: rgba(8, 8, 12, 0.78);
-      border: 1px solid rgba(48, 183, 240, 0.25);
-      border-radius: 22px;
-      padding: 45px;
-      box-shadow:
-        0 0 30px rgba(48, 183, 240, 0.08),
-        0 0 80px rgba(48, 183, 240, 0.04);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .terms-badge {
-      display: inline-block;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-      background: rgba(48, 183, 240, 0.12);
-      border: 1px solid rgba(48, 183, 240, 0.35);
-      border-radius: 999px;
-      padding: 8px 14px;
-      margin-bottom: 18px;
-      letter-spacing: 0.5px;
-    }
-
-    .terms-title {
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    .terms-title .accent {
-      color: #30b7f0;
-    }
-
-    .terms-updated {
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 28px;
-      font-size: 1rem;
-    }
-
-    .terms-intro {
-      color: rgba(255,255,255,0.92);
-      font-size: 1.05rem;
-      line-height: 1.9;
-      margin-bottom: 28px;
-    }
-
-    .terms-block {
-      margin-bottom: 30px;
-      padding-bottom: 22px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .terms-block:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    .terms-block h2 {
-      color: #30b7f0;
-      font-size: 1.45rem;
-      margin-bottom: 14px;
-      font-weight: 700;
-    }
-
-    .terms-block p,
-    .terms-block li {
-      color: rgba(255,255,255,0.92);
-      line-height: 1.9;
-      font-size: 1rem;
-    }
-
-    .terms-block ul {
-      margin: 0;
-      padding-left: 22px;
-    }
-
-    .terms-block li {
-      margin-bottom: 10px;
-    }
-
-    .terms-highlight {
-      color: #30b7f0;
-      font-weight: 700;
-    }
-
-    .terms-note {
-      margin-top: 12px;
-      color: rgba(255,255,255,0.82);
-      font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-      .terms-wrapper {
-        padding: 28px 22px;
-      }
-
-      .terms-section {
-        padding-top: 120px;
-        padding-bottom: 70px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
