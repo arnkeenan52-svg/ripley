@@ -303,7 +303,7 @@ const counters = document.querySelectorAll('.counter');
 const animateCounters = () => {
   counters.forEach(counter => {
     const target = +counter.getAttribute('data-target');
-    const speed = 200;
+    const speed = 100;
 
     const updateCount = () => {
       const count = +counter.innerText;
@@ -311,7 +311,7 @@ const animateCounters = () => {
 
       if (count < target) {
         counter.innerText = Math.ceil(count + increment);
-        setTimeout(updateCount, 10);
+        setTimeout(updateCount, 5);
       } else {
         counter.innerText = target.toLocaleString();
       }
