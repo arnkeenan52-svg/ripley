@@ -37,8 +37,43 @@ body {
     background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
     background-size: cover;
     }
-</style>
-  <style>
+    <style>
+.custom-stats-section .custom-stat-card {
+    background: rgba(7, 40, 56, 0.88);
+    border-radius: 10px;
+    padding: 30px 20px;
+    min-height: 165px;
+    box-shadow: 0 0 18px rgba(48, 183, 240, 0.18);
+    border-left: 3px solid #30b7f0;
+    transition: 0.3s ease;
+}
+
+.custom-stats-section .custom-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 24px rgba(48, 183, 240, 0.28);
+}
+
+.custom-stats-section .custom-stat-box {
+    text-align: center;
+}
+
+.custom-stats-section .mbr-iconfont {
+    font-size: 38px;
+    color: #42c8ff;
+    margin-bottom: 14px;
+    display: inline-block;
+}
+
+.custom-stats-section h4,
+.custom-stats-section h4 strong,
+.custom-stats-section p {
+    color: #ffffff !important;
+}
+
+.custom-stats-section .display-4,
+.custom-stats-section .display-7 {
+    color: #ffffff !important;
+}
 </style>
 <style>
 ::-webkit-scrollbar{
@@ -458,57 +493,51 @@ document.addEventListener("DOMContentLoaded", function () {
         <div data-aos="fade-up">
     <div class="row align-left justify-content-center align-content-around second-feature" style="margin-bottom: 100px;">
 </section>
-<div class="container stats-section">
-    <div data-aos="zoom-in-up">
-        <div class="row justify-content-center">
+<div class="container custom-stats-section">
+    <div class="row justify-content-center g-4">
 
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card-wrapper glowing-border">
-                    <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-server fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4">
-                            <strong><span class="counter" data-target="324">0</span>+</strong>
-                        </h4>
-                        <p class="card-text mbr-fonts-style display-7">Servers using Ripley</p>
-                    </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="custom-stat-card">
+                <div class="custom-stat-box">
+                    <span class="mbr-iconfont fa-server fa"></span>
+                    <h4 class="display-4"><strong>324+</strong></h4>
+                    <p class="display-7">Servers using Ripley</p>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card-wrapper glowing-border">
-                    <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-users fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4">
-                            <strong><span class="counter" data-target="13821">0</span>+</strong>
-                        </h4>
-                        <p class="card-text mbr-fonts-style display-7">Tickets Handled</p>
-                    </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="custom-stat-card">
+                <div class="custom-stat-box">
+                    <span class="mbr-iconfont fa-users fa"></span>
+                    <h4 class="display-4"><strong>13,821+</strong></h4>
+                    <p class="display-7">Tickets Handled</p>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card-wrapper glowing-border">
-                    <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-cogs fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4">
-                            <strong><span class="counter" data-target="12831">0</span>+</strong>
-                        </h4>
-                        <p class="card-text mbr-fonts-style display-7">Closed tickets</p>
-                    </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="custom-stat-card">
+                <div class="custom-stat-box">
+                    <span class="mbr-iconfont fa-cogs fa"></span>
+                    <h4 class="display-4"><strong>12,831+</strong></h4>
+                    <p class="display-7">Closed tickets</p>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card-wrapper glowing-border">
-                    <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-bolt fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4">
-                            <strong><span class="counter" data-target="6">0</span>s</strong>
-                        </h4>
-                        <p class="card-text mbr-fonts-style display-7">Average response time</p>
-                    </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="custom-stat-card">
+                <div class="custom-stat-box">
+                    <span class="mbr-iconfont fa-bolt fa"></span>
+                    <h4 class="display-4"><strong>6s</strong></h4>
+                    <p class="display-7">Average response time</p>
                 </div>
             </div>
+        </div>
+
+    </div>
+</div>
 
         </div>
     </div>
