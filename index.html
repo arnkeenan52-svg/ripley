@@ -304,27 +304,27 @@ document.addEventListener("DOMContentLoaded", function () {
     let hasAnimated = false;
 
     function animateCounter(counter) {
-        const target = Number(counter.dataset.target);
-        let current = 0;
+    const target = Number(counter.dataset.target);
 
-        if (isNaN(target)) return;
+    const duration = 6000; // ⬅️ change speed here
+    const startTime = performance.now();
 
-        const increment = Math.max(1, Math.ceil(target / 100));
+    function updateCounter(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
-        function updateCounter() {
-            current += increment;
+        const value = Math.floor(progress * target);
+        counter.textContent = value.toLocaleString();
 
-            if (current < target) {
-                counter.textContent = current.toLocaleString();
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target.toLocaleString();
-            }
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        } else {
+            counter.textContent = target.toLocaleString();
         }
-
-        updateCounter();
     }
 
+    requestAnimationFrame(updateCounter);
+}
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting && !hasAnimated) {
