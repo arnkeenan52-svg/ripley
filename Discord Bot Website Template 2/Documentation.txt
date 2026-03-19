@@ -1,0 +1,24 @@
+Main Information:
+Number of pages: 4
+
+TUTORIALS:
+
+How to change the contents of the website?
+
+* Open the HTML file you want to edit with an text editor such as Notepad++
+* Edit all of the contents you want by replacing the text/images.
+* Save the file and reload the website to see made changes.
+
+How can I change the color to something else?
+
+* Locate to \Website Files\assets\mobirise\css and open the mbr-additional file.
+* Press CTRL + F and search for the HEX color you want to change.
+* If you use Notepad++, within the search tab there is an option to replace all HEX colors at once.
+* Replace the HEX color with the HEX color of choice and save the file.
+* Reload the website to see made changes.
+
+
+Do you have any other questions or need help changing something? Feel free to contact me:
+
+BuiltByBit: https://builtbybit.com/members/spaceley.163713/
+Discord: discord.spaceydevs.com
