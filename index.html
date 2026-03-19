@@ -237,51 +237,102 @@ box-shadow: inset 0px 0px 0px 0px #000000;
 
 
     
-    <div class="container">
-        <div data-aos="zoom-in-up">
+  <div class="container">
+    <div data-aos="zoom-in-up">
         <div class="row justify-content-center">
             
+            <!-- Servers -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="card-wrapper glowing-border">
                     <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-check fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4"><strong>claude API</strong></h4>
-                        <p class="card-text mbr-fonts-style display-7">maximizes support with fast, high-quality responses.<br></p>
+                        <span class="mbr-iconfont fa-server fa"></span>
+                        <h4 class="card-title mbr-black mb-2 display-4">
+                            <strong><span class="counter" data-target="1200">0</span>+</strong>
+                        </h4>
+                        <p class="card-text display-7">Servers using Ripley</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Users -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="card-wrapper glowing-border">
                     <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-check fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4"><strong>Custom Bot</strong></h4>
-                        <p class="card-text mbr-fonts-style display-7">Ripley offers full customization of bot name and profile.
-</p>
+                        <span class="mbr-iconfont fa-users fa"></span>
+                        <h4 class="card-title mbr-black mb-2 display-4">
+                            <strong><span class="counter" data-target="50000">0</span>+</strong>
+                        </h4>
+                        <p class="card-text display-7">Active users supported</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Commands -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="card-wrapper glowing-border">
                     <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-check fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4"><strong>Custom commands</strong></h4>
-                        <p class="card-text mbr-fonts-style display-7">Ripley includes a wide range of custom commands.
-<br></p>
+                        <span class="mbr-iconfont fa-cogs fa"></span>
+                        <h4 class="card-title mbr-black mb-2 display-4">
+                            <strong><span class="counter" data-target="100">0</span>+</strong>
+                        </h4>
+                        <p class="card-text display-7">Custom commands available</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Response Time -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="card-wrapper glowing-border">
                     <div class="card-box align-left">
-                        <span class="mbr-iconfont fa-check fa"></span>
-                        <h4 class="card-title align-left mbr-black mb-2 mbr-fonts-style display-4"><strong>Fast responses</strong></h4>
-                        <p class="card-text mbr-fonts-style display-7">Ripley delivers fast responses, averaging around six seconds.
-<br></p>
+                        <span class="mbr-iconfont fa-bolt fa"></span>
+                        <h4 class="card-title mbr-black mb-2 display-4">
+                            <strong><span class="counter" data-target="6">0</span>s</strong>
+                        </h4>
+                        <p class="card-text display-7">Average response time</p>
                     </div>
                 </div>
             </div>
-           
-         
+
+        </div>
+    </div>
+</div>
+
+<script>
+const counters = document.querySelectorAll('.counter');
+
+const animateCounters = () => {
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    const speed = 200;
+
+    const updateCount = () => {
+      const count = +counter.innerText;
+      const increment = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 10);
+      } else {
+        counter.innerText = target.toLocaleString();
+      }
+    };
+
+    updateCount();
+  });
+};
+
+// trigger when visible
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounters();
+      observer.disconnect();
+    }
+  });
+});
+
+observer.observe(document.querySelector('.container'));
+</script>
 </section>
 
 <section data-bs-version="5.1" class="content5 cid-uJknVPSfQf" id="content03-6">
