@@ -404,17 +404,9 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         </div>
 
-       <!-- Bottom feature -->
-<div data-aos="fade-up">
-    <div class="row align-left justify-content-center align-content-around">
-
-        <!-- IMAGE FIRST (this puts it on the LEFT in code, RIGHT visually on desktop) -->
-        <div class="col-12 col-md-12 my-auto col-lg-5 image-wrapper order-lg-2">
-            <img class="w-100" src="assets/images/heroimgabout.png-940x940.png" alt="feature">
-        </div>
-
-        <!-- TEXT SECOND -->
-        <div class="col-12 col-lg col-md-12 my-auto order-lg-1">
+    <div data-aos="fade-up">
+    <div class="row align-left justify-content-center align-content-around" style="flex-direction: row-reverse;">
+        <div class="col-12 col-lg col-md-12 my-auto">
             <div class="text-wrapper md-pb">
                 <h1 class="mbr-section-title mbr-fonts-style align-left display-1">
                     <strong>Designed for Growth</strong>
@@ -424,12 +416,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 </p>
 
                 <p class="mbr-text-custom mbr-fonts-style align-left display-7" style="font-style: normal;">
-                    <i class="fa fa-bolt" style="color: #30b7f0; margin-right: 8px;"></i>
+                    <i class="fa fa-bolt" style="color: #30b7f0; margin-right: 8px; font-style: normal;"></i>
                     Built for <span style="color: #30b7f0; font-weight: bold;">speed, control, and reliability</span>.
                 </p>
             </div>
         </div>
 
+        <div class="col-12 col-md-12 my-auto col-lg-5 image-wrapper">
+            <img class="w-100" src="assets/images/heroimgabout.png-940x940.png" alt="feature">
+        </div>
     </div>
 </div>
 </section>
