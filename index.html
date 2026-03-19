@@ -456,7 +456,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div data-aos="fade-up">
     <div class="row align-left justify-content-center align-content-around second-feature" style="margin-bottom: 100px;">
 </section>
-        <div class="container">
+         <div class="container">
     <div data-aos="zoom-in-up">
         <div class="row justify-content-center">
             
@@ -514,6 +514,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
         </div>
     </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll(".counter");
+    const statsSection = document.querySelector(".stats-section");
+    let hasAnimated = false;
+
+    function animateCounter(counter) {
+    const target = Number(counter.dataset.target);
+
+    const duration = 6000; // ⬅️ change speed here
+    const startTime = performance.now();
+
+    function updateCounter(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const value = Math.floor(progress * target);
+        counter.textContent = value.toLocaleString();
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        } else {
+            counter.textContent = target.toLocaleString();
+        }
+    }
+
+    requestAnimationFrame(updateCounter);
+}
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                counters.forEach(counter => animateCounter(counter));
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    if (statsSection) {
+        observer.observe(statsSection);
+    }
+});
+</script>
+
+
+</script>
 </div>
 <section data-bs-version="5.1" class="team1 cid-uJkLbz5oj8" id="team01-9">
                     </div>
