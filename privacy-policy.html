@@ -1,45 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ripley Dashboard</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/a69fd87e-7e4b-4da2-8a4a-f3a51241773a.png" type="image/x-icon">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Privacy Policy - Ripley</title>
+  <meta name="description" content="Ripley Privacy Policy">
+
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
+  <link rel="stylesheet" href="assets/FontAwesome/css/font-awesome.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=GJQnM6">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=GJQnM6" type="text/css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <style>
-    :root {
-      --primary: #30b7f0;
-      --primary-soft: rgba(48, 183, 240, 0.14);
-      --primary-border: rgba(48, 183, 240, 0.28);
-      --panel: rgba(8, 8, 12, 0.78);
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.72);
-      --success: #35e07c;
-      --warn: #ffd491;
-      --shadow: 0 0 28px rgba(48, 183, 240, 0.12);
-      --radius: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     html, body {
-      background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
-      background-size: cover;
-      overflow-x: hidden;
       min-height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: #000 !important;
     }
 
     body {
-      margin: 0;
-      color: var(--text);
-      font-family: 'Rubik', sans-serif;
       position: relative;
+      isolation: isolate;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
+      background-size: cover;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.38);
+      z-index: -1;
+      pointer-events: none;
     }
 
     ::-webkit-scrollbar {
@@ -63,15 +81,18 @@
 
     section,
     .container,
+    .container-fluid,
     .row,
-    .col,
-    .col-12,
-    .col-lg-10,
-    .col-lg-3,
-    .col-lg-4,
-    .col-lg-6,
-    .content,
-    .app {
+    [class*="col-"],
+    .menu,
+    .navbar,
+    .navbar-dropdown,
+    .footer3,
+    .mbr-section,
+    .cid-uJ9FbipEIh,
+    .cid-uJld2yUyAl,
+    .privacy-section {
+      background: transparent !important;
       background-color: transparent !important;
     }
 
@@ -85,204 +106,20 @@
       pointer-events: none;
     }
 
-    .app {
+    .privacy-section {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 290px 1fr;
-      min-height: 100vh;
+      padding-top: 140px;
+      padding-bottom: 90px;
     }
 
-    .sidebar {
-      background: rgba(6, 10, 14, 0.8);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255,255,255,0.06);
-      padding: 22px 18px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 10px 18px;
-      margin-bottom: 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .brand-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.06));
-      border: 1px solid var(--primary-border);
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      box-shadow: var(--shadow);
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: .04em;
-    }
-
-    .brand p {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: .85rem;
-    }
-
-    .nav-title {
-      color: rgba(255,255,255,.46);
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      padding: 10px 12px;
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .nav a {
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 14px;
-      border-radius: 16px;
-      background: transparent;
-      border: 1px solid transparent;
-      transition: .22s ease;
-      font-weight: 500;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      background: var(--primary-soft);
-      border-color: var(--primary-border);
-      box-shadow: var(--shadow);
-      transform: translateX(2px);
-    }
-
-    .nav .icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.05);
-      display: grid;
-      place-items: center;
-      font-size: 1rem;
-      flex: 0 0 36px;
-    }
-
-    .sidebar-footer {
-      margin-top: 28px;
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(48,183,240,.14), rgba(48,183,240,.04));
-      border: 1px solid var(--primary-border);
-    }
-
-    .sidebar-footer small {
-      display: block;
-      color: var(--muted);
-      margin-top: 6px;
-      line-height: 1.6;
-    }
-
-    .content {
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .page-title h2,
-    .brand h1,
-    .section-header h3,
-    .metric .value {
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .page-title h2 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .page-title p {
-      margin: 8px 0 0;
-      color: var(--muted);
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    button,
-    .button {
-      border: 1px solid var(--primary-border);
-      background: rgba(48,183,240,.12);
-      color: white;
-      padding: 12px 16px;
-      border-radius: 14px;
-      cursor: pointer;
-      font: inherit;
-      transition: .2s ease;
-      text-decoration: none;
-    }
-
-    button:hover,
-    .button:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow);
-      background: rgba(48,183,240,.18);
-    }
-
-    button.secondary,
-    .button.secondary {
-      background: rgba(255,255,255,.05);
-      border-color: rgba(255,255,255,.08);
-    }
-
-    .grid {
-      display: grid;
-      gap: 22px;
-    }
-
-    .cards-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .cards-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .cards-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .panel {
-      background: var(--panel) !important;
+    .privacy-wrapper {
+      position: relative;
+      z-index: 1;
+      background: rgba(8, 8, 12, 0.78) !important;
       border: 1px solid rgba(48, 183, 240, 0.25);
-      border-radius: var(--radius);
-      padding: 22px;
+      border-radius: 22px;
+      padding: 45px;
       box-shadow:
         0 0 30px rgba(48, 183, 240, 0.08),
         0 0 80px rgba(48, 183, 240, 0.04);
@@ -290,611 +127,409 @@
       -webkit-backdrop-filter: blur(8px);
     }
 
-    .page-view {
-      display: none;
+    .privacy-badge {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(48, 183, 240, 0.12);
+      border: 1px solid rgba(48, 183, 240, 0.35);
+      border-radius: 999px;
+      padding: 8px 14px;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
     }
 
-    .page-view.active {
-      display: block;
-    }
-
-    .metric .label {
-      color: var(--muted);
-      font-size: .92rem;
+    .privacy-title {
+      color: #fff;
       margin-bottom: 12px;
     }
 
-    .metric .value {
-      font-size: 2rem;
+    .privacy-title .accent {
+      color: #30b7f0;
+    }
+
+    .privacy-updated {
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 28px;
+      font-size: 1rem;
+    }
+
+    .privacy-intro {
+      color: rgba(255,255,255,0.92);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .privacy-contents {
+      background: rgba(255,255,255,0.03) !important;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .privacy-contents h3 {
+      color: #30b7f0;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .privacy-contents ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .privacy-contents li {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+
+    .privacy-block {
+      margin-bottom: 30px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .privacy-block:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .privacy-block h2 {
+      color: #30b7f0;
+      font-size: 1.45rem;
+      margin-bottom: 14px;
       font-weight: 700;
     }
 
-    .metric .delta {
-      margin-top: 10px;
-      font-size: .9rem;
-      color: var(--success);
+    .privacy-block h4 {
+      color: #ffffff;
+      font-size: 1.05rem;
+      margin-top: 16px;
+      margin-bottom: 10px;
+      font-weight: 700;
     }
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
+    .privacy-block p,
+    .privacy-block li {
+      color: rgba(255,255,255,0.92);
+      line-height: 1.9;
+      font-size: 1rem;
     }
 
-    .section-header h3 {
+    .privacy-block ul {
       margin: 0;
-      font-size: 1.15rem;
+      padding-left: 22px;
     }
 
-    .section-header p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: .95rem;
+    .privacy-block li {
+      margin-bottom: 10px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 16px;
+    .privacy-highlight {
+      color: #30b7f0;
+      font-weight: 700;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
+    .privacy-note {
+      margin-top: 12px;
+      color: rgba(255,255,255,0.82);
+      font-style: italic;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
-
-    .field label {
-      color: rgba(255,255,255,.88);
-      font-size: .95rem;
-      font-weight: 500;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      background: rgba(255,255,255,.04);
-      color: white;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      padding: 14px 14px;
-      font: inherit;
-      outline: none;
-      transition: .18s ease;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(48,183,240,.14);
-    }
-
-    .field textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .pill {
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: rgba(255,255,255,.92);
-      font-size: .92rem;
-    }
-
-    .command-list,
-    .activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.06);
-      flex-wrap: wrap;
-    }
-
-    .item-row strong {
-      display: block;
-    }
-
-    .item-row span,
-    .item-row small {
-      color: var(--muted);
-    }
-
-    .status {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: .82rem;
-      font-weight: 600;
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .status.ok {
-      color: #9effc3;
-      background: rgba(53,224,124,.12);
-      border-color: rgba(53,224,124,.24);
-    }
-
-    .status.warn {
-      color: var(--warn);
-      background: rgba(255, 193, 91, .12);
-      border-color: rgba(255, 193, 91, .24);
-    }
-
-    .chart {
-      height: 240px;
-      padding: 14px 10px 0;
-    }
-
-    .bars {
-      height: 100%;
-      display: flex;
-      align-items: end;
-      gap: 14px;
-    }
-
-    .bar-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .bar {
-      width: 100%;
-      border-radius: 16px 16px 6px 6px;
-      background: linear-gradient(180deg, rgba(48,183,240,1), rgba(48,183,240,.28));
-      border: 1px solid rgba(48,183,240,.28);
-      min-height: 18px;
-      box-shadow: inset 0 0 12px rgba(255,255,255,.14);
-    }
-
-    .bar-label {
-      color: var(--muted);
-      font-size: .85rem;
-    }
-
-    .hero-banner {
-      background: linear-gradient(135deg, rgba(48,183,240,.16), rgba(255,255,255,.03)) !important;
-      border: 1px solid var(--primary-border);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      right: -80px;
-      top: -80px;
-      background: radial-gradient(circle, rgba(48,183,240,.28), transparent 65%);
-      pointer-events: none;
-    }
-
-    .hero-banner h3 {
-      margin: 0 0 10px;
-      font-size: 1.5rem;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .hero-banner p {
-      margin: 0;
-      max-width: 760px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .save-row {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .mobile-toggle {
-      display: none;
-    }
-
-    @media (max-width: 1100px) {
-      .cards-4,
-      .cards-3,
-      .cards-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 900px) {
-      .app {
-        grid-template-columns: 1fr;
+    @media (max-width: 768px) {
+      .privacy-wrapper {
+        padding: 28px 22px;
       }
 
-      .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        transform: translateX(-100%);
-        width: 290px;
-        z-index: 20;
-        transition: .22s ease;
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .mobile-toggle {
-        display: inline-flex;
-      }
-
-      .content {
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .cards-4,
-      .cards-3,
-      .cards-2,
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .content {
-        padding: 16px;
-      }
-
-      .page-title h2 {
-        font-size: 1.55rem;
-      }
-
-      .panel {
-        padding: 18px;
+      .privacy-section {
+        padding-top: 120px;
+        padding-bottom: 70px;
       }
     }
   </style>
 </head>
 <body>
+
   <div id="particles-js"></div>
 
-  <div class="app">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-logo">🦈</div>
-        <div>
-          <h1>Ripley</h1>
-          <p>Bot Dashboard</p>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+    });
+  </script>
+
+  <section data-bs-version="5.1" class="menu menu1 cid-uJ9FbipEIh" once="menu" id="menu01-0">
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+      <div class="container">
+        <div class="navbar-brand">
+          <span class="navbar-logo">
+            <a href="index.html">
+              <img src="assets/images/Kawaii_shark_with_joyful_smile-removebg-preview.png" alt="" style="height: 3rem;">
+            </a>
+          </span>
+          <span class="navbar-caption-wrap">
+            <a class="navbar-caption text-white text-primary display-5" href="index.html">Ripley</a>
+          </span>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#features">Features</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#premium">Premium</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" target="_blank">Documentation</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" target="_blank">Developers</a></li>
+          </ul>
+
+          <div class="icons-menu">
+            <a class="iconfont-wrapper" href="https://google.com" target="_blank">
+              <span class="p-2 mbr-iconfont socicon-discord socicon"></span>
+            </a>
+          </div>
+
+          <div class="navbar-buttons mbr-section-btn">
+            <a class="btn btn-sm btn-secondary display-4" href="https://google.com" target="_blank">
+              <span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>Dashboard
+            </a>
+          </div>
         </div>
       </div>
+    </nav>
+  </section>
 
-      <div class="nav-title">Navigation</div>
-      <nav class="nav">
-        <a href="#home" data-page="home" class="active"><span class="icon">⌂</span><span>Home</span></a>
-        <a href="#customize" data-page="customize"><span class="icon">⚙</span><span>Customize Bot Channel</span></a>
-        <a href="#analytics" data-page="analytics"><span class="icon">📈</span><span>Analytics Channel</span></a>
-        <a href="#knowledge" data-page="knowledge"><span class="icon">🧠</span><span>Import Knowledge</span></a>
-        <a href="#commands" data-page="commands"><span class="icon">⌘</span><span>Commands</span></a>
-      </nav>
+  <section class="privacy-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10" data-aos="fade-up">
+          <div class="privacy-wrapper">
 
-      <div class="sidebar-footer">
-        <strong>Bot Status: Online</strong>
-        <small>Each navigation item opens its own page while keeping the same Ripley theme and background.</small>
+            <div class="privacy-badge">
+              <span class="fa fa-shield mbr-iconfont" style="color: #30b7f0; margin-right: 8px;"></span>
+              PRIVACY &amp; DATA PROTECTION
+            </div>
+
+            <h1 class="mbr-section-title mbr-fonts-style display-2 privacy-title">
+              <strong>Privacy <span class="accent">Policy</span></strong>
+            </h1>
+
+            <p class="privacy-updated"><strong>Last Updated:</strong> April 15, 2025</p>
+
+            <p class="privacy-intro">
+              Your privacy matters to us. This Privacy Policy explains how <span class="privacy-highlight">Ripley</span> ("we," "our," or "us") collects, uses, stores, and safeguards information when you use our Discord bot, dashboard, website, or related services.
+            </p>
+
+            <div class="privacy-contents">
+              <h3>Contents</h3>
+              <ul>
+                <li>1. Data We Collect</li>
+                <li>2. How We Collect Data</li>
+                <li>3. Why We Collect Data</li>
+                <li>4. Data Retention &amp; Security</li>
+                <li>5. Your Privacy Choices</li>
+                <li>6. Children’s Privacy</li>
+                <li>7. Third-Party Services</li>
+                <li>8. Policy Changes</li>
+                <li>9. Contact Us</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>1. Data We Collect</h2>
+              <p>
+                We collect limited data necessary to provide, maintain, and improve Ripley. The information we collect generally falls into two categories:
+              </p>
+
+              <h4>a. Discord User and Server Information</h4>
+              <ul>
+                <li><strong>Discord User IDs:</strong> used to identify users involved in support activity and ticket interactions.</li>
+                <li><strong>Server Information:</strong> including server IDs, channel IDs, and related configuration data where Ripley is enabled.</li>
+                <li><strong>Command and Interaction Data:</strong> records of commands or actions submitted to Ripley to support functionality, moderation, diagnostics, and service performance.</li>
+              </ul>
+
+              <h4>b. Non-Personal and Operational Data</h4>
+              <ul>
+                <li>Interaction timestamps</li>
+                <li>Usage patterns</li>
+                <li>Anonymized or aggregated analytics used to improve reliability, features, and user experience</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>2. How We Collect Data</h2>
+              <p>We collect data in a transparent and purposeful manner, including through:</p>
+              <ul>
+                <li><strong>Discord interactions and commands:</strong> when users engage with Ripley inside Discord.</li>
+                <li><strong>Error and performance logs:</strong> automatically generated system data used to identify bugs, outages, abuse, or technical issues.</li>
+                <li><strong>Server configuration and usage activity:</strong> when administrators configure Ripley or use dashboard-related functionality.</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>3. Why We Collect Data</h2>
+              <p>We collect and process data only for legitimate service-related purposes, including to:</p>
+              <ul>
+                <li>Facilitate Discord ticket and support management</li>
+                <li>Ensure smooth, secure, and reliable bot operation</li>
+                <li>Improve features, automation, performance, and overall user experience</li>
+                <li>Comply with Discord API requirements, platform rules, and applicable legal obligations</li>
+              </ul>
+
+              <p>
+                We do <span class="privacy-highlight">not</span> sell personal data, and we do not use collected information for unrelated advertising purposes.
+              </p>
+
+              <h4>How Ripley Uses Your Data</h4>
+              <p>Ripley uses collected data solely to provide and improve support and ticket management services. This may include:</p>
+              <ul>
+                <li>Creating and managing support tickets</li>
+                <li>Supporting AI-assisted responses tailored to your server’s needs</li>
+                <li>Generating analytics to improve support efficiency and workflows</li>
+                <li>Ensuring proper operation of automations, ticket flows, and support tools</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>4. Data Retention &amp; Security</h2>
+              <p>
+                We retain data only for as long as reasonably necessary to provide our services, comply with legal obligations, resolve disputes, and enforce our policies.
+              </p>
+              <p>
+                We use industry-standard safeguards to help protect the information we process. However, no method of storage or transmission can be guaranteed to be completely secure.
+              </p>
+
+              <h4>Security Measures We May Implement</h4>
+              <ul>
+                <li>Encryption of sensitive data where appropriate</li>
+                <li>Access controls and authentication protections</li>
+                <li>Routine monitoring for suspicious or unusual activity</li>
+                <li>Periodic reviews and security improvements</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>5. Your Privacy Choices</h2>
+              <p>You may have the right to:</p>
+              <ul>
+                <li>Request access to the data associated with your use of Ripley</li>
+                <li>Request correction of inaccurate information</li>
+                <li>Request deletion of applicable data</li>
+                <li>Stop using the service at any time</li>
+              </ul>
+
+              <h4>How to Exercise Your Rights</h4>
+              <p>
+                To request access, correction, or deletion of your data, please contact us through your official Ripley support channels, Discord support server, or website contact methods.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>6. Children’s Privacy</h2>
+              <p>
+                Ripley is intended for users who are at least 13 years old, or the minimum age required by applicable law in their jurisdiction.
+              </p>
+              <p>
+                We do not knowingly collect personal information from children in violation of applicable law. If you believe that a minor has provided data improperly, please contact us so we can review and take appropriate action.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>7. Third-Party Services</h2>
+              <p>
+                Ripley integrates with Discord and may reference or link to third-party services. While we aim to operate in compliance with Discord’s policies and platform requirements, we are not responsible for the privacy practices of third-party platforms or services outside our control.
+              </p>
+
+              <h4>Discord Integration</h4>
+              <p>
+                Ripley interacts with Discord’s API and related services in order to function. For more information about Discord’s own data handling practices, please review Discord’s Privacy Policy separately.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>8. Policy Changes</h2>
+              <p>
+                We may update this Privacy Policy from time to time to reflect changes in our services, legal requirements, or operational practices.
+              </p>
+              <p>
+                Continued use of Ripley after changes become effective constitutes acceptance of the revised Privacy Policy. Where appropriate, significant changes may be communicated through our support server, website, or other official channels.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>9. Contact Us</h2>
+              <p>
+                If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us through your official Ripley support channels, Discord support server, or website contact methods.
+              </p>
+              <p class="privacy-note">
+                You can replace this line with your real support email later if you want.
+              </p>
+            </div>
+
+          </div>
+        </div>
       </div>
-    </aside>
+    </div>
+  </section>
 
-    <main class="content">
-      <div class="topbar">
-        <div class="page-title">
-          <h2 id="pageTitle">Ripley Dashboard</h2>
-          <p id="pageSubtitle">Overview of channels, knowledge, commands, and analytics.</p>
+  <section data-bs-version="5.1" class="footer3 cid-uJld2yUyAl" once="footer" id="footer03-g">
+    <div class="container">
+      <div class="row align-left justify-content-center mbr-white">
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Quick Links</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <a href="index.html#features" class="text-white">Features</a><br>
+            <a href="index.html#premium" class="text-white">Premium</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Documentation</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Developers</a>
+          </h3>
         </div>
-        <div class="top-actions">
-          <button class="secondary mobile-toggle" id="menuBtn">☰ Menu</button>
-          <button class="secondary" data-toast="Preview synced successfully.">Preview</button>
-          <button data-toast="Settings saved successfully.">Save Changes</button>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Legal</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <div><a href="terms-of-use.html" class="text-white">Terms Of Use</a></div>
+            <div><a href="privacy-policy.html" class="text-white">Privacy Policy</a></div>
+            <div><a href="refund-policy.html" class="text-white">Refund Policy</a></div>
+            <div><a href="https://google.com" class="text-white" target="_blank">Github Page</a></div>
+          </h3>
+        </div>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Community</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <a href="https://google.com" class="text-white" target="_blank">Instagram</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Twitter</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Discord</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Email</a>
+          </h3>
+        </div>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Ripley</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            Ripley blends futuristic intelligence with AI-powered support to bring automation and fast help to your server.
+          </h3>
         </div>
       </div>
-
-      <section class="page-view active" data-page="home">
-        <div class="grid">
-          <section class="panel hero-banner">
-            <h3>Welcome back to Ripley.</h3>
-            <p>Use this dashboard to control where Ripley listens, where analytics are posted, which knowledge sources power replies, and which commands are available to your server members and staff team.</p>
-          </section>
-        </div>
-
-        <section class="grid cards-4" style="margin-top: 22px; margin-bottom: 22px;">
-          <div class="panel metric">
-            <div class="label">Support Tickets Today</div>
-            <div class="value">148</div>
-            <div class="delta">+12.4% from yesterday</div>
-          </div>
-          <div class="panel metric">
-            <div class="label">Average Response Time</div>
-            <div class="value">6.2s</div>
-            <div class="delta">Fast reply performance</div>
-          </div>
-          <div class="panel metric">
-            <div class="label">Knowledge Sources</div>
-            <div class="value">12</div>
-            <div class="delta">3 updated this week</div>
-          </div>
-          <div class="panel metric">
-            <div class="label">Commands Enabled</div>
-            <div class="value">24</div>
-            <div class="delta">All systems operational</div>
-          </div>
-        </section>
-
-        <section class="grid cards-3">
-          <div class="panel">
-            <div class="section-header"><div><h3>Customize Bot Channel</h3><p>Quick access to support channel settings.</p></div></div>
-            <p style="color: var(--muted); line-height: 1.8;">Set Ripley’s main bot channel, greeting style, welcome text, and support flow without leaving the dashboard.</p>
-            <div class="save-row" style="justify-content:flex-start;"><button data-go="customize">Open Page</button></div>
-          </div>
-          <div class="panel">
-            <div class="section-header"><div><h3>Analytics Channel</h3><p>Review trends and log destinations.</p></div></div>
-            <p style="color: var(--muted); line-height: 1.8;">Choose where reporting is posted and view response-time and ticket activity at a glance.</p>
-            <div class="save-row" style="justify-content:flex-start;"><button data-go="analytics">Open Page</button></div>
-          </div>
-          <div class="panel">
-            <div class="section-header"><div><h3>Import Knowledge</h3><p>Train Ripley with your own content.</p></div></div>
-            <p style="color: var(--muted); line-height: 1.8;">Upload FAQs, pricing, docs, and policies so Ripley responds with accurate server-specific answers.</p>
-            <div class="save-row" style="justify-content:flex-start;"><button data-go="knowledge">Open Page</button></div>
-          </div>
-        </section>
-      </section>
-
-      <section class="page-view" data-page="customize">
-        <div class="grid cards-2">
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Customize Bot Channel</h3>
-                <p>Choose the main support and interaction channel for Ripley.</p>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="field">
-                <label for="serverChannel">Primary Bot Channel</label>
-                <select id="serverChannel">
-                  <option>#support</option>
-                  <option>#tickets</option>
-                  <option>#help-center</option>
-                  <option>#bot-commands</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="greetingStyle">Greeting Style</label>
-                <select id="greetingStyle">
-                  <option>Professional</option>
-                  <option>Friendly</option>
-                  <option>Minimal</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label for="welcomeMessage">Welcome Message</label>
-                <textarea id="welcomeMessage">Welcome to Ripley Support. Describe your issue and our AI assistant will respond instantly or route you to the right place.</textarea>
-              </div>
-            </div>
-            <div class="pill-row">
-              <span class="pill">Auto-thread creation</span>
-              <span class="pill">Slash commands enabled</span>
-              <span class="pill">Staff mention routing</span>
-            </div>
-            <div class="save-row">
-              <button class="secondary" data-toast="Channel settings reset.">Reset</button>
-              <button data-toast="Bot channel settings saved.">Save Bot Channel</button>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Bot Identity</h3>
-                <p>Change the bot avatar, display name, and profile description.</p>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="field full">
-                <label>Upload Custom Avatar</label>
-                <div class="item-row" style="justify-content:flex-start; align-items:center; gap:18px;">
-                  <div style="width:72px; height:72px; border-radius:18px; background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.05)); border:1px solid rgba(48,183,240,.28); display:grid; place-items:center; font-size:32px; box-shadow: var(--shadow);">🦈</div>
-                  <div style="flex:1; min-width: 220px;">
-                    <strong style="display:block; margin-bottom:6px;">Current Avatar</strong>
-                    <small style="color: var(--muted); display:block; margin-bottom:10px;">Upload a custom avatar image for your bot branding.</small>
-                    <button type="button" class="secondary" data-toast="Avatar upload placeholder opened.">Upload Custom Avatar</button>
-                  </div>
-                </div>
-              </div>
-              <div class="field">
-                <label for="botName">Bot Name</label>
-                <input id="botName" type="text" value="Ripley" />
-              </div>
-              <div class="field full">
-                <label for="botDescription">Bot Description</label>
-                <textarea id="botDescription">Ripley is an AI-powered Discord support bot built to automate ticket help, answer questions from your knowledge base, and keep your community running smoothly.</textarea>
-              </div>
-            </div>
-            <div class="save-row">
-              <button class="secondary" data-toast="Bot identity reset.">Reset Identity</button>
-              <button data-toast="Bot identity saved successfully.">Save Bot Identity</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page-view" data-page="analytics">
-        <div class="grid cards-2">
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Analytics Channel</h3>
-                <p>Control where logs, summaries, and ticket analytics are posted.</p>
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="field">
-                <label for="analyticsChannel">Analytics Destination</label>
-                <select id="analyticsChannel">
-                  <option>#analytics</option>
-                  <option>#staff-logs</option>
-                  <option>#ticket-metrics</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="reportFrequency">Report Frequency</label>
-                <select id="reportFrequency">
-                  <option>Daily</option>
-                  <option>Weekly</option>
-                  <option>Monthly</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label>Enabled Reports</label>
-                <div class="pill-row">
-                  <span class="pill">Response time</span>
-                  <span class="pill">Top commands</span>
-                  <span class="pill">Unresolved tickets</span>
-                  <span class="pill">Staff activity</span>
-                </div>
-              </div>
-            </div>
-            <div class="save-row">
-              <button data-toast="Analytics settings saved.">Save Analytics</button>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Performance Overview</h3>
-                <p>Weekly support activity preview.</p>
-              </div>
-            </div>
-            <div class="chart" aria-label="Analytics preview chart">
-              <div class="bars">
-                <div class="bar-col"><div class="bar" style="height: 48%;"></div><div class="bar-label">Mon</div></div>
-                <div class="bar-col"><div class="bar" style="height: 72%;"></div><div class="bar-label">Tue</div></div>
-                <div class="bar-col"><div class="bar" style="height: 56%;"></div><div class="bar-label">Wed</div></div>
-                <div class="bar-col"><div class="bar" style="height: 85%;"></div><div class="bar-label">Thu</div></div>
-                <div class="bar-col"><div class="bar" style="height: 62%;"></div><div class="bar-label">Fri</div></div>
-                <div class="bar-col"><div class="bar" style="height: 40%;"></div><div class="bar-label">Sat</div></div>
-                <div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Sun</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page-view" data-page="knowledge">
-        <div class="grid cards-2">
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Import Knowledge</h3>
-                <p>Upload or paste the information Ripley should answer from.</p>
-              </div>
-              <button class="secondary" id="fakeUploadBtn">Upload Files</button>
-            </div>
-            <div class="form-grid">
-              <div class="field full">
-                <label for="knowledgeText">Knowledge Base Text</label>
-                <textarea id="knowledgeText">Import custom knowledge like pricing, FAQs, commands, policies, and product data so Ripley can answer accurately and intelligently.</textarea>
-              </div>
-            </div>
-            <div class="save-row">
-              <button class="secondary" data-toast="Knowledge draft cleared.">Clear</button>
-              <button data-toast="Knowledge imported successfully.">Import Knowledge</button>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Connected Sources</h3>
-                <p>Active files powering Ripley answers.</p>
-              </div>
-            </div>
-            <div class="command-list">
-              <div class="item-row"><div><strong>pricing.md</strong><small>Updated 2 hours ago</small></div><span class="status ok">Active</span></div>
-              <div class="item-row"><div><strong>faq.txt</strong><small>Updated yesterday</small></div><span class="status ok">Active</span></div>
-              <div class="item-row"><div><strong>discord-rules.pdf</strong><small>Updated 4 days ago</small></div><span class="status ok">Indexed</span></div>
-              <div class="item-row"><div><strong>support-workflow.docx</strong><small>Updated 1 week ago</small></div><span class="status warn">Review</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page-view" data-page="commands">
-        <div class="grid cards-2">
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Commands</h3>
-                <p>Manage which commands are available and review recent usage.</p>
-              </div>
-              <button data-toast="New command modal opened.">Add Command</button>
-            </div>
-            <div class="command-list">
-              <div class="item-row">
-                <div><strong>/ticket create</strong><small>Opens a new support ticket for a member.</small></div>
-                <span class="status ok">Enabled</span>
-              </div>
-              <div class="item-row">
-                <div><strong>/faq</strong><small>Answers common questions from imported knowledge.</small></div>
-                <span class="status ok">Enabled</span>
-              </div>
-              <div class="item-row">
-                <div><strong>/close</strong><small>Closes the active support thread or ticket.</small></div>
-                <span class="status warn">Restricted</span>
-              </div>
-            </div>
-          </div>
-          <div class="panel">
-            <div class="section-header">
-              <div>
-                <h3>Recent Activity</h3>
-                <p>Latest command usage across your server.</p>
-              </div>
-            </div>
-            <div class="activity-list">
-              <div class="item-row"><div><strong>/ticket create</strong><span>Used by @SupportLead in #support</span></div><small>2 min ago</small></div>
-              <div class="item-row"><div><strong>/faq pricing</strong><span>Used by @MemberHelp in #help-center</span></div><small>9 min ago</small></div>
-              <div class="item-row"><div><strong>/close</strong><span>Used by @StaffOne in #tickets</span></div><small>21 min ago</small></div>
-              <div class="item-row"><div><strong>/transcript</strong><span>Used by @Manager in #staff-logs</span></div><small>44 min ago</small></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+    </div>
+    <br>
+    <center><p><strong>©2026 Copyright - Ripley - All rights reserved</strong></p></center>
+  </section>
 
   <script>
     particlesJS("particles-js", {
@@ -960,100 +595,13 @@
       },
       "retina_detect": true
     });
-
-    const toast = document.createElement('div');
-    toast.style.position = 'fixed';
-    toast.style.right = '20px';
-    toast.style.bottom = '20px';
-    toast.style.zIndex = '50';
-    toast.style.padding = '14px 16px';
-    toast.style.borderRadius = '14px';
-    toast.style.background = 'rgba(9,16,24,0.94)';
-    toast.style.border = '1px solid rgba(48,183,240,.3)';
-    toast.style.color = 'white';
-    toast.style.boxShadow = '0 0 24px rgba(48,183,240,.16)';
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(10px)';
-    toast.style.transition = '.2s ease';
-    toast.style.pointerEvents = 'none';
-    document.body.appendChild(toast);
-
-    let toastTimer;
-    function showToast(message) {
-      toast.textContent = message;
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateY(0)';
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(10px)';
-      }, 2200);
-    }
-
-    document.querySelectorAll('[data-toast]').forEach(btn => {
-      btn.addEventListener('click', () => showToast(btn.getAttribute('data-toast')));
-    });
-
-    document.getElementById('fakeUploadBtn')?.addEventListener('click', () => {
-      showToast('Upload dialog placeholder opened.');
-    });
-
-    const pages = {
-      home: {
-        title: 'Ripley Dashboard',
-        subtitle: 'Overview of channels, knowledge, commands, and analytics.'
-      },
-      customize: {
-        title: 'Customize Bot Channel',
-        subtitle: 'Configure where Ripley listens and how it greets users.'
-      },
-      analytics: {
-        title: 'Analytics Channel',
-        subtitle: 'Manage reporting destinations and monitor support trends.'
-      },
-      knowledge: {
-        title: 'Import Knowledge',
-        subtitle: 'Upload and manage the information Ripley answers from.'
-      },
-      commands: {
-        title: 'Commands',
-        subtitle: 'Enable commands, review usage, and control access.'
-      }
-    };
-
-    const navLinks = [...document.querySelectorAll('.nav a[data-page]')];
-    const pageViews = [...document.querySelectorAll('.page-view')];
-    const pageTitle = document.getElementById('pageTitle');
-    const pageSubtitle = document.getElementById('pageSubtitle');
-    const sidebar = document.getElementById('sidebar');
-
-    function setPage(page) {
-      const selected = pages[page] ? page : 'home';
-      navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === selected));
-      pageViews.forEach(view => view.classList.toggle('active', view.dataset.page === selected));
-      pageTitle.textContent = pages[selected].title;
-      pageSubtitle.textContent = pages[selected].subtitle;
-      if (location.hash !== '#' + selected) history.replaceState(null, '', '#' + selected);
-      sidebar.classList.remove('open');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        setPage(link.dataset.page);
-      });
-    });
-
-    document.querySelectorAll('[data-go]').forEach(btn => {
-      btn.addEventListener('click', () => setPage(btn.dataset.go));
-    });
-
-    const menuBtn = document.getElementById('menuBtn');
-    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
-
-    const startPage = location.hash.replace('#', '') || 'home';
-    setPage(startPage);
   </script>
+
+  <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/ytplayer/index.js"></script>
+  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+  <script src="assets/mbr-switch-arrow/mbr-switch-arrow.js"></script>
+  <script src="assets/theme/js/script.js"></script>
 </body>
 </html>
