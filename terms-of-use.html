@@ -1,858 +1,880 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ripley Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root {
---bg-image: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80');
---primary: #30b7f0;
---primary-soft: rgba(48, 183, 240, 0.14);
---primary-border: rgba(48, 183, 240, 0.28);
---panel: rgba(7, 12, 18, 0.78);
---panel-strong: rgba(9, 16, 24, 0.9);
---text: #ffffff;
---muted: rgba(255, 255, 255, 0.72);
---success: #35e07c;
---danger: #ff6b81;
---shadow: 0 0 28px rgba(48, 183, 240, 0.12);
---radius: 22px;
---radius-sm: 16px;
-}
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-margin: 0;
-min-height: 100vh;
-color: var(--text);
-font-family: 'Rubik', sans-serif;
-background: var(--bg-image) no-repeat center center fixed;
-background-size: cover;
-overflow-x: hidden;
-position: relative;
-}
-
-body::before {
-content: "";
-position: fixed;
-inset: 0;
-background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.72));
-z-index: 0;
-pointer-events: none;
-}
-
-.particles {
-position: fixed;
-inset: 0;
-z-index: 0;
-pointer-events: none;
-overflow: hidden;
-}
-
-.particle {
-position: absolute;
-top: -10px;
-width: 3px;
-height: 14px;
-border-radius: 999px;
-background: linear-gradient(to bottom, rgba(255,255,255,.9), rgba(48,183,240,.2));
-opacity: .75;
-animation: fall linear infinite;
-}
-
-@keyframes fall {
-to {
-transform: translateY(110vh);
-}
-}
-
-.app {
-position: relative;
-z-index: 1;
-display: grid;
-grid-template-columns: 290px 1fr;
-min-height: 100vh;
-}
-
-.sidebar {
-background: rgba(6, 10, 14, 0.8);
-backdrop-filter: blur(10px);
-border-right: 1px solid rgba(255,255,255,0.06);
-padding: 22px 18px;
-position: sticky;
-top: 0;
-height: 100vh;
-}
-
-.brand {
-display: flex;
-align-items: center;
-gap: 14px;
-padding: 10px 10px 18px;
-margin-bottom: 18px;
-border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.brand-logo {
-width: 48px;
-height: 48px;
-border-radius: 14px;
-background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.06));
-border: 1px solid var(--primary-border);
-display: grid;
-place-items: center;
-font-size: 24px;
-box-shadow: var(--shadow);
-}
-
-.brand h1 {
-margin: 0;
-font-family: 'Orbitron', sans-serif;
-font-size: 1.15rem;
-letter-spacing: .04em;
-}
-
-.brand p {
-margin: 2px 0 0;
-color: var(--muted);
-font-size: .85rem;
-}
-
-.nav-title {
-color: rgba(255,255,255,.46);
-font-size: .78rem;
-text-transform: uppercase;
-letter-spacing: .12em;
-padding: 10px 12px;
-}
-
-.nav {
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
-
-.nav a {
-text-decoration: none;
-color: var(--text);
-display: flex;
-align-items: center;
-gap: 12px;
-padding: 14px 14px;
-border-radius: 16px;
-background: transparent;
-border: 1px solid transparent;
-transition: .22s ease;
-font-weight: 500;
-}
-
-.nav a:hover,
-.nav a.active {
-background: var(--primary-soft);
-border-color: var(--primary-border);
-box-shadow: var(--shadow);
-transform: translateX(2px);
-}
-
-.nav .icon {
-width: 36px;
-height: 36px;
-border-radius: 12px;
-background: rgba(255,255,255,.05);
-display: grid;
-place-items: center;
-font-size: 1rem;
-flex: 0 0 36px;
-}
-
-.sidebar-footer {
-margin-top: 28px;
-padding: 16px;
-border-radius: 18px;
-background: linear-gradient(180deg, rgba(48,183,240,.14), rgba(48,183,240,.04));
-border: 1px solid var(--primary-border);
-}
-
-.sidebar-footer small {
-display: block;
-color: var(--muted);
-margin-top: 6px;
-line-height: 1.6;
-}
-
-.content {
-padding: 28px;
-}
-
-.topbar {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 18px;
-margin-bottom: 24px;
-flex-wrap: wrap;
-}
-
-.page-title h2 {
-margin: 0;
-font-size: 2rem;
-font-family: 'Orbitron', sans-serif;
-}
-
-.page-title p {
-margin: 8px 0 0;
-color: var(--muted);
-}
-
-.top-actions {
-display: flex;
-gap: 12px;
-flex-wrap: wrap;
-}
-
-button,
-.button {
-border: 1px solid var(--primary-border);
-background: rgba(48,183,240,.12);
-color: white;
-padding: 12px 16px;
-border-radius: 14px;
-cursor: pointer;
-font: inherit;
-transition: .2s ease;
-text-decoration: none;
-}
-
-button:hover,
-.button:hover {
-transform: translateY(-1px);
-box-shadow: var(--shadow);
-background: rgba(48,183,240,.18);
-}
-
-.button.secondary,
-button.secondary {
-background: rgba(255,255,255,.05);
-border-color: rgba(255,255,255,.08);
-}
-
-.grid {
-display: grid;
-gap: 22px;
-}
-
-.cards-4 {
-grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.cards-2 {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.panel {
-background: var(--panel);
-border: 1px solid rgba(255,255,255,0.06);
-border-radius: var(--radius);
-padding: 22px;
-backdrop-filter: blur(10px);
-box-shadow: var(--shadow);
-}
-
-.metric .label {
-color: var(--muted);
-font-size: .92rem;
-margin-bottom: 12px;
-}
-
-.metric .value {
-font-size: 2rem;
-font-weight: 700;
-font-family: 'Orbitron', sans-serif;
-}
-
-.metric .delta {
-margin-top: 10px;
-font-size: .9rem;
-color: var(--success);
-}
-
-.section-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 12px;
-margin-bottom: 18px;
-flex-wrap: wrap;
-}
-
-.section-header h3 {
-margin: 0;
-font-size: 1.15rem;
-}
-
-.section-header p {
-margin: 6px 0 0;
-color: var(--muted);
-font-size: .95rem;
-}
-
-.form-grid {
-display: grid;
-grid-template-columns: repeat(2, minmax(0,1fr));
-gap: 16px;
-}
-
-.field {
-display: flex;
-flex-direction: column;
-gap: 9px;
-}
-
-.field.full { grid-column: 1 / -1; }
-
-.field label {
-color: rgba(255,255,255,.88);
-font-size: .95rem;
-font-weight: 500;
-}
-
-.field input,
-.field select,
-.field textarea {
-width: 100%;
-background: rgba(255,255,255,.04);
-color: white;
-border: 1px solid rgba(255,255,255,.08);
-border-radius: 14px;
-padding: 14px 14px;
-font: inherit;
-outline: none;
-transition: .18s ease;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-border-color: var(--primary);
-box-shadow: 0 0 0 3px rgba(48,183,240,.14);
-}
-
-.field textarea {
-min-height: 130px;
-resize: vertical;
-}
-
-.pill-row {
-display: flex;
-flex-wrap: wrap;
-gap: 10px;
-margin-top: 10px;
-}
-
-.pill {
-background: rgba(255,255,255,.05);
-border: 1px solid rgba(255,255,255,.08);
-padding: 8px 12px;
-border-radius: 999px;
-color: rgba(255,255,255,.92);
-font-size: .92rem;
-}
-
-.command-list,
-.activity-list {
-display: flex;
-flex-direction: column;
-gap: 12px;
-}
-
-.item-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 16px;
-padding: 16px;
-border-radius: 16px;
-background: rgba(255,255,255,.04);
-border: 1px solid rgba(255,255,255,.06);
-flex-wrap: wrap;
-}
-
-.item-row strong { display: block; }
-.item-row span,
-.item-row small { color: var(--muted); }
-
-.status {
-padding: 7px 10px;
-border-radius: 999px;
-font-size: .82rem;
-font-weight: 600;
-border: 1px solid rgba(255,255,255,.08);
-}
-
-.status.ok {
-color: #9effc3;
-background: rgba(53,224,124,.12);
-border-color: rgba(53,224,124,.24);
-}
-
-.status.warn {
-color: #ffd491;
-background: rgba(255, 193, 91, .12);
-border-color: rgba(255, 193, 91, .24);
-}
-
-.chart {
-height: 240px;
-padding: 14px 10px 0;
-}
-
-.bars {
-height: 100%;
-display: flex;
-align-items: end;
-gap: 14px;
-}
-
-.bar-col {
-flex: 1;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
-}
-
-.bar {
-width: 100%;
-border-radius: 16px 16px 6px 6px;
-background: linear-gradient(180deg, rgba(48,183,240,1), rgba(48,183,240,.28));
-border: 1px solid rgba(48,183,240,.28);
-min-height: 18px;
-box-shadow: inset 0 0 12px rgba(255,255,255,.14);
-}
-
-.bar-label {
-color: var(--muted);
-font-size: .85rem;
-}
-
-.hero-banner {
-background: linear-gradient(135deg, rgba(48,183,240,.16), rgba(255,255,255,.03));
-border: 1px solid var(--primary-border);
-overflow: hidden;
-position: relative;
-}
-
-.hero-banner::after {
-content: "";
-position: absolute;
-width: 240px;
-height: 240px;
-right: -80px;
-top: -80px;
-background: radial-gradient(circle, rgba(48,183,240,.28), transparent 65%);
-pointer-events: none;
-}
-
-.hero-banner h3 {
-margin: 0 0 10px;
-font-size: 1.5rem;
-font-family: 'Orbitron', sans-serif;
-}
-
-.hero-banner p {
-margin: 0;
-max-width: 760px;
-color: var(--muted);
-line-height: 1.8;
-}
-
-.save-row {
-display: flex;
-justify-content: flex-end;
-gap: 12px;
-margin-top: 18px;
-flex-wrap: wrap;
-}
-
-.mobile-toggle {
-display: none;
-}
-
-@media (max-width: 1100px) {
-.cards-4,
-.cards-2 {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-}
-
-@media (max-width: 900px) {
-.app {
-grid-template-columns: 1fr;
-}
-
-.sidebar {
-position: fixed;
-left: 0;
-top: 0;
-transform: translateX(-100%);
-width: 290px;
-z-index: 20;
-transition: .22s ease;
-}
-
-.sidebar.open {
-transform: translateX(0);
-}
-
-.mobile-toggle {
-display: inline-flex;
-}
-
-.content {
-padding: 20px;
-}
-}
-
-@media (max-width: 700px) {
-.cards-4,
-.cards-2,
-.form-grid {
-grid-template-columns: 1fr;
-}
-
-.content {
-padding: 16px;
-}
-
-.page-title h2 {
-font-size: 1.55rem;
-}
-
-.panel,
-.refund-wrapper {
-padding: 18px;
-}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ripley Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-image: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80');
+      --primary: #30b7f0;
+      --primary-soft: rgba(48, 183, 240, 0.14);
+      --primary-border: rgba(48, 183, 240, 0.28);
+      --panel: rgba(7, 12, 18, 0.78);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.72);
+      --success: #35e07c;
+      --warn: #ffd491;
+      --shadow: 0 0 28px rgba(48, 183, 240, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: 'Rubik', sans-serif;
+      background: var(--bg-image) no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.72));
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      top: -10px;
+      width: 3px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.9), rgba(48,183,240,.2));
+      opacity: .75;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: rgba(6, 10, 14, 0.8);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 22px 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 10px 18px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.06));
+      border: 1px solid var(--primary-border);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: .04em;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .nav-title {
+      color: rgba(255,255,255,.46);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      padding: 10px 12px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: .22s ease;
+      font-weight: 500;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: var(--primary-soft);
+      border-color: var(--primary-border);
+      box-shadow: var(--shadow);
+      transform: translateX(2px);
+    }
+
+    .nav .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      flex: 0 0 36px;
+    }
+
+    .sidebar-footer {
+      margin-top: 28px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(48,183,240,.14), rgba(48,183,240,.04));
+      border: 1px solid var(--primary-border);
+    }
+
+    .sidebar-footer small {
+      display: block;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .content {
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .page-title h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .page-title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .button {
+      border: 1px solid var(--primary-border);
+      background: rgba(48,183,240,.12);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      font: inherit;
+      transition: .2s ease;
+      text-decoration: none;
+    }
+
+    button:hover,
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      background: rgba(48,183,240,.18);
+    }
+
+    .button.secondary,
+    button.secondary {
+      background: rgba(255,255,255,.05);
+      border-color: rgba(255,255,255,.08);
+    }
+
+    .grid { display: grid; gap: 22px; }
+    .cards-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .cards-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 22px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    .metric .label { color: var(--muted); font-size: .92rem; margin-bottom: 12px; }
+    .metric .value { font-size: 2rem; font-weight: 700; font-family: 'Orbitron', sans-serif; }
+    .metric .delta { margin-top: 10px; font-size: .9rem; color: var(--success); }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-header h3 { margin: 0; font-size: 1.15rem; }
+    .section-header p { margin: 6px 0 0; color: var(--muted); font-size: .95rem; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 9px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: rgba(255,255,255,.88); font-size: .95rem; font-weight: 500; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      color: white;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 14px 14px;
+      font: inherit;
+      outline: none;
+      transition: .18s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(48,183,240,.14);
+    }
+
+    .field textarea { min-height: 130px; resize: vertical; }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+
+    .pill {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.92);
+      font-size: .92rem;
+    }
+
+    .command-list,
+    .activity-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      flex-wrap: wrap;
+    }
+
+    .item-row strong { display: block; }
+    .item-row span,
+    .item-row small { color: var(--muted); }
+
+    .status {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .status.ok {
+      color: #9effc3;
+      background: rgba(53,224,124,.12);
+      border-color: rgba(53,224,124,.24);
+    }
+
+    .status.warn {
+      color: var(--warn);
+      background: rgba(255, 193, 91, .12);
+      border-color: rgba(255, 193, 91, .24);
+    }
+
+    .chart {
+      height: 240px;
+      padding: 14px 10px 0;
+    }
+
+    .bars {
+      height: 100%;
+      display: flex;
+      align-items: end;
+      gap: 14px;
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar {
+      width: 100%;
+      border-radius: 16px 16px 6px 6px;
+      background: linear-gradient(180deg, rgba(48,183,240,1), rgba(48,183,240,.28));
+      border: 1px solid rgba(48,183,240,.28);
+      min-height: 18px;
+      box-shadow: inset 0 0 12px rgba(255,255,255,.14);
+    }
+
+    .bar-label { color: var(--muted); font-size: .85rem; }
+
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(48,183,240,.16), rgba(255,255,255,.03));
+      border: 1px solid var(--primary-border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -80px;
+      top: -80px;
+      background: radial-gradient(circle, rgba(48,183,240,.28), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-banner h3 {
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .hero-banner p { margin: 0; max-width: 760px; color: var(--muted); line-height: 1.8; }
+
+    .save-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-toggle { display: none; }
+
+    @media (max-width: 1100px) {
+      .cards-4,
+      .cards-3,
+      .cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        width: 290px;
+        z-index: 20;
+        transition: .22s ease;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-toggle { display: inline-flex; }
+      .content { padding: 20px; }
+    }
+
+    @media (max-width: 700px) {
+      .cards-4,
+      .cards-3,
+      .cards-2,
+      .form-grid { grid-template-columns: 1fr; }
+      .content { padding: 16px; }
+      .page-title h2 { font-size: 1.55rem; }
+      .panel { padding: 18px; }
+    }
+  </style>
 </head>
 <body>
-<div class="particles" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true"></div>
 
-<div class="app">
-<aside class="sidebar" id="sidebar">
-<div class="brand">
-<div class="brand-logo">🦈</div>
-<div>
-<h1>Ripley</h1>
-<p>Bot Dashboard</p>
-</div>
-</div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">🦈</div>
+        <div>
+          <h1>Ripley</h1>
+          <p>Bot Dashboard</p>
+        </div>
+      </div>
 
-<div class="nav-title">Navigation</div>
-<nav class="nav">
-<a href="#home" class="active"><span class="icon">⌂</span><span>Home</span></a>
-<a href="#customize"><span class="icon">⚙</span><span>Customize Bot Channel</span></a>
-<a href="#analytics"><span class="icon">📈</span><span>Analytics Channel</span></a>
-<a href="#knowledge"><span class="icon">🧠</span><span>Import Knowledge</span></a>
-<a href="#commands"><span class="icon">⌘</span><span>Commands</span></a>
-</nav>
+      <div class="nav-title">Navigation</div>
+      <nav class="nav">
+        <a href="#home" data-page="home" class="active"><span class="icon">⌂</span><span>Home</span></a>
+        <a href="#customize" data-page="customize"><span class="icon">⚙</span><span>Customize Bot Channel</span></a>
+        <a href="#analytics" data-page="analytics"><span class="icon">📈</span><span>Analytics Channel</span></a>
+        <a href="#knowledge" data-page="knowledge"><span class="icon">🧠</span><span>Import Knowledge</span></a>
+        <a href="#commands" data-page="commands"><span class="icon">⌘</span><span>Commands</span></a>
+      </nav>
 
-<div class="sidebar-footer">
-<strong>Bot Status: Online</strong>
-<small>Manage your support setup, connect channels, upload knowledge, and review command activity from one place.</small>
-</div>
-</aside>
+      <div class="sidebar-footer">
+        <strong>Bot Status: Online</strong>
+        <small>Each navigation item now opens its own page view while keeping the same dashboard design and theme.</small>
+      </div>
+    </aside>
 
-<main class="content">
-<div class="topbar">
-<div class="page-title">
-<h2>Ripley Dashboard</h2>
-<p>Manage channels, knowledge, commands, and analytics with your current theme and background.</p>
-</div>
-<div class="top-actions">
-<button class="secondary mobile-toggle" id="menuBtn">☰ Menu</button>
-<button class="secondary" data-toast="Preview synced successfully.">Preview</button>
-<button data-toast="Settings saved successfully.">Save Changes</button>
-</div>
-</div>
+    <main class="content">
+      <div class="topbar">
+        <div class="page-title" id="pageTitleWrap">
+          <h2 id="pageTitle">Ripley Dashboard</h2>
+          <p id="pageSubtitle">Manage channels, knowledge, commands, and analytics with your current theme and background.</p>
+        </div>
+        <div class="top-actions">
+          <button class="secondary mobile-toggle" id="menuBtn">☰ Menu</button>
+          <button class="secondary" data-toast="Preview synced successfully.">Preview</button>
+          <button data-toast="Settings saved successfully.">Save Changes</button>
+        </div>
+      </div>
 
-<div class="grid" style="margin-bottom: 22px;">
-<section id="home" class="panel hero-banner">
-<h3>Welcome back to Ripley.</h3>
-<p>Use this dashboard to control where Ripley listens, where analytics are posted, which knowledge sources power replies, and which commands are available to your server members and staff team.</p>
-</section>
-</div>
+      <section class="page-view active" data-page="home">
+        <div class="grid">
+          <section class="panel hero-banner">
+            <h3>Welcome back to Ripley.</h3>
+            <p>Use this dashboard to control where Ripley listens, where analytics are posted, which knowledge sources power replies, and which commands are available to your server members and staff team.</p>
+          </section>
+        </div>
 
-<section class="grid cards-4" style="margin-bottom: 22px;">
-<div class="panel metric">
-<div class="label">Support Tickets Today</div>
-<div class="value">148</div>
-<div class="delta">+12.4% from yesterday</div>
-</div>
-<div class="panel metric">
-<div class="label">Average Response Time</div>
-<div class="value">6.2s</div>
-<div class="delta">Fast reply performance</div>
-</div>
-<div class="panel metric">
-<div class="label">Knowledge Sources</div>
-<div class="value">12</div>
-<div class="delta">3 updated this week</div>
-</div>
-<div class="panel metric">
-<div class="label">Commands Enabled</div>
-<div class="value">24</div>
-<div class="delta">All systems operational</div>
-</div>
-</section>
+        <section class="grid cards-4" style="margin-top: 22px; margin-bottom: 22px;">
+          <div class="panel metric">
+            <div class="label">Support Tickets Today</div>
+            <div class="value">148</div>
+            <div class="delta">+12.4% from yesterday</div>
+          </div>
+          <div class="panel metric">
+            <div class="label">Average Response Time</div>
+            <div class="value">6.2s</div>
+            <div class="delta">Fast reply performance</div>
+          </div>
+          <div class="panel metric">
+            <div class="label">Knowledge Sources</div>
+            <div class="value">12</div>
+            <div class="delta">3 updated this week</div>
+          </div>
+          <div class="panel metric">
+            <div class="label">Commands Enabled</div>
+            <div class="value">24</div>
+            <div class="delta">All systems operational</div>
+          </div>
+        </section>
 
-<section class="grid cards-2" style="margin-bottom: 22px;">
-<div id="customize" class="panel">
-<div class="section-header">
-<div>
-<h3>Customize Bot Channel</h3>
-<p>Choose the main support and interaction channel for Ripley.</p>
-</div>
-</div>
-<div class="form-grid">
-<div class="field">
-<label for="serverChannel">Primary Bot Channel</label>
-<select id="serverChannel">
-<option>#support</option>
-<option>#tickets</option>
-<option>#help-center</option>
-<option>#bot-commands</option>
-</select>
-</div>
-<div class="field">
-<label for="greetingStyle">Greeting Style</label>
-<select id="greetingStyle">
-<option>Professional</option>
-<option>Friendly</option>
-<option>Minimal</option>
-</select>
-</div>
-<div class="field full">
-<label for="welcomeMessage">Welcome Message</label>
-<textarea id="welcomeMessage">Welcome to Ripley Support. Describe your issue and our AI assistant will respond instantly or route you to the right place.</textarea>
-</div>
-</div>
-<div class="pill-row">
-<span class="pill">Auto-thread creation</span>
-<span class="pill">Slash commands enabled</span>
-<span class="pill">Staff mention routing</span>
-</div>
-<div class="save-row">
-<button class="secondary" data-toast="Channel settings reset.">Reset</button>
-<button data-toast="Bot channel settings saved.">Save Bot Channel</button>
-</div>
-</div>
+        <section class="grid cards-3">
+          <div class="panel">
+            <div class="section-header"><div><h3>Customize Bot Channel</h3><p>Quick access to support channel settings.</p></div></div>
+            <p style="color: var(--muted); line-height: 1.8;">Set Ripley’s main bot channel, greeting style, welcome text, and support flow without leaving the dashboard.</p>
+            <div class="save-row" style="justify-content:flex-start;"><button data-go="customize">Open Page</button></div>
+          </div>
+          <div class="panel">
+            <div class="section-header"><div><h3>Analytics Channel</h3><p>Review trends and log destinations.</p></div></div>
+            <p style="color: var(--muted); line-height: 1.8;">Choose where reporting is posted and view response-time and ticket activity at a glance.</p>
+            <div class="save-row" style="justify-content:flex-start;"><button data-go="analytics">Open Page</button></div>
+          </div>
+          <div class="panel">
+            <div class="section-header"><div><h3>Import Knowledge</h3><p>Train Ripley with your own content.</p></div></div>
+            <p style="color: var(--muted); line-height: 1.8;">Upload FAQs, pricing, docs, and policies so Ripley responds with accurate server-specific answers.</p>
+            <div class="save-row" style="justify-content:flex-start;"><button data-go="knowledge">Open Page</button></div>
+          </div>
+        </section>
+      </section>
 
-<div id="analytics" class="panel">
-<div class="section-header">
-<div>
-<h3>Analytics Channel</h3>
-<p>Control where logs, summaries, and ticket analytics are posted.</p>
-</div>
-</div>
-<div class="form-grid">
-<div class="field">
-<label for="analyticsChannel">Analytics Destination</label>
-<select id="analyticsChannel">
-<option>#analytics</option>
-<option>#staff-logs</option>
-<option>#ticket-metrics</option>
-</select>
-</div>
-<div class="field">
-<label for="reportFrequency">Report Frequency</label>
-<select id="reportFrequency">
-<option>Daily</option>
-<option>Weekly</option>
-<option>Monthly</option>
-</select>
-</div>
-<div class="field full">
-<label>Enabled Reports</label>
-<div class="pill-row">
-<span class="pill">Response time</span>
-<span class="pill">Top commands</span>
-<span class="pill">Unresolved tickets</span>
-<span class="pill">Staff activity</span>
-</div>
-</div>
-</div>
-<div class="chart" aria-label="Analytics preview chart">
-<div class="bars">
-<div class="bar-col"><div class="bar" style="height: 48%;"></div><div class="bar-label">Mon</div></div>
-<div class="bar-col"><div class="bar" style="height: 72%;"></div><div class="bar-label">Tue</div></div>
-<div class="bar-col"><div class="bar" style="height: 56%;"></div><div class="bar-label">Wed</div></div>
-<div class="bar-col"><div class="bar" style="height: 85%;"></div><div class="bar-label">Thu</div></div>
-<div class="bar-col"><div class="bar" style="height: 62%;"></div><div class="bar-label">Fri</div></div>
-<div class="bar-col"><div class="bar" style="height: 40%;"></div><div class="bar-label">Sat</div></div>
-<div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Sun</div></div>
-</div>
-</div>
-<div class="save-row">
-<button data-toast="Analytics settings saved.">Save Analytics</button>
-</div>
-</div>
-</section>
+      <section class="page-view" data-page="customize">
+        <div class="grid cards-2">
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Customize Bot Channel</h3>
+                <p>Choose the main support and interaction channel for Ripley.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="serverChannel">Primary Bot Channel</label>
+                <select id="serverChannel">
+                  <option>#support</option>
+                  <option>#tickets</option>
+                  <option>#help-center</option>
+                  <option>#bot-commands</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="greetingStyle">Greeting Style</label>
+                <select id="greetingStyle">
+                  <option>Professional</option>
+                  <option>Friendly</option>
+                  <option>Minimal</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="welcomeMessage">Welcome Message</label>
+                <textarea id="welcomeMessage">Welcome to Ripley Support. Describe your issue and our AI assistant will respond instantly or route you to the right place.</textarea>
+              </div>
+            </div>
+            <div class="pill-row">
+              <span class="pill">Auto-thread creation</span>
+              <span class="pill">Slash commands enabled</span>
+              <span class="pill">Staff mention routing</span>
+            </div>
+            <div class="save-row">
+              <button class="secondary" data-toast="Channel settings reset.">Reset</button>
+              <button data-toast="Bot channel settings saved.">Save Bot Channel</button>
+            </div>
+          </div>
 
-<section class="grid cards-2" style="margin-bottom: 22px;">
-<div id="knowledge" class="panel">
-<div class="section-header">
-<div>
-<h3>Import Knowledge</h3>
-<p>Upload or paste the information Ripley should answer from.</p>
-</div>
-<button class="secondary" id="fakeUploadBtn">Upload Files</button>
-</div>
-<div class="form-grid">
-<div class="field full">
-<label for="knowledgeText">Knowledge Base Text</label>
-<textarea id="knowledgeText">Import custom knowledge like pricing, FAQs, commands, policies, and product data so Ripley can answer accurately and intelligently.</textarea>
-</div>
-</div>
-<div class="pill-row">
-<span class="pill">pricing.md</span>
-<span class="pill">faq.txt</span>
-<span class="pill">discord-rules.pdf</span>
-<span class="pill">support-workflow.docx</span>
-</div>
-<div class="save-row">
-<button class="secondary" data-toast="Knowledge draft cleared.">Clear</button>
-<button data-toast="Knowledge imported successfully.">Import Knowledge</button>
-</div>
-</div>
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Bot Identity</h3>
+                <p>Change the bot avatar, display name, and profile description.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field full">
+                <label>Upload Custom Avatar</label>
+                <div class="item-row" style="justify-content:flex-start; align-items:center; gap:18px;">
+                  <div style="width:72px; height:72px; border-radius:18px; background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.05)); border:1px solid rgba(48,183,240,.28); display:grid; place-items:center; font-size:32px; box-shadow: var(--shadow);">🦈</div>
+                  <div style="flex:1; min-width: 220px;">
+                    <strong style="display:block; margin-bottom:6px;">Current Avatar</strong>
+                    <small style="color: var(--muted); display:block; margin-bottom:10px;">Upload a custom avatar image for your bot branding.</small>
+                    <button type="button" class="secondary" data-toast="Avatar upload placeholder opened.">Upload Custom Avatar</button>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label for="botName">Bot Name</label>
+                <input id="botName" type="text" value="Ripley" />
+              </div>
+              <div class="field full">
+                <label for="botDescription">Bot Description</label>
+                <textarea id="botDescription">Ripley is an AI-powered Discord support bot built to automate ticket help, answer questions from your knowledge base, and keep your community running smoothly.</textarea>
+              </div>
+            </div>
+            <div class="save-row">
+              <button class="secondary" data-toast="Bot identity reset.">Reset Identity</button>
+              <button data-toast="Bot identity saved successfully.">Save Bot Identity</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<div id="commands" class="panel">
-<div class="section-header">
-<div>
-<h3>Commands</h3>
-<p>Manage which commands are available and review recent usage.</p>
-</div>
-<button data-toast="New command modal opened.">Add Command</button>
-</div>
-<div class="command-list">
-<div class="item-row">
-<div>
-<strong>/ticket create</strong>
-<small>Opens a new support ticket for a member.</small>
-</div>
-<span class="status ok">Enabled</span>
-</div>
-<div class="item-row">
-<div>
-<strong>/faq</strong>
-<small>Answers common questions from imported knowledge.</small>
-</div>
-<span class="status ok">Enabled</span>
-</div>
-<div class="item-row">
-<div>
-<strong>/close</strong>
-<small>Closes the active support thread or ticket.</small>
-</div>
-<span class="status warn">Restricted</span>
-</div>
-</div>
-<div class="section-header" style="margin-top: 22px;">
-<div>
-<h3 style="font-size:1rem;">Recent Activity</h3>
-</div>
-</div>
-<div class="activity-list">
-<div class="item-row">
-<div>
-<strong>/ticket create</strong>
-<span>Used by @SupportLead in #support</span>
-</div>
-<small>2 min ago</small>
-</div>
-<div class="item-row">
-<div>
-<strong>/faq pricing</strong>
-<span>Used by @MemberHelp in #help-center</span>
-</div>
-<small>9 min ago</small>
-</div>
-</div>
-</div>
-</section>
-</main>
-</div>
+      <section class="page-view" data-page="analytics">
+        <div class="grid cards-2">
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Analytics Channel</h3>
+                <p>Control where logs, summaries, and ticket analytics are posted.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="analyticsChannel">Analytics Destination</label>
+                <select id="analyticsChannel">
+                  <option>#analytics</option>
+                  <option>#staff-logs</option>
+                  <option>#ticket-metrics</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="reportFrequency">Report Frequency</label>
+                <select id="reportFrequency">
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>Enabled Reports</label>
+                <div class="pill-row">
+                  <span class="pill">Response time</span>
+                  <span class="pill">Top commands</span>
+                  <span class="pill">Unresolved tickets</span>
+                  <span class="pill">Staff activity</span>
+                </div>
+              </div>
+            </div>
+            <div class="save-row">
+              <button data-toast="Analytics settings saved.">Save Analytics</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Performance Overview</h3>
+                <p>Weekly support activity preview.</p>
+              </div>
+            </div>
+            <div class="chart" aria-label="Analytics preview chart">
+              <div class="bars">
+                <div class="bar-col"><div class="bar" style="height: 48%;"></div><div class="bar-label">Mon</div></div>
+                <div class="bar-col"><div class="bar" style="height: 72%;"></div><div class="bar-label">Tue</div></div>
+                <div class="bar-col"><div class="bar" style="height: 56%;"></div><div class="bar-label">Wed</div></div>
+                <div class="bar-col"><div class="bar" style="height: 85%;"></div><div class="bar-label">Thu</div></div>
+                <div class="bar-col"><div class="bar" style="height: 62%;"></div><div class="bar-label">Fri</div></div>
+                <div class="bar-col"><div class="bar" style="height: 40%;"></div><div class="bar-label">Sat</div></div>
+                <div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Sun</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<script>
-const particles = document.querySelector('.particles');
-for (let i = 0; i < 48; i++) {
-const p = document.createElement('span');
-p.className = 'particle';
-p.style.left = Math.random() * 100 + 'vw';
-p.style.height = 8 + Math.random() * 18 + 'px';
-p.style.width = 2 + Math.random() * 2 + 'px';
-p.style.animationDuration = 4 + Math.random() * 6 + 's';
-p.style.animationDelay = Math.random() * 6 + 's';
-p.style.opacity = 0.25 + Math.random() * 0.65;
-particles.appendChild(p);
-}
+      <section class="page-view" data-page="knowledge">
+        <div class="grid cards-2">
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Import Knowledge</h3>
+                <p>Upload or paste the information Ripley should answer from.</p>
+              </div>
+              <button class="secondary" id="fakeUploadBtn">Upload Files</button>
+            </div>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="knowledgeText">Knowledge Base Text</label>
+                <textarea id="knowledgeText">Import custom knowledge like pricing, FAQs, commands, policies, and product data so Ripley can answer accurately and intelligently.</textarea>
+              </div>
+            </div>
+            <div class="save-row">
+              <button class="secondary" data-toast="Knowledge draft cleared.">Clear</button>
+              <button data-toast="Knowledge imported successfully.">Import Knowledge</button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Connected Sources</h3>
+                <p>Active files powering Ripley answers.</p>
+              </div>
+            </div>
+            <div class="command-list">
+              <div class="item-row"><div><strong>pricing.md</strong><small>Updated 2 hours ago</small></div><span class="status ok">Active</span></div>
+              <div class="item-row"><div><strong>faq.txt</strong><small>Updated yesterday</small></div><span class="status ok">Active</span></div>
+              <div class="item-row"><div><strong>discord-rules.pdf</strong><small>Updated 4 days ago</small></div><span class="status ok">Indexed</span></div>
+              <div class="item-row"><div><strong>support-workflow.docx</strong><small>Updated 1 week ago</small></div><span class="status warn">Review</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-const toast = document.createElement('div');
-toast.style.position = 'fixed';
-toast.style.right = '20px';
-toast.style.bottom = '20px';
-toast.style.zIndex = '50';
-toast.style.padding = '14px 16px';
-toast.style.borderRadius = '14px';
-toast.style.background = 'rgba(9,16,24,0.94)';
-toast.style.border = '1px solid rgba(48,183,240,.3)';
-toast.style.color = 'white';
-toast.style.boxShadow = '0 0 24px rgba(48,183,240,.16)';
-toast.style.opacity = '0';
-toast.style.transform = 'translateY(10px)';
-toast.style.transition = '.2s ease';
-toast.style.pointerEvents = 'none';
-document.body.appendChild(toast);
+      <section class="page-view" data-page="commands">
+        <div class="grid cards-2">
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Commands</h3>
+                <p>Manage which commands are available and review recent usage.</p>
+              </div>
+              <button data-toast="New command modal opened.">Add Command</button>
+            </div>
+            <div class="command-list">
+              <div class="item-row">
+                <div><strong>/ticket create</strong><small>Opens a new support ticket for a member.</small></div>
+                <span class="status ok">Enabled</span>
+              </div>
+              <div class="item-row">
+                <div><strong>/faq</strong><small>Answers common questions from imported knowledge.</small></div>
+                <span class="status ok">Enabled</span>
+              </div>
+              <div class="item-row">
+                <div><strong>/close</strong><small>Closes the active support thread or ticket.</small></div>
+                <span class="status warn">Restricted</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="section-header">
+              <div>
+                <h3>Recent Activity</h3>
+                <p>Latest command usage across your server.</p>
+              </div>
+            </div>
+            <div class="activity-list">
+              <div class="item-row"><div><strong>/ticket create</strong><span>Used by @SupportLead in #support</span></div><small>2 min ago</small></div>
+              <div class="item-row"><div><strong>/faq pricing</strong><span>Used by @MemberHelp in #help-center</span></div><small>9 min ago</small></div>
+              <div class="item-row"><div><strong>/close</strong><span>Used by @StaffOne in #tickets</span></div><small>21 min ago</small></div>
+              <div class="item-row"><div><strong>/transcript</strong><span>Used by @Manager in #staff-logs</span></div><small>44 min ago</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
 
-let toastTimer;
-function showToast(message) {
-toast.textContent = message;
-toast.style.opacity = '1';
-toast.style.transform = 'translateY(0)';
-clearTimeout(toastTimer);
-toastTimer = setTimeout(() => {
-toast.style.opacity = '0';
-toast.style.transform = 'translateY(10px)';
-}, 2200);
-}
+  <script>
+    const particles = document.querySelector('.particles');
+    for (let i = 0; i < 48; i++) {
+      const p = document.createElement('span');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.height = 8 + Math.random() * 18 + 'px';
+      p.style.width = 2 + Math.random() * 2 + 'px';
+      p.style.animationDuration = 4 + Math.random() * 6 + 's';
+      p.style.animationDelay = Math.random() * 6 + 's';
+      p.style.opacity = 0.25 + Math.random() * 0.65;
+      particles.appendChild(p);
+    }
 
-document.querySelectorAll('[data-toast]').forEach(btn => {
-btn.addEventListener('click', () => showToast(btn.getAttribute('data-toast')));
-});
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.right = '20px';
+    toast.style.bottom = '20px';
+    toast.style.zIndex = '50';
+    toast.style.padding = '14px 16px';
+    toast.style.borderRadius = '14px';
+    toast.style.background = 'rgba(9,16,24,0.94)';
+    toast.style.border = '1px solid rgba(48,183,240,.3)';
+    toast.style.color = 'white';
+    toast.style.boxShadow = '0 0 24px rgba(48,183,240,.16)';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+    toast.style.transition = '.2s ease';
+    toast.style.pointerEvents = 'none';
+    document.body.appendChild(toast);
 
-document.getElementById('fakeUploadBtn').addEventListener('click', () => {
-showToast('Upload dialog placeholder opened.');
-});
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateY(0)';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+      }, 2200);
+    }
 
-const links = [...document.querySelectorAll('.nav a')];
-links.forEach(link => {
-link.addEventListener('click', () => {
-links.forEach(l => l.classList.remove('active'));
-link.classList.add('active');
-document.getElementById('sidebar').classList.remove('open');
-});
-});
+    document.querySelectorAll('[data-toast]').forEach(btn => {
+      btn.addEventListener('click', () => showToast(btn.getAttribute('data-toast')));
+    });
 
-const menuBtn = document.getElementById('menuBtn');
-const sidebar = document.getElementById('sidebar');
-menuBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
-</script>
+    document.getElementById('fakeUploadBtn')?.addEventListener('click', () => {
+      showToast('Upload dialog placeholder opened.');
+    });
+
+    const pages = {
+      home: {
+        title: 'Ripley Dashboard',
+        subtitle: 'Overview of channels, knowledge, commands, and analytics.'
+      },
+      customize: {
+        title: 'Customize Bot Channel',
+        subtitle: 'Configure where Ripley listens and how it greets users.'
+      },
+      analytics: {
+        title: 'Analytics Channel',
+        subtitle: 'Manage reporting destinations and monitor support trends.'
+      },
+      knowledge: {
+        title: 'Import Knowledge',
+        subtitle: 'Upload and manage the information Ripley answers from.'
+      },
+      commands: {
+        title: 'Commands',
+        subtitle: 'Enable commands, review usage, and control access.'
+      }
+    };
+
+    const navLinks = [...document.querySelectorAll('.nav a[data-page]')];
+    const pageViews = [...document.querySelectorAll('.page-view')];
+    const pageTitle = document.getElementById('pageTitle');
+    const pageSubtitle = document.getElementById('pageSubtitle');
+    const sidebar = document.getElementById('sidebar');
+
+    function setPage(page) {
+      const selected = pages[page] ? page : 'home';
+      navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === selected));
+      pageViews.forEach(view => view.classList.toggle('active', view.dataset.page === selected));
+      pageTitle.textContent = pages[selected].title;
+      pageSubtitle.textContent = pages[selected].subtitle;
+      if (location.hash !== '#' + selected) history.replaceState(null, '', '#' + selected);
+      sidebar.classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        setPage(link.dataset.page);
+      });
+    });
+
+    document.querySelectorAll('[data-go]').forEach(btn => {
+      btn.addEventListener('click', () => setPage(btn.dataset.go));
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    const startPage = location.hash.replace('#', '') || 'home';
+    setPage(startPage);
+  </script>
 </body>
 </html>
