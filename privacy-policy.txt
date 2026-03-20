@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/a69fd87e-7e4b-4da2-8a4a-f3a51241773a.png" type="image/x-icon">
+
+  <title>Privacy Policy - Ripley</title>
+  <meta name="description" content="Ripley Privacy Policy">
+
+  <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
+  <link rel="stylesheet" href="assets/FontAwesome/css/font-awesome.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap"></noscript>
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=GJQnM6">
+  <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=GJQnM6" type="text/css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    html, body {
+      background: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+      min-height: 100%;
+    }
+
+    body {
+      position: relative;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #30b7f0;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #30b7f0;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000000;
+      border-radius: 0px;
+      box-shadow: inset 0px 0px 0px 0px #000000;
+    }
+
+    section,
+    .container,
+    .row,
+    .col-12,
+    .col-lg-10 {
+      background-color: transparent !important;
+    }
+
+    .cid-uJ9FbipEIh,
+    .cid-uJld2yUyAl,
+    .privacy-section {
+      background: transparent !important;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .navbar,
+    .navbar-dropdown,
+    .menu,
+    .footer3 {
+      background: transparent !important;
+    }
+
+    .privacy-section {
+      position: relative;
+      z-index: 1;
+      padding-top: 140px;
+      padding-bottom: 90px;
+    }
+
+    .privacy-wrapper {
+      background: rgba(8, 8, 12, 0.78);
+      border: 1px solid rgba(48, 183, 240, 0.25);
+      border-radius: 22px;
+      padding: 45px;
+      box-shadow:
+        0 0 30px rgba(48, 183, 240, 0.08),
+        0 0 80px rgba(48, 183, 240, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .privacy-badge {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(48, 183, 240, 0.12);
+      border: 1px solid rgba(48, 183, 240, 0.35);
+      border-radius: 999px;
+      padding: 8px 14px;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .privacy-title {
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .privacy-title .accent {
+      color: #30b7f0;
+    }
+
+    .privacy-updated {
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 28px;
+      font-size: 1rem;
+    }
+
+    .privacy-intro {
+      color: rgba(255,255,255,0.92);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+
+    .privacy-contents {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .privacy-contents h3 {
+      color: #30b7f0;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .privacy-contents ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .privacy-contents li {
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+
+    .privacy-block {
+      margin-bottom: 30px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .privacy-block:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .privacy-block h2 {
+      color: #30b7f0;
+      font-size: 1.45rem;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .privacy-block h4 {
+      color: #ffffff;
+      font-size: 1.05rem;
+      margin-top: 16px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .privacy-block p,
+    .privacy-block li {
+      color: rgba(255,255,255,0.92);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+
+    .privacy-block ul {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .privacy-block li {
+      margin-bottom: 10px;
+    }
+
+    .privacy-highlight {
+      color: #30b7f0;
+      font-weight: 700;
+    }
+
+    .privacy-note {
+      margin-top: 12px;
+      color: rgba(255,255,255,0.82);
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .privacy-wrapper {
+        padding: 28px 22px;
+      }
+
+      .privacy-section {
+        padding-top: 120px;
+        padding-bottom: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+    });
+  </script>
+
+  <section data-bs-version="5.1" class="menu menu1 cid-uJ9FbipEIh" once="menu" id="menu01-0">
+    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
+      <div class="container">
+        <div class="navbar-brand">
+          <span class="navbar-logo">
+            <a href="index.html">
+              <img src="assets/images/Kawaii_shark_with_joyful_smile-removebg-preview.png" alt="" style="height: 3rem;">
+            </a>
+          </span>
+          <span class="navbar-caption-wrap">
+            <a class="navbar-caption text-white text-primary display-5" href="index.html">Ripley</a>
+          </span>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#features">Features</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#premium">Premium</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" target="_blank">Documentation</a></li>
+            <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" target="_blank">Developers</a></li>
+          </ul>
+
+          <div class="icons-menu">
+            <a class="iconfont-wrapper" href="https://google.com" target="_blank">
+              <span class="p-2 mbr-iconfont socicon-discord socicon"></span>
+            </a>
+          </div>
+
+          <div class="navbar-buttons mbr-section-btn">
+            <a class="btn btn-sm btn-secondary display-4" href="https://google.com" target="_blank">
+              <span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+  <section class="privacy-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10" data-aos="fade-up">
+          <div class="privacy-wrapper">
+
+            <div class="privacy-badge">
+              <span class="fa fa-shield mbr-iconfont" style="color: #30b7f0; margin-right: 8px;"></span>
+              PRIVACY &amp; DATA PROTECTION
+            </div>
+
+            <h1 class="mbr-section-title mbr-fonts-style display-2 privacy-title">
+              <strong>Privacy <span class="accent">Policy</span></strong>
+            </h1>
+
+            <p class="privacy-updated"><strong>Last Updated:</strong> April 15, 2025</p>
+
+            <p class="privacy-intro">
+              Your privacy matters to us. This Privacy Policy explains how <span class="privacy-highlight">Ripley</span> ("we," "our," or "us") collects, uses, stores, and safeguards information when you use our Discord bot, dashboard, website, or related services.
+            </p>
+
+            <div class="privacy-contents">
+              <h3>Contents</h3>
+              <ul>
+                <li>1. Data We Collect</li>
+                <li>2. How We Collect Data</li>
+                <li>3. Why We Collect Data</li>
+                <li>4. Data Retention &amp; Security</li>
+                <li>5. Your Privacy Choices</li>
+                <li>6. Children’s Privacy</li>
+                <li>7. Third-Party Services</li>
+                <li>8. Policy Changes</li>
+                <li>9. Contact Us</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>1. Data We Collect</h2>
+              <p>
+                We collect limited data necessary to provide, maintain, and improve Ripley. The information we collect generally falls into two categories:
+              </p>
+
+              <h4>a. Discord User and Server Information</h4>
+              <ul>
+                <li><strong>Discord User IDs:</strong> used to identify users involved in support activity and ticket interactions.</li>
+                <li><strong>Server Information:</strong> including server IDs, channel IDs, and related configuration data where Ripley is enabled.</li>
+                <li><strong>Command and Interaction Data:</strong> records of commands or actions submitted to Ripley to support functionality, moderation, diagnostics, and service performance.</li>
+              </ul>
+
+              <h4>b. Non-Personal and Operational Data</h4>
+              <ul>
+                <li>Interaction timestamps</li>
+                <li>Usage patterns</li>
+                <li>Anonymized or aggregated analytics used to improve reliability, features, and user experience</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>2. How We Collect Data</h2>
+              <p>We collect data in a transparent and purposeful manner, including through:</p>
+              <ul>
+                <li><strong>Discord interactions and commands:</strong> when users engage with Ripley inside Discord.</li>
+                <li><strong>Error and performance logs:</strong> automatically generated system data used to identify bugs, outages, abuse, or technical issues.</li>
+                <li><strong>Server configuration and usage activity:</strong> when administrators configure Ripley or use dashboard-related functionality.</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>3. Why We Collect Data</h2>
+              <p>We collect and process data only for legitimate service-related purposes, including to:</p>
+              <ul>
+                <li>Facilitate Discord ticket and support management</li>
+                <li>Ensure smooth, secure, and reliable bot operation</li>
+                <li>Improve features, automation, performance, and overall user experience</li>
+                <li>Comply with Discord API requirements, platform rules, and applicable legal obligations</li>
+              </ul>
+
+              <p>
+                We do <span class="privacy-highlight">not</span> sell personal data, and we do not use collected information for unrelated advertising purposes.
+              </p>
+
+              <h4>How Ripley Uses Your Data</h4>
+              <p>Ripley uses collected data solely to provide and improve support and ticket management services. This may include:</p>
+              <ul>
+                <li>Creating and managing support tickets</li>
+                <li>Supporting AI-assisted responses tailored to your server’s needs</li>
+                <li>Generating analytics to improve support efficiency and workflows</li>
+                <li>Ensuring proper operation of automations, ticket flows, and support tools</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>4. Data Retention &amp; Security</h2>
+              <p>
+                We retain data only for as long as reasonably necessary to provide our services, comply with legal obligations, resolve disputes, and enforce our policies.
+              </p>
+              <p>
+                We use industry-standard safeguards to help protect the information we process. However, no method of storage or transmission can be guaranteed to be completely secure.
+              </p>
+
+              <h4>Security Measures We May Implement</h4>
+              <ul>
+                <li>Encryption of sensitive data where appropriate</li>
+                <li>Access controls and authentication protections</li>
+                <li>Routine monitoring for suspicious or unusual activity</li>
+                <li>Periodic reviews and security improvements</li>
+              </ul>
+            </div>
+
+            <div class="privacy-block">
+              <h2>5. Your Privacy Choices</h2>
+              <p>You may have the right to:</p>
+              <ul>
+                <li>Request access to the data associated with your use of Ripley</li>
+                <li>Request correction of inaccurate information</li>
+                <li>Request deletion of applicable data</li>
+                <li>Stop using the service at any time</li>
+              </ul>
+
+              <h4>How to Exercise Your Rights</h4>
+              <p>
+                To request access, correction, or deletion of your data, please contact us through your official Ripley support channels, Discord support server, or website contact methods.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>6. Children’s Privacy</h2>
+              <p>
+                Ripley is intended for users who are at least 13 years old, or the minimum age required by applicable law in their jurisdiction.
+              </p>
+              <p>
+                We do not knowingly collect personal information from children in violation of applicable law. If you believe that a minor has provided data improperly, please contact us so we can review and take appropriate action.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>7. Third-Party Services</h2>
+              <p>
+                Ripley integrates with Discord and may reference or link to third-party services. While we aim to operate in compliance with Discord’s policies and platform requirements, we are not responsible for the privacy practices of third-party platforms or services outside our control.
+              </p>
+
+              <h4>Discord Integration</h4>
+              <p>
+                Ripley interacts with Discord’s API and related services in order to function. For more information about Discord’s own data handling practices, please review Discord’s Privacy Policy separately.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>8. Policy Changes</h2>
+              <p>
+                We may update this Privacy Policy from time to time to reflect changes in our services, legal requirements, or operational practices.
+              </p>
+              <p>
+                Continued use of Ripley after changes become effective constitutes acceptance of the revised Privacy Policy. Where appropriate, significant changes may be communicated through our support server, website, or other official channels.
+              </p>
+            </div>
+
+            <div class="privacy-block">
+              <h2>9. Contact Us</h2>
+              <p>
+                If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us through your official Ripley support channels, Discord support server, or website contact methods.
+              </p>
+              <p class="privacy-note">
+                You can replace this line with your real support email later if you want.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-bs-version="5.1" class="footer3 cid-uJld2yUyAl" once="footer" id="footer03-g">
+    <div class="container">
+      <div class="row align-left justify-content-center mbr-white">
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Quick Links</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <a href="index.html#features" class="text-white">Features</a><br>
+            <a href="index.html#premium" class="text-white">Premium</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Documentation</a><br>
+            <a href="https://google.com" class="text-white" target="_blank">Developers</a>
+          </h3>
+        </div>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Legal</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <div><a href="terms-of-use.html" class="text-white">Terms Of Use</a></div>
+            <div><a href="privacy-policy.html" class="text-white">Privacy Policy</a></div>
+            <div><a href="refund-policy.html" class="text-white">Refund Policy</a></div>
+            <div><a href="https://google.com" class="text-white" target="_blank">Github Page</a></div>
+          </h3>
+        </div>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Community</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            <a href="https://google.com" class="text-secondary text-primary" target="_blank">Instagram</a><br>
+            <a href="https://google.com" class="text-secondary" target="_blank">Twitter</a><br>
+            <a href="https://google.com" class="text-secondary text-primary" target="_blank">Discord</a><br>
+            <a href="https://google.com" class="text-secondary" target="_blank">Email</a>
+          </h3>
+        </div>
+
+        <div class="col-md-6 col-lg-3 md-pb">
+          <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Ripley</strong></h2>
+          <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">
+            Ripley blends futuristic intelligence with AI-powered support to bring automation and fast help to your server.
+          </h3>
+        </div>
+      </div>
+    </div>
+    <br>
+    <center><p><strong>©2026 Copyright - Ripley - All rights reserved</strong></p></center>
+  </section>
+
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 50,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": ["#ffffff", "#30b7f0", "#30b7f0"]
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          }
+        },
+        "opacity": {
+          "value": 0.6,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "size": {
+          "value": 5,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": false
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "bottom",
+          "random": false,
+          "straight": true,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+
+  <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/ytplayer/index.js"></script>
+  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
+  <script src="assets/mbr-switch-arrow/mbr-switch-arrow.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+</body>
+</html>
