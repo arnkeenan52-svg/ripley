@@ -1,485 +1,858 @@
 <!DOCTYPE html>
-<html  >
+<html lang="en">
 <head>
-  
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <link rel="shortcut icon" href="assets/images/new-project-55.png-524x524.png" type="image/x-icon">
-  <meta name="description" content="">
-  
-  
-  <title>ArcBot - Terms Of Use</title>
-  <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
-  <link rel="stylesheet" href="assets/FontAwesome/css/font-awesome.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
-  <link rel="stylesheet" href="assets/dropdown/css/style.css">
-  <link rel="stylesheet" href="assets/socicon/css/styles.css">
-  <link rel="stylesheet" href="assets/theme/css/style.css">
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron:400,500,600,700,800,900&display=swap"></noscript>
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
-  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=uthByR"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=uthByR" type="text/css">
-
-  
-  <!-- AOS CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-
-<!-- AOS JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ripley Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root {
+--bg-image: url('https://img.freepik.com/premium-vector/black-white-overlay-snowfall-vector-decoration_569013-2317.jpg?semt=ais_rp_progressive&w=740&q=80');
+--primary: #30b7f0;
+--primary-soft: rgba(48, 183, 240, 0.14);
+--primary-border: rgba(48, 183, 240, 0.28);
+--panel: rgba(7, 12, 18, 0.78);
+--panel-strong: rgba(9, 16, 24, 0.9);
+--text: #ffffff;
+--muted: rgba(255, 255, 255, 0.72);
+--success: #35e07c;
+--danger: #ff6b81;
+--shadow: 0 0 28px rgba(48, 183, 240, 0.12);
+--radius: 22px;
+--radius-sm: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-    background: url('https://i.imgur.com/9jtFsp0.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    }
+margin: 0;
+min-height: 100vh;
+color: var(--text);
+font-family: 'Rubik', sans-serif;
+background: var(--bg-image) no-repeat center center fixed;
+background-size: cover;
+overflow-x: hidden;
+position: relative;
+}
+
+body::before {
+content: "";
+position: fixed;
+inset: 0;
+background: linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.72));
+z-index: 0;
+pointer-events: none;
+}
+
+.particles {
+position: fixed;
+inset: 0;
+z-index: 0;
+pointer-events: none;
+overflow: hidden;
+}
+
+.particle {
+position: absolute;
+top: -10px;
+width: 3px;
+height: 14px;
+border-radius: 999px;
+background: linear-gradient(to bottom, rgba(255,255,255,.9), rgba(48,183,240,.2));
+opacity: .75;
+animation: fall linear infinite;
+}
+
+@keyframes fall {
+to {
+transform: translateY(110vh);
+}
+}
+
+.app {
+position: relative;
+z-index: 1;
+display: grid;
+grid-template-columns: 290px 1fr;
+min-height: 100vh;
+}
+
+.sidebar {
+background: rgba(6, 10, 14, 0.8);
+backdrop-filter: blur(10px);
+border-right: 1px solid rgba(255,255,255,0.06);
+padding: 22px 18px;
+position: sticky;
+top: 0;
+height: 100vh;
+}
+
+.brand {
+display: flex;
+align-items: center;
+gap: 14px;
+padding: 10px 10px 18px;
+margin-bottom: 18px;
+border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.brand-logo {
+width: 48px;
+height: 48px;
+border-radius: 14px;
+background: linear-gradient(135deg, rgba(48,183,240,.25), rgba(48,183,240,.06));
+border: 1px solid var(--primary-border);
+display: grid;
+place-items: center;
+font-size: 24px;
+box-shadow: var(--shadow);
+}
+
+.brand h1 {
+margin: 0;
+font-family: 'Orbitron', sans-serif;
+font-size: 1.15rem;
+letter-spacing: .04em;
+}
+
+.brand p {
+margin: 2px 0 0;
+color: var(--muted);
+font-size: .85rem;
+}
+
+.nav-title {
+color: rgba(255,255,255,.46);
+font-size: .78rem;
+text-transform: uppercase;
+letter-spacing: .12em;
+padding: 10px 12px;
+}
+
+.nav {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.nav a {
+text-decoration: none;
+color: var(--text);
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 14px 14px;
+border-radius: 16px;
+background: transparent;
+border: 1px solid transparent;
+transition: .22s ease;
+font-weight: 500;
+}
+
+.nav a:hover,
+.nav a.active {
+background: var(--primary-soft);
+border-color: var(--primary-border);
+box-shadow: var(--shadow);
+transform: translateX(2px);
+}
+
+.nav .icon {
+width: 36px;
+height: 36px;
+border-radius: 12px;
+background: rgba(255,255,255,.05);
+display: grid;
+place-items: center;
+font-size: 1rem;
+flex: 0 0 36px;
+}
+
+.sidebar-footer {
+margin-top: 28px;
+padding: 16px;
+border-radius: 18px;
+background: linear-gradient(180deg, rgba(48,183,240,.14), rgba(48,183,240,.04));
+border: 1px solid var(--primary-border);
+}
+
+.sidebar-footer small {
+display: block;
+color: var(--muted);
+margin-top: 6px;
+line-height: 1.6;
+}
+
+.content {
+padding: 28px;
+}
+
+.topbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 18px;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+
+.page-title h2 {
+margin: 0;
+font-size: 2rem;
+font-family: 'Orbitron', sans-serif;
+}
+
+.page-title p {
+margin: 8px 0 0;
+color: var(--muted);
+}
+
+.top-actions {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+}
+
+button,
+.button {
+border: 1px solid var(--primary-border);
+background: rgba(48,183,240,.12);
+color: white;
+padding: 12px 16px;
+border-radius: 14px;
+cursor: pointer;
+font: inherit;
+transition: .2s ease;
+text-decoration: none;
+}
+
+button:hover,
+.button:hover {
+transform: translateY(-1px);
+box-shadow: var(--shadow);
+background: rgba(48,183,240,.18);
+}
+
+.button.secondary,
+button.secondary {
+background: rgba(255,255,255,.05);
+border-color: rgba(255,255,255,.08);
+}
+
+.grid {
+display: grid;
+gap: 22px;
+}
+
+.cards-4 {
+grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cards-2 {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel {
+background: var(--panel);
+border: 1px solid rgba(255,255,255,0.06);
+border-radius: var(--radius);
+padding: 22px;
+backdrop-filter: blur(10px);
+box-shadow: var(--shadow);
+}
+
+.metric .label {
+color: var(--muted);
+font-size: .92rem;
+margin-bottom: 12px;
+}
+
+.metric .value {
+font-size: 2rem;
+font-weight: 700;
+font-family: 'Orbitron', sans-serif;
+}
+
+.metric .delta {
+margin-top: 10px;
+font-size: .9rem;
+color: var(--success);
+}
+
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 12px;
+margin-bottom: 18px;
+flex-wrap: wrap;
+}
+
+.section-header h3 {
+margin: 0;
+font-size: 1.15rem;
+}
+
+.section-header p {
+margin: 6px 0 0;
+color: var(--muted);
+font-size: .95rem;
+}
+
+.form-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0,1fr));
+gap: 16px;
+}
+
+.field {
+display: flex;
+flex-direction: column;
+gap: 9px;
+}
+
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+color: rgba(255,255,255,.88);
+font-size: .95rem;
+font-weight: 500;
+}
+
+.field input,
+.field select,
+.field textarea {
+width: 100%;
+background: rgba(255,255,255,.04);
+color: white;
+border: 1px solid rgba(255,255,255,.08);
+border-radius: 14px;
+padding: 14px 14px;
+font: inherit;
+outline: none;
+transition: .18s ease;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(48,183,240,.14);
+}
+
+.field textarea {
+min-height: 130px;
+resize: vertical;
+}
+
+.pill-row {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+margin-top: 10px;
+}
+
+.pill {
+background: rgba(255,255,255,.05);
+border: 1px solid rgba(255,255,255,.08);
+padding: 8px 12px;
+border-radius: 999px;
+color: rgba(255,255,255,.92);
+font-size: .92rem;
+}
+
+.command-list,
+.activity-list {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.item-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 16px;
+padding: 16px;
+border-radius: 16px;
+background: rgba(255,255,255,.04);
+border: 1px solid rgba(255,255,255,.06);
+flex-wrap: wrap;
+}
+
+.item-row strong { display: block; }
+.item-row span,
+.item-row small { color: var(--muted); }
+
+.status {
+padding: 7px 10px;
+border-radius: 999px;
+font-size: .82rem;
+font-weight: 600;
+border: 1px solid rgba(255,255,255,.08);
+}
+
+.status.ok {
+color: #9effc3;
+background: rgba(53,224,124,.12);
+border-color: rgba(53,224,124,.24);
+}
+
+.status.warn {
+color: #ffd491;
+background: rgba(255, 193, 91, .12);
+border-color: rgba(255, 193, 91, .24);
+}
+
+.chart {
+height: 240px;
+padding: 14px 10px 0;
+}
+
+.bars {
+height: 100%;
+display: flex;
+align-items: end;
+gap: 14px;
+}
+
+.bar-col {
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
+
+.bar {
+width: 100%;
+border-radius: 16px 16px 6px 6px;
+background: linear-gradient(180deg, rgba(48,183,240,1), rgba(48,183,240,.28));
+border: 1px solid rgba(48,183,240,.28);
+min-height: 18px;
+box-shadow: inset 0 0 12px rgba(255,255,255,.14);
+}
+
+.bar-label {
+color: var(--muted);
+font-size: .85rem;
+}
+
+.hero-banner {
+background: linear-gradient(135deg, rgba(48,183,240,.16), rgba(255,255,255,.03));
+border: 1px solid var(--primary-border);
+overflow: hidden;
+position: relative;
+}
+
+.hero-banner::after {
+content: "";
+position: absolute;
+width: 240px;
+height: 240px;
+right: -80px;
+top: -80px;
+background: radial-gradient(circle, rgba(48,183,240,.28), transparent 65%);
+pointer-events: none;
+}
+
+.hero-banner h3 {
+margin: 0 0 10px;
+font-size: 1.5rem;
+font-family: 'Orbitron', sans-serif;
+}
+
+.hero-banner p {
+margin: 0;
+max-width: 760px;
+color: var(--muted);
+line-height: 1.8;
+}
+
+.save-row {
+display: flex;
+justify-content: flex-end;
+gap: 12px;
+margin-top: 18px;
+flex-wrap: wrap;
+}
+
+.mobile-toggle {
+display: none;
+}
+
+@media (max-width: 1100px) {
+.cards-4,
+.cards-2 {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+}
+
+@media (max-width: 900px) {
+.app {
+grid-template-columns: 1fr;
+}
+
+.sidebar {
+position: fixed;
+left: 0;
+top: 0;
+transform: translateX(-100%);
+width: 290px;
+z-index: 20;
+transition: .22s ease;
+}
+
+.sidebar.open {
+transform: translateX(0);
+}
+
+.mobile-toggle {
+display: inline-flex;
+}
+
+.content {
+padding: 20px;
+}
+}
+
+@media (max-width: 700px) {
+.cards-4,
+.cards-2,
+.form-grid {
+grid-template-columns: 1fr;
+}
+
+.content {
+padding: 16px;
+}
+
+.page-title h2 {
+font-size: 1.55rem;
+}
+
+.panel,
+.refund-wrapper {
+padding: 18px;
+}
+}
 </style>
-<style>
-::-webkit-scrollbar{
-width: 5px;
-height: 10px;
-}
-::-webkit-scrollbar-thumb{
-background: #30b7f0;
-}
-::-webkit-scrollbar-thumb:hover{
-background: #30b7f0;
-}
-::-webkit-scrollbar-track{
-background: #000000;
-border-radius: 0px;
-box-shadow: inset 0px 0px 0px 0px #000000;
-}
-</style>
-  <!-- SEO meta tags -->
-    <meta name="description" content="ArcBot blends futuristic intelligence with mystical powers to bring order, fun, and automation to your Discord server.">
-    <meta name="keywords" content="Discord Bot, ArcBot, Discord, Bot">
-    <meta name="author" content="SpaceyDevs">    
-    
-    <!-- Open Graph meta tags for social media sharing (Facebook, Twitter, LinkedIn) -->
-    <meta property="og:title" content="ArcBot - Terms Of Use">
-    <meta property="og:description" content="ArcBot blends futuristic intelligence with mystical powers to bring order, fun, and automation to your Discord server.">
-    <meta property="og:image" content="https://i.imgur.com/Vc7owMI.png">
-    <meta property="og:url" content="https://yourdomain.com">
-    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <script>
-  AOS.init({
-    duration: 800, // Duration of the animation in milliseconds
-    easing: 'ease-in-out', // Easing of the animation
-    once: true, // Animation happens only once while scrolling down
-  });
+<div class="particles" aria-hidden="true"></div>
+
+<div class="app">
+<aside class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brand-logo">🦈</div>
+<div>
+<h1>Ripley</h1>
+<p>Bot Dashboard</p>
+</div>
+</div>
+
+<div class="nav-title">Navigation</div>
+<nav class="nav">
+<a href="#home" class="active"><span class="icon">⌂</span><span>Home</span></a>
+<a href="#customize"><span class="icon">⚙</span><span>Customize Bot Channel</span></a>
+<a href="#analytics"><span class="icon">📈</span><span>Analytics Channel</span></a>
+<a href="#knowledge"><span class="icon">🧠</span><span>Import Knowledge</span></a>
+<a href="#commands"><span class="icon">⌘</span><span>Commands</span></a>
+</nav>
+
+<div class="sidebar-footer">
+<strong>Bot Status: Online</strong>
+<small>Manage your support setup, connect channels, upload knowledge, and review command activity from one place.</small>
+</div>
+</aside>
+
+<main class="content">
+<div class="topbar">
+<div class="page-title">
+<h2>Ripley Dashboard</h2>
+<p>Manage channels, knowledge, commands, and analytics with your current theme and background.</p>
+</div>
+<div class="top-actions">
+<button class="secondary mobile-toggle" id="menuBtn">☰ Menu</button>
+<button class="secondary" data-toast="Preview synced successfully.">Preview</button>
+<button data-toast="Settings saved successfully.">Save Changes</button>
+</div>
+</div>
+
+<div class="grid" style="margin-bottom: 22px;">
+<section id="home" class="panel hero-banner">
+<h3>Welcome back to Ripley.</h3>
+<p>Use this dashboard to control where Ripley listens, where analytics are posted, which knowledge sources power replies, and which commands are available to your server members and staff team.</p>
+</section>
+</div>
+
+<section class="grid cards-4" style="margin-bottom: 22px;">
+<div class="panel metric">
+<div class="label">Support Tickets Today</div>
+<div class="value">148</div>
+<div class="delta">+12.4% from yesterday</div>
+</div>
+<div class="panel metric">
+<div class="label">Average Response Time</div>
+<div class="value">6.2s</div>
+<div class="delta">Fast reply performance</div>
+</div>
+<div class="panel metric">
+<div class="label">Knowledge Sources</div>
+<div class="value">12</div>
+<div class="delta">3 updated this week</div>
+</div>
+<div class="panel metric">
+<div class="label">Commands Enabled</div>
+<div class="value">24</div>
+<div class="delta">All systems operational</div>
+</div>
+</section>
+
+<section class="grid cards-2" style="margin-bottom: 22px;">
+<div id="customize" class="panel">
+<div class="section-header">
+<div>
+<h3>Customize Bot Channel</h3>
+<p>Choose the main support and interaction channel for Ripley.</p>
+</div>
+</div>
+<div class="form-grid">
+<div class="field">
+<label for="serverChannel">Primary Bot Channel</label>
+<select id="serverChannel">
+<option>#support</option>
+<option>#tickets</option>
+<option>#help-center</option>
+<option>#bot-commands</option>
+</select>
+</div>
+<div class="field">
+<label for="greetingStyle">Greeting Style</label>
+<select id="greetingStyle">
+<option>Professional</option>
+<option>Friendly</option>
+<option>Minimal</option>
+</select>
+</div>
+<div class="field full">
+<label for="welcomeMessage">Welcome Message</label>
+<textarea id="welcomeMessage">Welcome to Ripley Support. Describe your issue and our AI assistant will respond instantly or route you to the right place.</textarea>
+</div>
+</div>
+<div class="pill-row">
+<span class="pill">Auto-thread creation</span>
+<span class="pill">Slash commands enabled</span>
+<span class="pill">Staff mention routing</span>
+</div>
+<div class="save-row">
+<button class="secondary" data-toast="Channel settings reset.">Reset</button>
+<button data-toast="Bot channel settings saved.">Save Bot Channel</button>
+</div>
+</div>
+
+<div id="analytics" class="panel">
+<div class="section-header">
+<div>
+<h3>Analytics Channel</h3>
+<p>Control where logs, summaries, and ticket analytics are posted.</p>
+</div>
+</div>
+<div class="form-grid">
+<div class="field">
+<label for="analyticsChannel">Analytics Destination</label>
+<select id="analyticsChannel">
+<option>#analytics</option>
+<option>#staff-logs</option>
+<option>#ticket-metrics</option>
+</select>
+</div>
+<div class="field">
+<label for="reportFrequency">Report Frequency</label>
+<select id="reportFrequency">
+<option>Daily</option>
+<option>Weekly</option>
+<option>Monthly</option>
+</select>
+</div>
+<div class="field full">
+<label>Enabled Reports</label>
+<div class="pill-row">
+<span class="pill">Response time</span>
+<span class="pill">Top commands</span>
+<span class="pill">Unresolved tickets</span>
+<span class="pill">Staff activity</span>
+</div>
+</div>
+</div>
+<div class="chart" aria-label="Analytics preview chart">
+<div class="bars">
+<div class="bar-col"><div class="bar" style="height: 48%;"></div><div class="bar-label">Mon</div></div>
+<div class="bar-col"><div class="bar" style="height: 72%;"></div><div class="bar-label">Tue</div></div>
+<div class="bar-col"><div class="bar" style="height: 56%;"></div><div class="bar-label">Wed</div></div>
+<div class="bar-col"><div class="bar" style="height: 85%;"></div><div class="bar-label">Thu</div></div>
+<div class="bar-col"><div class="bar" style="height: 62%;"></div><div class="bar-label">Fri</div></div>
+<div class="bar-col"><div class="bar" style="height: 40%;"></div><div class="bar-label">Sat</div></div>
+<div class="bar-col"><div class="bar" style="height: 68%;"></div><div class="bar-label">Sun</div></div>
+</div>
+</div>
+<div class="save-row">
+<button data-toast="Analytics settings saved.">Save Analytics</button>
+</div>
+</div>
+</section>
+
+<section class="grid cards-2" style="margin-bottom: 22px;">
+<div id="knowledge" class="panel">
+<div class="section-header">
+<div>
+<h3>Import Knowledge</h3>
+<p>Upload or paste the information Ripley should answer from.</p>
+</div>
+<button class="secondary" id="fakeUploadBtn">Upload Files</button>
+</div>
+<div class="form-grid">
+<div class="field full">
+<label for="knowledgeText">Knowledge Base Text</label>
+<textarea id="knowledgeText">Import custom knowledge like pricing, FAQs, commands, policies, and product data so Ripley can answer accurately and intelligently.</textarea>
+</div>
+</div>
+<div class="pill-row">
+<span class="pill">pricing.md</span>
+<span class="pill">faq.txt</span>
+<span class="pill">discord-rules.pdf</span>
+<span class="pill">support-workflow.docx</span>
+</div>
+<div class="save-row">
+<button class="secondary" data-toast="Knowledge draft cleared.">Clear</button>
+<button data-toast="Knowledge imported successfully.">Import Knowledge</button>
+</div>
+</div>
+
+<div id="commands" class="panel">
+<div class="section-header">
+<div>
+<h3>Commands</h3>
+<p>Manage which commands are available and review recent usage.</p>
+</div>
+<button data-toast="New command modal opened.">Add Command</button>
+</div>
+<div class="command-list">
+<div class="item-row">
+<div>
+<strong>/ticket create</strong>
+<small>Opens a new support ticket for a member.</small>
+</div>
+<span class="status ok">Enabled</span>
+</div>
+<div class="item-row">
+<div>
+<strong>/faq</strong>
+<small>Answers common questions from imported knowledge.</small>
+</div>
+<span class="status ok">Enabled</span>
+</div>
+<div class="item-row">
+<div>
+<strong>/close</strong>
+<small>Closes the active support thread or ticket.</small>
+</div>
+<span class="status warn">Restricted</span>
+</div>
+</div>
+<div class="section-header" style="margin-top: 22px;">
+<div>
+<h3 style="font-size:1rem;">Recent Activity</h3>
+</div>
+</div>
+<div class="activity-list">
+<div class="item-row">
+<div>
+<strong>/ticket create</strong>
+<span>Used by @SupportLead in #support</span>
+</div>
+<small>2 min ago</small>
+</div>
+<div class="item-row">
+<div>
+<strong>/faq pricing</strong>
+<span>Used by @MemberHelp in #help-center</span>
+</div>
+<small>9 min ago</small>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+const particles = document.querySelector('.particles');
+for (let i = 0; i < 48; i++) {
+const p = document.createElement('span');
+p.className = 'particle';
+p.style.left = Math.random() * 100 + 'vw';
+p.style.height = 8 + Math.random() * 18 + 'px';
+p.style.width = 2 + Math.random() * 2 + 'px';
+p.style.animationDuration = 4 + Math.random() * 6 + 's';
+p.style.animationDelay = Math.random() * 6 + 's';
+p.style.opacity = 0.25 + Math.random() * 0.65;
+particles.appendChild(p);
+}
+
+const toast = document.createElement('div');
+toast.style.position = 'fixed';
+toast.style.right = '20px';
+toast.style.bottom = '20px';
+toast.style.zIndex = '50';
+toast.style.padding = '14px 16px';
+toast.style.borderRadius = '14px';
+toast.style.background = 'rgba(9,16,24,0.94)';
+toast.style.border = '1px solid rgba(48,183,240,.3)';
+toast.style.color = 'white';
+toast.style.boxShadow = '0 0 24px rgba(48,183,240,.16)';
+toast.style.opacity = '0';
+toast.style.transform = 'translateY(10px)';
+toast.style.transition = '.2s ease';
+toast.style.pointerEvents = 'none';
+document.body.appendChild(toast);
+
+let toastTimer;
+function showToast(message) {
+toast.textContent = message;
+toast.style.opacity = '1';
+toast.style.transform = 'translateY(0)';
+clearTimeout(toastTimer);
+toastTimer = setTimeout(() => {
+toast.style.opacity = '0';
+toast.style.transform = 'translateY(10px)';
+}, 2200);
+}
+
+document.querySelectorAll('[data-toast]').forEach(btn => {
+btn.addEventListener('click', () => showToast(btn.getAttribute('data-toast')));
+});
+
+document.getElementById('fakeUploadBtn').addEventListener('click', () => {
+showToast('Upload dialog placeholder opened.');
+});
+
+const links = [...document.querySelectorAll('.nav a')];
+links.forEach(link => {
+link.addEventListener('click', () => {
+links.forEach(l => l.classList.remove('active'));
+link.classList.add('active');
+document.getElementById('sidebar').classList.remove('open');
+});
+});
+
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+menuBtn?.addEventListener('click', () => sidebar.classList.toggle('open'));
 </script>
-  <section data-bs-version="5.1" class="menu menu1 cid-uJriUnyLX9" once="menu" id="menu01-z">
-    
-    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-        <div class="container">
-            <div class="navbar-brand">
-                <span class="navbar-logo">
-                    <a href="index.html">
-                        <img src="assets/images/new-project-55.png-524x524.png" alt="" style="height: 3rem;">
-                    </a>
-                </span>
-                <span class="navbar-caption-wrap"><a class="navbar-caption text-white text-primary display-5" href="index.html">ArcBot</a></span>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true"><li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html">Home</a></li><li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#features" aria-expanded="false" data-bs-auto-close="outside">Features</a></li>
-                    <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="index.html#premium" aria-expanded="false" data-bs-auto-close="outside">Premium</a></li>
-                    <li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" aria-expanded="false" data-bs-auto-close="outside" target="_blank">Documentation</a>
-                    </li><li class="nav-item"><a class="nav-link link text-white text-primary display-4" href="https://google.com" target="_blank">Developers</a></li></ul>
-                <div class="icons-menu">
-                    <a class="iconfont-wrapper" href="https://google.com" target="_blank">
-                        <span class="p-2 mbr-iconfont socicon-discord socicon"></span>
-                    </a>
-                    
-                    
-                    
-                </div>
-                <div class="navbar-buttons mbr-section-btn"><a class="btn btn-sm btn-secondary display-4" href="https://google.com" target="_blank"><span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>Dashboard</a></div>
-            </div>
-        </div>
-    </nav>
-</section>
-
-<section data-bs-version="5.1" class="header3 cid-uJriUoa7If" id="header03-10">
-    
-    <div id="particles-js"></div>
-    
-
-    
-    <div class="container">
-        <div data-aos="zoom-in">
-        <div class="row align-left justify-content-center align-content-around">
-            <div class="col-12 col-lg col-md-12 m-auto">
-                <div class="text-wrapper md-pb">
-                    <h2 class="mbr-section-subtitle mbr-fonts-style mb-2 align-left display-4"><strong><span class="fa fa-circle mbr-iconfont" style="color: rgb(48, 240, 94);"></span> POWERED BY AI</strong></h2>
-                    <h1 class="mbr-section-title mbr-fonts-style align-left display-1"><strong>Meet <strong style="color: #30b7f0;">ArcBot</strong> – Your Server’s Insane&nbsp;<strong style="color: #30b7f0;">Tech Guardian</strong>.</strong></h1>
-                    <p class="mbr-text mbr-fonts-style align-center display-7">
-  ArcBot blends futuristic intelligence with mystical powers to bring order, fun, and automation to your Discord server. From moderation and commands to custom tools, ArcBot is always <strong style="color: #30b7f0;">one step ahead</strong> — glowing with innovation.
-</p>
-
-                    <p class="mbr-text-custom mbr-fonts-style align-left display-7" style="font-style: normal;">
-    <i class="fa fa-server" style="color: #30b7f0; margin-right: 8px; font-style: normal;"></i> <!-- Icon with spacing -->
-    Deployed across <span style="color: #30b7f0; font-weight: bold;">400+ active</span> servers!
-</p>
-
-
-                     <div class="mbr-section-btn mt-2"><a class="btn btn-custom2 btn-primary display-4" href="https://google.com" target="_blank"><span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>Invite To Guild</a> <a class="btn btn-secondary display-4" href="https://google.com" target="_blank"><span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>Documentation</a></div>
-                  
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-lg-5 image-wrapper">
-                <img class="w-100" src="assets/images/heroimgdiscord.png-1036x1036.png" alt="hero-image">
-            </div>
-        </div>
-            </div>
-    </div>
-    <script>
-    particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 50, // Decrease particle count for a more dynamic look
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": ["#ffffff", "#30b7f0", "#30b7f0"] // Keeping your colors
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                }
-            },
-            "opacity": {
-                "value": 0.6, // Slightly higher opacity for more visibility
-                "random": true,
-                "anim": {
-                    "enable": false, // No opacity animation for stability
-                }
-            },
-            "size": {
-                "value": 5, // Increased size for larger raindrops
-                "random": true, // Random size within a range for variation
-                "anim": {
-                    "enable": false, // Keep size stable, no changes during animation
-                }
-            },
-            "line_linked": {
-                "enable": false // Disable links between particles
-            },
-            "move": {
-                "enable": true,
-                "speed": 2, // Faster speed for a more raindrop-like effect
-                "direction": "bottom", // Falling downwards like rain
-                "random": false, // Less random for a straighter path
-                "straight": true, // Ensure a straight line drop like raindrops
-                "out_mode": "out", // Remove particles when they leave the screen
-                "bounce": false,
-                "attract": {
-                    "enable": false
-                }
-            }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": false // Disable hover interaction
-                },
-                "onclick": {
-                    "enable": false // Disable click interaction
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                }
-            }
-        },
-        "retina_detect": true
-    });
-</script>
-
-</section>
-
-<div id="custom-html-11"><div data-aos="fade-up">
-
-
-<div class="divider-container">
-  <div class="divider"></div>
-</div>
-
-    </div></div>
-
-<section data-bs-version="5.1" class="offerm5 article15 cid-uJrjl8TvCV" id="article015-1d">
-    
-
-    
-    
-    <div data-aos="zoom-in-up">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="card-wrapper">
-  <h3 class="mbr-fonts-style mbr-section-title align-left mbr-semibold pb-2 display-1"><strong>Terms Of Use</strong></h3>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>1. Acceptance of Terms</strong><br>
-    By inviting or interacting with <strong style="color: #30b7f0;">ArcBot</strong>, you acknowledge and agree to be bound by these Terms of Use. These terms govern your access to and use of our services. If you do not agree with any part of these terms, you must not use ArcBot.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>2. Eligibility and Discord Compliance</strong><br>
-    ArcBot is intended for use by individuals who are at least <strong style="color: #30b7f0;">13 years of age</strong> and who comply with <strong style="color: #30b7f0;">Discord’s Terms of Service</strong>. You are responsible for ensuring that your use of the bot does not violate any applicable laws or Discord’s community guidelines.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>3. Data Usage and Privacy</strong><br>
-    ArcBot may temporarily store user IDs, message metadata, and server configuration data to deliver its core functionality. We do not sell or share personal data with third parties. By using the bot, you consent to the limited data processing required for its operation. More details can be found in our <strong style="color: #30b7f0;">Privacy Policy</strong>.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>4. Features and Premium Access</strong><br>
-    ArcBot offers both free and paid features. Premium features provide advanced capabilities and enhancements for users who choose to support development. Subscriptions are non-transferable, and access is subject to continued compliance with these terms.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>5. Prohibited Conduct</strong><br>
-    You may not use ArcBot to engage in or promote spam, abuse, harassment, or any behavior that violates Discord rules or applicable laws. Misuse of the bot, including attempting to exploit or disrupt its functionality, may result in immediate removal and permanent bans.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>6. Service Availability</strong><br>
-    While we strive to maintain uptime and performance, ArcBot is provided on an <strong style="color: #30b7f0;">"as-is"</strong> basis. We do not guarantee uninterrupted service or error-free functionality. Maintenance, updates, or technical issues may cause temporary unavailability.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>7. Limitation of Liability</strong><br>
-    We are not liable for any damages arising from the use or inability to use ArcBot, including but not limited to loss of data, server disruptions, or user conflicts. Use of the bot is at your own risk and discretion.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>8. Termination</strong><br>
-    We reserve the right to terminate or restrict access to ArcBot at any time, with or without notice, for violations of these terms or actions deemed harmful to the community, infrastructure, or user experience.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>9. Amendments</strong><br>
-    These Terms of Use may be updated periodically. We will notify users of major changes, but you are responsible for reviewing the terms regularly. Continued use of ArcBot after changes constitutes acceptance of the updated terms.
-  </p>
-
-  <p class="mbr-text align-left mbr-fonts-style mbr-py-1 display-4">
-    <strong>10. Contact Us</strong><br>
-    If you have any questions or concerns regarding these Terms, feel free to reach out via <strong style="color: #30b7f0;">our support Discord</strong> or email us at <strong style="color: #30b7f0;">support@yourdomain.com</strong>.
-  </p>
-</div>
-
-
-
-            </div>
-        </div>
-    </div>
-    </div>
-</section>
-
-<section data-bs-version="5.1" class="list1 cid-uJriUs614v" id="list01-18">
-    
-    
-
-    
-    <div class="container">
-        <div data-aos="fade-up">
-        <div id="bootstrap-accordion_18" class="panel-group accordionStyles accordion" role="tablist" aria-multiselectable="true">
-            <div class="row justify-content-center">
-
-                <div class="mbr-section-head col-12 align-center mb-5">
-                    <h3 class="mbr-section-title mb-0 mbr-fonts-style display-1"><strong>Frequently asked Questions.</strong></h3>
-                </div>
-                <div class="col-12 col-md-12 col-lg-6 md-pb">
-                    
-
-                    <div class="card mb-1">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse1_18" aria-expanded="false" aria-controls="collapse1">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-                            </a>
-                        </div>
-                        <div id="collapse1_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-4">Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-1">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse2_18" aria-expanded="false" aria-controls="collapse2">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-
-                            </a>
-                        </div>
-                        <div id="collapse2_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-4">
-                                    Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-1">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse3_18" aria-expanded="false" aria-controls="collapse3">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-
-                            </a>
-                        </div>
-                        <div id="collapse3_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-4">
-                                    Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-12 col-lg-6">
-                    
-                    <div id="bootstrap-accordion_18" class="panel-group accordionStyles accordion" role="tablist" aria-multiselectable="true">
-                        <div class="card mb-1">
-                            <div class="card-header" role="tab" id="headingOne">
-                                <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse4_18" aria-expanded="false" aria-controls="collapse4">
-                                    <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-
-                                </a>
-                            </div>
-                            <div id="collapse4_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                                <div class="panel-body">
-                                    <p class="mbr-fonts-style panel-text display-4">
-                                        Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-1">
-                            <div class="card-header" role="tab" id="headingOne">
-                                <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse5_18" aria-expanded="false" aria-controls="collapse5">
-                                    <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-
-                                </a>
-                            </div>
-                            <div id="collapse5_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                                <div class="panel-body">
-                                    <p class="mbr-fonts-style panel-text display-4">
-                                        Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-1">
-                            <div class="card-header" role="tab" id="headingOne">
-                                <a role="button" class="panel-title collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-core="" href="#collapse6_18" aria-expanded="false" aria-controls="collapse6">
-                                    <h6 class="panel-title-edit mbr-fonts-style mb-0 display-4"><strong>Lorem ipsum odor amet, consectetuer adipiscing elit.</strong></h6>
-
-                                </a>
-                            </div>
-                            <div id="collapse6_18" class="panel-collapse noScroll collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" data-bs-parent="#bootstrap-accordion_18">
-                                <div class="panel-body">
-                                    <p class="mbr-fonts-style panel-text display-4">
-                                        Lorem ipsum odor amet, consectetuer adipiscing elit. Dis justo nec quisque per ante pulvinar ac. Efficitur cursus nibh aliquet fusce malesuada facilisis dictum litora fames. Porta hendrerit lacus aliquam, conubia porta eleifend orci vitae.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-</section>
-
-<section data-bs-version="5.1" class="content5 cid-uJriUvrjR0" id="content03-1b">
-    
-    <div data-aos="flip-down">
-    <div class="discord-banner container">
-    <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-7">
-            <h3 class="mbr-section-title mbr-fonts-style mb-3 display-1">
-                <strong>We Are Here For You!</strong></h3>
-            
-            <p class="mbr-text mbr-fonts-style mb-4 display-7">
-  Whether you're just getting started or managing a massive community, we're here to offer <strong style="color: #30b7f0;">real support</strong> and <strong style="color: #30b7f0;">powerful features</strong> that scale with you. Need a hand? Reach out through our <strong style="color: #30b7f0;">support hub</strong> or connect with others in our <strong style="color: #30b7f0;">Discord server</strong> anytime!<br></p>
-
-            <center>
-                <div class="mbr-section-btn"><a class="btn btn-custom2 btn-primary display-4" href="https://google.com" target="_blank"><span class="fa fa-long-arrow-right mbr-iconfont mbr-iconfont-btn"></span>
-                        Join Our Discord
-                    </a></div>
-            </center>
-        </div>
-    </div>
-        </div>
-</div>
-
-</section>
-
-<section data-bs-version="5.1" class="footer3 cid-uJriUwdty2" once="footer" id="footer03-1c">
-    
-
-    
-
-    <div class="container">
-        <div class="row align-left justify-content-center mbr-white">
-            <div class="col-md-6 col-lg-3 md-pb">
-                <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>Quick Links</strong></h2>
-                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4"><a href="index.html#features" class="text-white">Features</a><br><a href="index.html#premium" class="text-white">Premium</a><br><a href="https://google.com" class="text-white" target="_blank">Documentation</a><br><a href="https://google.com" class="text-white" target="_blank">Developers</a></h3>
-
-            </div>
-            <div class="col-md-6 col-lg-3 md-pb">
-                <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>
-                        Legal</strong></h2>
-                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4"><div><a href="terms-of-use.html" class="text-white">Terms Of Use</a></div><div><a href="privacy-policy.html" class="text-white">Privacy Policy</a></div><div><a href="refund-policy.html" class="text-white">Refund Policy</a></div><div><a href="https://google.com" class="text-white" target="_blank">Github Page</a></div></h3>
-
-            </div>
-            <div class="col-md-6 col-lg-3 md-pb">
-                <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>
-                        Community</strong></h2>
-                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4"><a href="https://google.com" class="text-secondary text-primary" target="_blank">Instagram</a><br><a href="https://google.com" class="text-secondary" target="_blank">Twitter</a><br><a href="https://google.com" class="text-secondary text-primary" target="_blank">Discord</a><br><a href="https://google.com" class="text-secondary" target="_blank">Email</a></h3>
-
-            </div>
-            <div class="col-md-6 col-lg-3 md-pb">
-                <h2 class="mbr-section-title pb-2 mbr-fonts-style display-7"><strong>ArcBot</strong></h2>
-                <h3 class="mbr-section-subtitle mbr-fonts-style mbr-lighter display-4">ArcBot blends futuristic intelligence with mystical powers to bring order, fun, and automation to your server.</h3>
-            </div>
-        </div>
-    </div><br>
-    <center><p><strong>©2024 Copyright - ArcBot - All rights reserved</strong></p></center>
-</section>
-
-
-<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/smoothscroll/smooth-scroll.js"></script>
-  <script src="assets/ytplayer/index.js"></script>
-  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
-  <script src="assets/mbr-switch-arrow/mbr-switch-arrow.js"></script>
-  <script src="assets/theme/js/script.js"></script>
-  
-  
-  
 </body>
 </html>
