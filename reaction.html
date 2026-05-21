@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reaction — Markus er svag</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: radial-gradient(ellipse at top, #330000 0%, #000 70%);
+    min-height: 100vh;
+    font-family: 'VT323', monospace;
+    color: #fff;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .back {
+    position: fixed;
+    top: 20px; left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #fff;
+    background: #ff004d;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 4vw, 28px);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #ff004d 0%, #ff8500 50%, #ffec27 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { to { background-position: 200% center; } }
+
+  .subtitle {
+    font-size: 20px;
+    color: #ff004d;
+    margin-bottom: 18px;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .stats {
+    display: flex;
+    gap: 24px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    margin-bottom: 14px;
+    color: #ff004d;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stats span { color: #fff; }
+
+  .arena {
+    width: 100%;
+    max-width: 600px;
+    height: 340px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    text-align: center;
+    padding: 20px;
+    transition: background 0.05s;
+    border: 4px solid;
+    box-shadow: 0 0 40px;
+  }
+
+  .arena.idle {
+    background: #1a0014;
+    border-color: #555;
+    box-shadow-color: transparent;
+    cursor: pointer;
+  }
+  .arena.wait {
+    background: linear-gradient(135deg, #ff004d, #aa0033);
+    border-color: #ff77a8;
+    color: #fff;
+    box-shadow: 0 0 50px rgba(255,0,77,0.5);
+  }
+  .arena.go {
+    background: linear-gradient(135deg, #00e436, #008822);
+    border-color: #88ff88;
+    color: #fff;
+    box-shadow: 0 0 60px rgba(0,228,54,0.7);
+    animation: pulse 0.4s ease-out;
+  }
+  .arena.early {
+    background: linear-gradient(135deg, #ff8500, #cc4400);
+    border-color: #ffaa00;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(255,133,0,0.5);
+  }
+  .arena.result {
+    background: linear-gradient(135deg, #ffec27, #ff8500);
+    border-color: #fff;
+    color: #000;
+    box-shadow: 0 0 50px rgba(255,236,39,0.5);
+  }
+  .arena.done {
+    background: #14002a;
+    border-color: #29adff;
+    box-shadow: 0 0 50px rgba(41,173,255,0.5);
+    color: #fff;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.97); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  .arena .big {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(20px, 5vw, 36px);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .arena .small {
+    font-size: 22px;
+    margin-top: 8px;
+  }
+
+  .arena .ms {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 48px;
+    margin: 10px 0;
+  }
+
+  .process {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.4);
+    border: 2px solid #ff004d;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .process h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    color: #ff004d;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .process .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 6px;
+    font-size: 18px;
+    border-bottom: 1px solid #2a002a;
+  }
+  .process .row:last-child { border-bottom: none; }
+  .process .row.current { background: rgba(255,236,39,0.1); color: #ffec27; }
+  .process .row.done { color: #00e436; }
+  .process .row.pending { color: #555; }
+  .process .row .label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+  }
+  .process .row .value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+  }
+
+  .summary {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .summary .avg {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .summary .avg .num {
+    font-size: 32px;
+    color: #ffec27;
+    display: block;
+    margin-top: 8px;
+  }
+  .summary .rank {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px;
+    margin-top: 14px;
+    text-shadow: 0 0 16px currentColor;
+  }
+
+  button.action {
+    background: #ff004d;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 14px 6px 0;
+  }
+  button.action:hover { background: #ff77a8; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← ARCADE</a>
+
+<h1>Markus er svag</h1>
+<div class="subtitle">★ REACTION TEST ★</div>
+
+<div class="stats">
+  ROUND: <span id="round">1/5</span>
+  BEST: <span id="best">-</span>
+  AVG: <span id="avg">-</span>
+</div>
+
+<div class="arena idle" id="arena">
+  <div class="big">REACTION TEST</div>
+  <div class="small">Click anywhere to start</div>
+  <div class="small" style="font-size:16px;margin-top:14px;opacity:0.8;">Wait for GREEN, then click as fast as you can.<br>Don't click on red — that's an early click.</div>
+</div>
+
+<div class="process">
+  <h3>► PROCESS</h3>
+  <div class="row pending" id="rowAttempt">
+    <span class="label">CURRENT</span>
+    <span class="value" id="currentStatus">WAITING TO START</span>
+  </div>
+  <div id="rounds"></div>
+</div>
+
+<div class="summary" id="summary" style="display:none;"></div>
+
+<script>
+'use strict';
+
+const arena = document.getElementById('arena');
+const roundEl = document.getElementById('round');
+const bestEl = document.getElementById('best');
+const avgEl = document.getElementById('avg');
+const currentStatusEl = document.getElementById('currentStatus');
+const roundsEl = document.getElementById('rounds');
+const summaryEl = document.getElementById('summary');
+
+const TOTAL_ROUNDS = 5;
+
+let state = 'idle';      // idle | wait | go | result | done
+let currentRound = 0;    // 0..TOTAL_ROUNDS
+let results = [];        // array of {time, early} per round
+let goTime = 0;
+let waitTimer = null;
+let savedBest = +(localStorage.getItem('reactionBest') || 0);
+if (savedBest) bestEl.textContent = savedBest + 'ms';
+
+function startTest() {
+  currentRound = 0;
+  results = [];
+  summaryEl.style.display = 'none';
+  summaryEl.innerHTML = '';
+  buildRoundsList();
+  startRound();
+}
+
+function buildRoundsList() {
+  roundsEl.innerHTML = '';
+  for (let i = 0; i < TOTAL_ROUNDS; i++) {
+    const row = document.createElement('div');
+    row.className = 'row pending';
+    row.id = 'round-row-' + i;
+    row.innerHTML = `<span class="label">ATTEMPT ${i + 1}</span><span class="value">—</span>`;
+    roundsEl.appendChild(row);
+  }
+}
+
+function updateRoundRow(i, cls, value) {
+  const r = document.getElementById('round-row-' + i);
+  r.className = 'row ' + cls;
+  r.querySelector('.value').textContent = value;
+}
+
+function startRound() {
+  if (currentRound >= TOTAL_ROUNDS) {
+    finish();
+    return;
+  }
+  state = 'wait';
+  arena.className = 'arena wait';
+  arena.innerHTML = `
+    <div class="big">WAIT...</div>
+    <div class="small">Wait for GREEN — don't click yet!</div>
+  `;
+  roundEl.textContent = (currentRound + 1) + '/' + TOTAL_ROUNDS;
+  currentStatusEl.textContent = 'WAITING FOR GREEN';
+  updateRoundRow(currentRound, 'current', 'waiting...');
+  const delay = 1200 + Math.random() * 3500;
+  waitTimer = setTimeout(triggerGo, delay);
+}
+
+function triggerGo() {
+  if (state !== 'wait') return;
+  state = 'go';
+  arena.className = 'arena go';
+  arena.innerHTML = `
+    <div class="big">CLICK!</div>
+    <div class="small">NOW NOW NOW</div>
+  `;
+  currentStatusEl.textContent = 'CLICK NOW!';
+  goTime = performance.now();
+}
+
+function handleClick() {
+  if (state === 'idle') {
+    startTest();
+    return;
+  }
+  if (state === 'done') {
+    startTest();
+    return;
+  }
+  if (state === 'wait') {
+    // Too early
+    if (waitTimer) { clearTimeout(waitTimer); waitTimer = null; }
+    state = 'result';
+    arena.className = 'arena early';
+    arena.innerHTML = `
+      <div class="big">TOO EARLY!</div>
+      <div class="small">You clicked before green</div>
+      <div class="small" style="margin-top:14px;font-size:18px;">Click to continue →</div>
+    `;
+    results.push({ time: null, early: true });
+    updateRoundRow(currentRound, 'done', 'EARLY (fail)');
+    currentRound++;
+    currentStatusEl.textContent = 'PENALTY — moving on';
+    state = 'result-wait';
+    return;
+  }
+  if (state === 'go') {
+    const ms = Math.round(performance.now() - goTime);
+    state = 'result';
+    arena.className = 'arena result';
+    arena.innerHTML = `
+      <div class="big">${rankSingle(ms)}</div>
+      <div class="ms">${ms} ms</div>
+      <div class="small">Click to continue →</div>
+    `;
+    results.push({ time: ms, early: false });
+    updateRoundRow(currentRound, 'done', ms + 'ms');
+    currentRound++;
+    currentStatusEl.textContent = ms + 'ms — ' + rankSingle(ms).toLowerCase();
+    state = 'result-wait';
+    return;
+  }
+  if (state === 'result-wait') {
+    startRound();
+    return;
+  }
+}
+
+function rankSingle(ms) {
+  if (ms < 180) return 'INHUMAN';
+  if (ms < 230) return 'GREAT';
+  if (ms < 280) return 'GOOD';
+  if (ms < 350) return 'OK';
+  if (ms < 450) return 'SLOW';
+  return 'NAH';
+}
+
+function finish() {
+  state = 'done';
+  const valid = results.filter(r => !r.early && r.time != null).map(r => r.time);
+  if (valid.length === 0) {
+    arena.className = 'arena done';
+    arena.innerHTML = `
+      <div class="big">NO VALID TIMES</div>
+      <div class="small">You clicked early every round.</div>
+      <div class="small" style="margin-top:14px;">Click to try again →</div>
+    `;
+    currentStatusEl.textContent = 'no valid attempts';
+    return;
+  }
+  const sum = valid.reduce((a, b) => a + b, 0);
+  const avg = Math.round(sum / valid.length);
+  const fastest = Math.min(...valid);
+
+  let rank, color;
+  if (avg < 200) { rank = 'INHUMAN'; color = '#ff77a8'; }
+  else if (avg < 250) { rank = 'PRO GAMER'; color = '#29adff'; }
+  else if (avg < 300) { rank = 'SHARP'; color = '#00e436'; }
+  else if (avg < 360) { rank = 'AVERAGE'; color = '#ffec27'; }
+  else if (avg < 450) { rank = 'SLOW'; color = '#ff8500'; }
+  else { rank = 'GERIATRIC'; color = '#ff004d'; }
+
+  if (!savedBest || fastest < savedBest) {
+    savedBest = fastest;
+    localStorage.setItem('reactionBest', savedBest);
+    bestEl.textContent = savedBest + 'ms';
+  }
+  avgEl.textContent = avg + 'ms';
+
+  arena.className = 'arena done';
+  arena.innerHTML = `
+    <div class="big">TEST COMPLETE</div>
+    <div class="small">Click anywhere to try again</div>
+  `;
+  currentStatusEl.textContent = 'COMPLETE — avg ' + avg + 'ms';
+
+  summaryEl.style.display = 'block';
+  summaryEl.innerHTML = `
+    <div class="avg">AVERAGE REACTION TIME<span class="num">${avg}ms</span></div>
+    <div style="font-size:18px;color:#aaa;">Fastest: ${fastest}ms — Valid attempts: ${valid.length}/${TOTAL_ROUNDS}</div>
+    <div class="rank" style="color:${color}">${rank}</div>
+    <button class="action" onclick="location.reload()">PLAY AGAIN</button>
+  `;
+}
+
+arena.addEventListener('click', handleClick);
+arena.addEventListener('touchstart', e => { e.preventDefault(); handleClick(); }, { passive: false });
+
+buildRoundsList();
+</script>
+
+</body>
+</html>

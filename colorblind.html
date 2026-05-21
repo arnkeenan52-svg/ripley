@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color Test — Markus er lort til slime rng</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: radial-gradient(ellipse at top, #001a14 0%, #000 70%);
+    min-height: 100vh;
+    font-family: 'VT323', monospace;
+    color: #fff;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .back {
+    position: fixed;
+    top: 20px; left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #000;
+    background: #29adff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 4vw, 28px);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #29adff 0%, #00e436 50%, #ffec27 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { to { background-position: 200% center; } }
+
+  .subtitle {
+    font-size: 20px;
+    color: #29adff;
+    margin-bottom: 18px;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .stats {
+    display: flex;
+    gap: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    margin-bottom: 14px;
+    color: #29adff;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stats span { color: #fff; }
+
+  .timer-bar {
+    width: 90%;
+    max-width: 500px;
+    height: 8px;
+    background: #1a0028;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00e436, #ffec27, #ff8500, #ff004d);
+    width: 100%;
+  }
+
+  .board {
+    display: grid;
+    gap: 4px;
+    padding: 8px;
+    background: rgba(0,0,0,0.4);
+    border: 3px solid #29adff;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(41,173,255,0.3);
+    margin-bottom: 16px;
+  }
+
+  .tile {
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform 0.1s;
+  }
+  .tile:hover { transform: scale(1.05); }
+  .tile.wrong { animation: shake 0.3s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .feedback {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    margin: 10px 0;
+    min-height: 22px;
+    text-align: center;
+  }
+  .feedback.good { color: #00e436; }
+  .feedback.bad { color: #ff004d; }
+
+  button.action {
+    background: #29adff;
+    color: #000;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 8px;
+  }
+  button.action:hover { background: #00e436; }
+
+  #overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 50;
+  }
+  #overlay h2 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: #29adff;
+    text-shadow: 0 0 16px #29adff;
+    text-align: center;
+    padding: 0 20px;
+  }
+  #overlay p {
+    font-size: 16px;
+    margin-bottom: 18px;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.4;
+  }
+  #overlay .rank-final {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px;
+    margin: 14px 0;
+    text-shadow: 0 0 18px currentColor;
+  }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← ARCADE</a>
+
+<h1>Markus er lort til slime rng</h1>
+<div class="subtitle">★ COLOR TEST ★</div>
+
+<div class="stats">
+  ROUND: <span id="round">1</span>
+  SCORE: <span id="score">0</span>
+  LIVES: <span id="lives">3</span>
+  BEST: <span id="best">0</span>
+</div>
+
+<div class="timer-bar"><div class="timer-fill" id="timer"></div></div>
+
+<div class="board" id="board"></div>
+
+<div class="feedback" id="feedback">Find the odd-colored tile!</div>
+
+<div id="overlay">
+  <h2>COLOR BLIND TEST</h2>
+  <p>Find the odd-colored tile before time runs out.<br>Each round adds more tiles and makes the color difference smaller.</p>
+  <button class="action" id="startBtn">START</button>
+</div>
+
+<script>
+'use strict';
+
+const boardEl = document.getElementById('board');
+const roundEl = document.getElementById('round');
+const scoreEl = document.getElementById('score');
+const livesEl = document.getElementById('lives');
+const bestEl = document.getElementById('best');
+const timerEl = document.getElementById('timer');
+const feedbackEl = document.getElementById('feedback');
+const overlay = document.getElementById('overlay');
+const startBtn = document.getElementById('startBtn');
+
+let round = 1;
+let score = 0;
+let lives = 3;
+let best = +(localStorage.getItem('colorBest') || 0);
+let oddIndex = -1;
+let state = 'menu';
+let timeLeft = 0;
+let timeMax = 0;
+let lastTickTime = 0;
+
+bestEl.textContent = best;
+
+function getGridSize(r) {
+  if (r <= 2) return 2;
+  if (r <= 5) return 3;
+  if (r <= 10) return 4;
+  if (r <= 16) return 5;
+  if (r <= 25) return 6;
+  return 7;
+}
+
+function getDifference(r) {
+  // Higher round = smaller color difference. Starts at 80, decreases.
+  return Math.max(3, Math.floor(80 - r * 2.8));
+}
+
+function getTime(r) {
+  // Time in ms
+  return Math.max(3000, 12000 - r * 250);
+}
+
+function hslColor(h, s, l) {
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+function newRound() {
+  state = 'playing';
+  const size = getGridSize(round);
+  const total = size * size;
+  oddIndex = Math.floor(Math.random() * total);
+
+  const hue = Math.floor(Math.random() * 360);
+  const sat = 55 + Math.floor(Math.random() * 25);
+  const baseL = 45 + Math.floor(Math.random() * 20);
+
+  const diff = getDifference(round);
+  const oddL = Math.random() < 0.5 ? baseL + diff / 5 : baseL - diff / 5;
+  const oddH = (hue + diff) % 360;
+
+  const baseColor = hslColor(hue, sat, baseL);
+  const oddColor = hslColor(oddH, sat, oddL);
+
+  boardEl.innerHTML = '';
+  const tileSize = Math.max(40, Math.min(90, Math.floor(360 / size)));
+  boardEl.style.gridTemplateColumns = `repeat(${size}, ${tileSize}px)`;
+  for (let i = 0; i < total; i++) {
+    const t = document.createElement('div');
+    t.className = 'tile';
+    t.style.width = tileSize + 'px';
+    t.style.height = tileSize + 'px';
+    t.style.background = i === oddIndex ? oddColor : baseColor;
+    t.addEventListener('click', () => onTileClick(i, t));
+    boardEl.appendChild(t);
+  }
+
+  timeMax = getTime(round);
+  timeLeft = timeMax;
+  lastTickTime = performance.now();
+  timerEl.style.width = '100%';
+
+  feedbackEl.className = 'feedback';
+  feedbackEl.textContent = `Round ${round} — find the odd tile`;
+
+  updateHUD();
+  requestAnimationFrame(tick);
+}
+
+function tick(now) {
+  if (state !== 'playing') return;
+  const dt = now - lastTickTime;
+  lastTickTime = now;
+  timeLeft -= dt;
+  if (timeLeft <= 0) {
+    timeLeft = 0;
+    timerEl.style.width = '0%';
+    timeUp();
+    return;
+  }
+  timerEl.style.width = (timeLeft / timeMax * 100) + '%';
+  requestAnimationFrame(tick);
+}
+
+function timeUp() {
+  state = 'paused';
+  lives--;
+  feedbackEl.className = 'feedback bad';
+  feedbackEl.textContent = `Out of time! It was that one →`;
+  const tiles = boardEl.querySelectorAll('.tile');
+  tiles[oddIndex].style.outline = '4px solid #ff004d';
+  tiles[oddIndex].style.outlineOffset = '4px';
+  updateHUD();
+  setTimeout(() => {
+    if (lives <= 0) gameOver();
+    else newRound();
+  }, 1500);
+}
+
+function onTileClick(i, el) {
+  if (state !== 'playing') return;
+  if (i === oddIndex) {
+    state = 'paused';
+    const bonus = Math.floor(timeLeft / 100);
+    const roundPts = round * 10 + bonus;
+    score += roundPts;
+    feedbackEl.className = 'feedback good';
+    feedbackEl.textContent = `+${roundPts} pts! (${round * 10} base + ${bonus} time)`;
+    el.style.outline = '4px solid #00e436';
+    el.style.outlineOffset = '4px';
+    round++;
+    updateHUD();
+    setTimeout(newRound, 700);
+  } else {
+    el.classList.add('wrong');
+    lives--;
+    feedbackEl.className = 'feedback bad';
+    feedbackEl.textContent = `Wrong! ${lives} ${lives === 1 ? 'life' : 'lives'} left`;
+    updateHUD();
+    setTimeout(() => el.classList.remove('wrong'), 400);
+    if (lives <= 0) {
+      state = 'paused';
+      setTimeout(gameOver, 600);
+    }
+  }
+}
+
+function gameOver() {
+  state = 'over';
+  if (score > best) {
+    best = score;
+    localStorage.setItem('colorBest', best);
+    bestEl.textContent = best;
+  }
+  overlay.style.display = 'flex';
+  document.querySelector('#overlay h2').textContent = 'TEST COMPLETE';
+  let rank, color;
+  if (round < 4) { rank = 'COLOR BLIND'; color = '#ff004d'; }
+  else if (round < 8) { rank = 'BAD EYES'; color = '#ff8500'; }
+  else if (round < 14) { rank = 'AVERAGE'; color = '#ffec27'; }
+  else if (round < 20) { rank = 'SHARP'; color = '#00e436'; }
+  else if (round < 28) { rank = 'EAGLE EYE'; color = '#29adff'; }
+  else { rank = 'PERFECT VISION'; color = '#ff77a8'; }
+
+  document.querySelector('#overlay p').innerHTML =
+    `Made it to round <b>${round}</b><br>Score: <b>${score}</b> — Best: <b>${best}</b>` +
+    `<div class="rank-final" style="color:${color}">${rank}</div>`;
+  startBtn.textContent = 'PLAY AGAIN';
+}
+
+function updateHUD() {
+  roundEl.textContent = round;
+  scoreEl.textContent = score;
+  livesEl.textContent = lives;
+}
+
+startBtn.addEventListener('click', () => {
+  round = 1;
+  score = 0;
+  lives = 3;
+  overlay.style.display = 'none';
+  updateHUD();
+  newRound();
+});
+
+updateHUD();
+</script>
+
+</body>
+</html>
