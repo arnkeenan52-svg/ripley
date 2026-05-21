@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slime RNG — Markus er lort til slime rng</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background:
+      radial-gradient(ellipse at top, #001a0a 0%, #000 70%);
+    min-height: 100vh;
+    font-family: 'VT323', monospace;
+    color: #fff;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .back {
+    position: fixed;
+    top: 20px; left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #000;
+    background: #29adff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 4vw, 30px);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #29adff 0%, #00e436 50%, #ffec27 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { to { background-position: 200% center; } }
+
+  .subtitle {
+    font-size: 20px;
+    color: #29adff;
+    margin-bottom: 18px;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .stats {
+    display: flex;
+    gap: 18px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    margin-bottom: 18px;
+    color: #29adff;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stats span { color: #fff; }
+
+  .arena {
+    background: rgba(0,0,0,0.5);
+    border: 3px solid #29adff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 18px;
+    box-shadow: 0 0 30px rgba(41,173,255,0.3);
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slime {
+    font-size: 110px;
+    filter: drop-shadow(0 0 30px var(--color, #29adff));
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1, 1); }
+    50% { transform: translateY(-15px) scale(0.95, 1.05); }
+  }
+
+  .slime-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    margin-top: 14px;
+    color: var(--color, #fff);
+    text-shadow: 0 0 12px var(--color, #fff);
+    text-align: center;
+  }
+
+  .slime-rarity {
+    font-size: 22px;
+    color: #fff;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .empty {
+    color: #555;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+  }
+
+  button.roll {
+    background: linear-gradient(135deg, #29adff, #00e436);
+    color: #000;
+    border: none;
+    padding: 18px 44px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 6px;
+    box-shadow: 0 0 20px rgba(41,173,255,0.5);
+    transition: transform 0.1s;
+  }
+  button.roll:hover { transform: scale(1.05); }
+  button.roll:active { transform: scale(0.95); }
+  button.roll:disabled { opacity: 0.5; cursor: not-allowed; }
+  button.roll.auto { background: linear-gradient(135deg, #ff77a8, #ff004d); }
+  button.roll.big { background: linear-gradient(135deg, #ffec27, #ff8500); }
+
+  .controls-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .inventory {
+    max-width: 800px;
+    width: 100%;
+    border-top: 2px solid #29adff;
+    padding-top: 16px;
+  }
+  .inventory h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #29adff;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .inv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+  .inv-item {
+    background: rgba(0,0,0,0.4);
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .inv-item .emoji { font-size: 28px; display: block; }
+  .inv-item .nm { font-family: 'Press Start 2P', monospace; font-size: 9px; margin-top: 4px; }
+  .inv-item .ct { color: #ffec27; margin-top: 2px; }
+
+  #flash {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 30;
+  }
+  #flash.flash { animation: flash 0.6s ease-out; }
+  @keyframes flash {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .history {
+    max-width: 700px;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 12px 0;
+    font-size: 14px;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  .history div { margin: 2px 0; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← ARCADE</a>
+
+<h1>Markus er lort til slime rng</h1>
+<div class="subtitle">★ SLIME RNG ★</div>
+
+<div class="stats">
+  ROLLS: <span id="rolls">0</span>
+  LUCK: <span id="luck">1x</span>
+  RAREST: <span id="rarest">-</span>
+</div>
+
+<div class="arena" id="arena">
+  <div class="empty">CLICK ROLL TO GET A SLIME</div>
+</div>
+
+<div class="controls-row">
+  <button class="roll" id="rollBtn">ROLL (1)</button>
+  <button class="roll big" id="roll10Btn">ROLL ×10</button>
+  <button class="roll auto" id="autoBtn">AUTO ROLL</button>
+</div>
+
+<div class="history" id="history"></div>
+
+<div class="inventory">
+  <h3>COLLECTION</h3>
+  <div class="inv-grid" id="inv"></div>
+</div>
+
+<div id="flash"></div>
+
+<script>
+'use strict';
+
+// Slime definitions — common to insanely rare
+const SLIMES = [
+  { name: 'Snot',       emoji: '🟢', color: '#00e436', weight: 5000,  rarity: '1 in 1' },
+  { name: 'Blue',       emoji: '🔵', color: '#29adff', weight: 3000,  rarity: '1 in 2' },
+  { name: 'Sunny',      emoji: '🟡', color: '#ffec27', weight: 1500,  rarity: '1 in 5' },
+  { name: 'Berry',      emoji: '🟣', color: '#a855f7', weight: 800,   rarity: '1 in 9' },
+  { name: 'Coral',      emoji: '🟠', color: '#ff8500', weight: 400,   rarity: '1 in 19' },
+  { name: 'Rose',       emoji: '🌸', color: '#ff77a8', weight: 200,   rarity: '1 in 38' },
+  { name: 'Lava',       emoji: '🔥', color: '#ff004d', weight: 100,   rarity: '1 in 75' },
+  { name: 'Frost',      emoji: '❄️', color: '#a8e6ff', weight: 50,    rarity: '1 in 150' },
+  { name: 'Toxic',      emoji: '☢️', color: '#c8ff00', weight: 25,    rarity: '1 in 300' },
+  { name: 'Void',       emoji: '🌀', color: '#7700ff', weight: 12,    rarity: '1 in 625' },
+  { name: 'Galactic',   emoji: '🌌', color: '#4488ff', weight: 6,     rarity: '1 in 1250' },
+  { name: 'Phoenix',    emoji: '🦅', color: '#ff5500', weight: 3,     rarity: '1 in 2500' },
+  { name: 'Crystal',    emoji: '💎', color: '#88ddff', weight: 1.5,   rarity: '1 in 5000' },
+  { name: 'Rainbow',    emoji: '🌈', color: '#ff77ff', weight: 0.7,   rarity: '1 in 10000' },
+  { name: 'Cosmic',     emoji: '⭐', color: '#ffff00', weight: 0.3,   rarity: '1 in 25000' },
+  { name: 'Divine',     emoji: '👑', color: '#fff8b8', weight: 0.1,   rarity: '1 in 75000' },
+  { name: 'GOATED',     emoji: '🐐', color: '#ff0080', weight: 0.02,  rarity: '1 in 375000' },
+  { name: 'CLAPPED',    emoji: '💀', color: '#ff0000', weight: 0.005, rarity: '1 in 1500000' }
+];
+
+const totalWeight = SLIMES.reduce((s, x) => s + x.weight, 0);
+
+let rolls = +(localStorage.getItem('slimeRolls') || 0);
+let inventory = JSON.parse(localStorage.getItem('slimeInv') || '{}');
+let rarestIdx = +(localStorage.getItem('slimeRarest') || -1);
+let autoOn = false;
+let history = [];
+
+const arena = document.getElementById('arena');
+const rollBtn = document.getElementById('rollBtn');
+const roll10Btn = document.getElementById('roll10Btn');
+const autoBtn = document.getElementById('autoBtn');
+const rollsEl = document.getElementById('rolls');
+const luckEl = document.getElementById('luck');
+const rarestEl = document.getElementById('rarest');
+const invEl = document.getElementById('inv');
+const historyEl = document.getElementById('history');
+const flash = document.getElementById('flash');
+
+function rollOnce() {
+  let r = Math.random() * totalWeight;
+  for (let i = 0; i < SLIMES.length; i++) {
+    r -= SLIMES[i].weight;
+    if (r <= 0) return i;
+  }
+  return 0;
+}
+
+function rollAndShow() {
+  const idx = rollOnce();
+  const s = SLIMES[idx];
+  rolls++;
+
+  // Update inventory
+  inventory[s.name] = (inventory[s.name] || 0) + 1;
+
+  // Update rarest
+  if (idx > rarestIdx) {
+    rarestIdx = idx;
+    flashScreen(s.color);
+  } else if (idx >= 10) {
+    flashScreen(s.color);
+  }
+
+  // History
+  history.unshift({ idx, name: s.name, emoji: s.emoji, rarity: s.rarity, color: s.color });
+  if (history.length > 5) history.pop();
+
+  // Display
+  arena.innerHTML = `
+    <div class="slime" style="--color:${s.color}">${s.emoji}</div>
+    <div class="slime-name" style="--color:${s.color}">${s.name}</div>
+    <div class="slime-rarity">${s.rarity}</div>
+  `;
+
+  // Save
+  localStorage.setItem('slimeRolls', rolls);
+  localStorage.setItem('slimeInv', JSON.stringify(inventory));
+  localStorage.setItem('slimeRarest', rarestIdx);
+
+  refreshUI();
+  return idx;
+}
+
+function flashScreen(color) {
+  flash.style.background = color;
+  flash.classList.remove('flash');
+  void flash.offsetWidth;
+  flash.classList.add('flash');
+}
+
+function refreshUI() {
+  rollsEl.textContent = rolls;
+  luckEl.textContent = '1x';
+  rarestEl.textContent = rarestIdx >= 0 ? SLIMES[rarestIdx].name : '-';
+
+  // Inventory
+  let html = '';
+  for (let i = SLIMES.length - 1; i >= 0; i--) {
+    const s = SLIMES[i];
+    const c = inventory[s.name] || 0;
+    if (c === 0) continue;
+    html += `
+      <div class="inv-item" style="border-color:${s.color}; box-shadow:0 0 10px ${s.color}40;">
+        <span class="emoji">${s.emoji}</span>
+        <div class="nm" style="color:${s.color}">${s.name}</div>
+        <div class="ct">×${c}</div>
+      </div>
+    `;
+  }
+  if (!html) html = '<div style="grid-column:1/-1;text-align:center;color:#555;font-family:Press Start 2P,monospace;font-size:10px;padding:20px;">No slimes yet</div>';
+  invEl.innerHTML = html;
+
+  // History
+  historyEl.innerHTML = history.map(h =>
+    `<div style="color:${h.color}">${h.emoji} ${h.name} — ${h.rarity}</div>`
+  ).join('');
+}
+
+rollBtn.addEventListener('click', () => rollAndShow());
+
+roll10Btn.addEventListener('click', () => {
+  let best = -1, bestSlime = null;
+  for (let i = 0; i < 10; i++) {
+    const idx = rollOnce();
+    rolls++;
+    inventory[SLIMES[idx].name] = (inventory[SLIMES[idx].name] || 0) + 1;
+    if (idx > best) { best = idx; bestSlime = SLIMES[idx]; }
+    history.unshift({ idx, name: SLIMES[idx].name, emoji: SLIMES[idx].emoji, rarity: SLIMES[idx].rarity, color: SLIMES[idx].color });
+  }
+  while (history.length > 5) history.pop();
+  if (best > rarestIdx) rarestIdx = best;
+  if (best >= 8) flashScreen(bestSlime.color);
+
+  // Show best result
+  arena.innerHTML = `
+    <div style="font-family:'Press Start 2P',monospace;font-size:11px;color:#ffec27;margin-bottom:8px;">BEST OF 10:</div>
+    <div class="slime" style="--color:${bestSlime.color}">${bestSlime.emoji}</div>
+    <div class="slime-name" style="--color:${bestSlime.color}">${bestSlime.name}</div>
+    <div class="slime-rarity">${bestSlime.rarity}</div>
+  `;
+
+  localStorage.setItem('slimeRolls', rolls);
+  localStorage.setItem('slimeInv', JSON.stringify(inventory));
+  localStorage.setItem('slimeRarest', rarestIdx);
+  refreshUI();
+});
+
+autoBtn.addEventListener('click', () => {
+  autoOn = !autoOn;
+  autoBtn.textContent = autoOn ? 'STOP AUTO' : 'AUTO ROLL';
+});
+
+setInterval(() => {
+  if (autoOn) rollAndShow();
+}, 250);
+
+refreshUI();
+</script>
+
+</body>
+</html>

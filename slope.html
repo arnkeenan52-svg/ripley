@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slope — Markus er milf enjoyer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: radial-gradient(ellipse at top, #001a33 0%, #000 70%), #000;
+    min-height: 100vh;
+    font-family: 'VT323', monospace;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .back {
+    position: fixed;
+    top: 20px; left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #000;
+    background: #00e436;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(18px, 5vw, 38px);
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #00e436 0%, #29adff 50%, #ff77a8 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { to { background-position: 200% center; } }
+
+  .subtitle {
+    font-size: 20px;
+    color: #00e436;
+    margin-bottom: 12px;
+    letter-spacing: 4px;
+    text-align: center;
+  }
+
+  .hud {
+    display: flex;
+    gap: 30px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #00e436;
+  }
+  .hud span { color: #fff; }
+
+  canvas {
+    background: #000;
+    border: 4px solid #00e436;
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(0,228,54,.6);
+    display: block;
+    max-width: 100%;
+    height: auto;
+    outline: none;
+  }
+
+  .controls {
+    margin-top: 12px;
+    font-size: 18px;
+    color: #aaa;
+  }
+  .controls kbd {
+    background: #222; border: 1px solid #444; border-radius: 4px;
+    padding: 1px 7px; color: #00e436;
+  }
+
+  #overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 50;
+    font-family: 'Press Start 2P', monospace;
+  }
+  #overlay h2 {
+    color: #ff004d;
+    font-size: 32px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 20px #ff004d;
+  }
+  #overlay p {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  #overlay button {
+    background: #00e436;
+    color: #000;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #overlay button:hover { background: #29adff; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← ARCADE</a>
+
+<h1>Markus er milf enjoyer</h1>
+<div class="subtitle">★ SLOPE ★</div>
+
+<div class="hud">
+  SCORE: <span id="score">0</span>
+  BEST: <span id="best">0</span>
+  SPEED: <span id="spd">1.0x</span>
+</div>
+
+<canvas id="game" width="640" height="480" tabindex="0"></canvas>
+
+<div class="controls">
+  <kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> to steer
+</div>
+
+<div id="overlay">
+  <h2>SLOPE</h2>
+  <p>Steer with arrows or A/D — don't fall off, don't hit red blocks</p>
+  <button id="startBtn">START</button>
+</div>
+
+<script>
+'use strict';
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const scoreEl = document.getElementById('score');
+const bestEl = document.getElementById('best');
+const spdEl = document.getElementById('spd');
+const overlay = document.getElementById('overlay');
+const startBtn = document.getElementById('startBtn');
+
+const W = canvas.width;
+const H = canvas.height;
+const HORIZON_Y = 100;     // vanishing point Y
+const TRACK_NEAR_HALF = 220; // half-width of track at bottom of screen
+const TRACK_FAR_HALF = 30;   // half-width of track at horizon
+
+// Project a world (x, z) to screen (sx, sy). z=0 is at player, z increases into distance.
+function project(x, z) {
+  // z in [0, 1] roughly. As z grows, we squeeze toward horizon
+  const t = z / (z + 0.6); // perspective curve: t=0 at z=0, approaches 1 as z→∞
+  const sy = H - (H - HORIZON_Y) * (1 - t);
+  // x scale: at z=0 use TRACK_NEAR_HALF as unit, at horizon use TRACK_FAR_HALF
+  const scaleX = TRACK_NEAR_HALF * (1 - t) + TRACK_FAR_HALF * t;
+  const sx = W / 2 + x * scaleX;
+  return { sx, sy, scale: scaleX / TRACK_NEAR_HALF };
+}
+
+// Game state
+let best = +(localStorage.getItem('slopeBest') || 0);
+bestEl.textContent = best;
+
+let state = 'menu'; // menu, playing, dead
+let score = 0;
+let speed = 0.012; // z per frame
+let ballX = 0;     // -1 to 1 across track
+let ballVX = 0;
+let frame = 0;
+let obstacles = []; // {x, z, type: 'block'|'gap'}
+let particles = [];
+let cameraZ = 0;   // cumulative distance traveled
+
+const keys = {};
+window.addEventListener('keydown', e => {
+  keys[e.key] = true;
+  if (['ArrowLeft','ArrowRight','a','d','A','D'].includes(e.key)) e.preventDefault();
+});
+window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+// Touch
+let touchX = null;
+canvas.addEventListener('touchstart', e => {
+  touchX = e.touches[0].clientX;
+  e.preventDefault();
+}, {passive: false});
+canvas.addEventListener('touchmove', e => {
+  if (touchX === null) return;
+  const newX = e.touches[0].clientX;
+  const dx = newX - touchX;
+  ballVX += dx * 0.0008;
+  touchX = newX;
+  e.preventDefault();
+}, {passive: false});
+canvas.addEventListener('touchend', () => { touchX = null; });
+
+function reset() {
+  score = 0;
+  speed = 0.012;
+  ballX = 0;
+  ballVX = 0;
+  obstacles = [];
+  particles = [];
+  cameraZ = 0;
+  frame = 0;
+  state = 'playing';
+  overlay.style.display = 'none';
+  canvas.focus();
+}
+
+startBtn.addEventListener('click', reset);
+
+function spawnObstacle() {
+  const r = Math.random();
+  if (r < 0.7) {
+    // Block obstacle
+    obstacles.push({
+      type: 'block',
+      x: (Math.random() * 1.6 - 0.8),
+      z: 1.5,
+      w: 0.15 + Math.random() * 0.15
+    });
+  } else {
+    // Gap in track (hole)
+    obstacles.push({
+      type: 'gap',
+      x: (Math.random() * 1.4 - 0.7),
+      z: 1.5,
+      w: 0.25 + Math.random() * 0.2
+    });
+  }
+}
+
+function update() {
+  frame++;
+
+  // Steering
+  let steer = 0;
+  if (keys.ArrowLeft || keys.a || keys.A) steer -= 1;
+  if (keys.ArrowRight || keys.d || keys.D) steer += 1;
+  ballVX += steer * 0.0025;
+  ballVX *= 0.92;
+  ballX += ballVX;
+
+  // Fall off track?
+  if (Math.abs(ballX) > 1.05) {
+    die();
+    return;
+  }
+
+  // Advance
+  cameraZ += speed;
+  speed += 0.000008; // gradually faster
+  score = Math.floor(cameraZ * 100);
+
+  // Spawn obstacles periodically based on distance
+  if (frame % Math.max(20, Math.floor(40 - speed * 1500)) === 0) {
+    spawnObstacle();
+  }
+
+  // Update obstacles
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    const o = obstacles[i];
+    o.z -= speed;
+    if (o.z < -0.05) {
+      obstacles.splice(i, 1);
+      continue;
+    }
+    // Collision check when obstacle reaches ball
+    if (o.z < 0.05 && o.z > -0.05) {
+      const dx = Math.abs(o.x - ballX);
+      if (o.type === 'block' && dx < o.w + 0.08) {
+        die();
+        return;
+      }
+      if (o.type === 'gap' && dx < o.w) {
+        die();
+        return;
+      }
+    }
+  }
+
+  // Particles
+  if (frame % 2 === 0) {
+    particles.push({
+      x: ballX + (Math.random() - 0.5) * 0.1,
+      z: -0.05,
+      life: 30
+    });
+  }
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].z -= speed * 0.3;
+    particles[i].life--;
+    if (particles[i].life <= 0) particles.splice(i, 1);
+  }
+
+  spdEl.textContent = (speed / 0.012).toFixed(1) + 'x';
+}
+
+function die() {
+  state = 'dead';
+  if (score > best) {
+    best = score;
+    localStorage.setItem('slopeBest', best);
+    bestEl.textContent = best;
+  }
+  document.getElementById('overlay').style.display = 'flex';
+  document.querySelector('#overlay h2').textContent = 'GAME OVER';
+  document.querySelector('#overlay p').textContent = 'Score: ' + score + ' — Best: ' + best;
+  startBtn.textContent = 'TRY AGAIN';
+}
+
+function drawTrack() {
+  // Background gradient (sky)
+  const sky = ctx.createLinearGradient(0, 0, 0, HORIZON_Y);
+  sky.addColorStop(0, '#001a33');
+  sky.addColorStop(1, '#003366');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, HORIZON_Y);
+
+  // Ground
+  ctx.fillStyle = '#0a0014';
+  ctx.fillRect(0, HORIZON_Y, W, H - HORIZON_Y);
+
+  // Track — slice into horizontal strips and color them
+  const slices = 40;
+  for (let i = slices - 1; i >= 0; i--) {
+    const z1 = i / slices * 1.5;
+    const z2 = (i + 1) / slices * 1.5;
+    const offset = (cameraZ * 8 + i) | 0;
+    const isLight = offset % 2 === 0;
+    // Left edge
+    const p1 = project(-1, z1);
+    const p2 = project(-1, z2);
+    const p3 = project(1, z2);
+    const p4 = project(1, z1);
+    ctx.fillStyle = isLight ? '#1a1a3a' : '#222255';
+    ctx.beginPath();
+    ctx.moveTo(p1.sx, p1.sy);
+    ctx.lineTo(p2.sx, p2.sy);
+    ctx.lineTo(p3.sx, p3.sy);
+    ctx.lineTo(p4.sx, p4.sy);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Track edges (glowing lines)
+  ctx.strokeStyle = '#00e436';
+  ctx.shadowColor = '#00e436';
+  ctx.shadowBlur = 12;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  for (let i = 0; i <= 30; i++) {
+    const z = i / 30 * 1.5;
+    const p = project(-1, z);
+    if (i === 0) ctx.moveTo(p.sx, p.sy);
+    else ctx.lineTo(p.sx, p.sy);
+  }
+  ctx.stroke();
+  ctx.beginPath();
+  for (let i = 0; i <= 30; i++) {
+    const z = i / 30 * 1.5;
+    const p = project(1, z);
+    if (i === 0) ctx.moveTo(p.sx, p.sy);
+    else ctx.lineTo(p.sx, p.sy);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function drawObstacle(o) {
+  const p = project(o.x, o.z);
+  if (o.type === 'block') {
+    const size = 50 * p.scale;
+    ctx.fillStyle = '#ff004d';
+    ctx.shadowColor = '#ff004d';
+    ctx.shadowBlur = 15;
+    // Draw as cube-ish: bottom rect + top rect offset
+    ctx.fillRect(p.sx - size/2, p.sy - size, size, size);
+    ctx.fillStyle = '#ff77a8';
+    ctx.fillRect(p.sx - size/2, p.sy - size, size, size * 0.2);
+    ctx.shadowBlur = 0;
+  } else if (o.type === 'gap') {
+    const w = o.w * 2 * p.scale * TRACK_NEAR_HALF / TRACK_NEAR_HALF;
+    const widthPx = o.w * 2 * (TRACK_NEAR_HALF * (1 - o.z/(o.z+0.6)) + TRACK_FAR_HALF * (o.z/(o.z+0.6)));
+    ctx.fillStyle = '#000';
+    ctx.fillRect(p.sx - widthPx/2, p.sy - 4, widthPx, 8);
+    ctx.strokeStyle = '#ff004d';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(p.sx - widthPx/2, p.sy - 4, widthPx, 8);
+  }
+}
+
+function drawBall() {
+  const p = project(ballX, 0);
+  const radius = 22;
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.beginPath();
+  ctx.ellipse(p.sx, p.sy + 4, radius * 1.1, radius * 0.4, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Ball
+  const grad = ctx.createRadialGradient(p.sx - 6, p.sy - 6 - radius, 2, p.sx, p.sy - radius, radius * 1.5);
+  grad.addColorStop(0, '#fff');
+  grad.addColorStop(0.4, '#29adff');
+  grad.addColorStop(1, '#003366');
+  ctx.fillStyle = grad;
+  ctx.shadowColor = '#29adff';
+  ctx.shadowBlur = 20;
+  ctx.beginPath();
+  ctx.arc(p.sx, p.sy - radius, radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  // Rolling stripes
+  const roll = (cameraZ * 30) % (Math.PI * 2);
+  ctx.strokeStyle = '#003366';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(p.sx, p.sy - radius, radius * 0.6, roll, roll + Math.PI);
+  ctx.stroke();
+}
+
+function drawParticles() {
+  for (const p of particles) {
+    const proj = project(p.x, p.z);
+    ctx.fillStyle = `rgba(0, 228, 54, ${p.life / 30})`;
+    ctx.beginPath();
+    ctx.arc(proj.sx, proj.sy, 3 * proj.scale, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  drawTrack();
+  // Sort obstacles back to front so close ones draw on top
+  const sorted = obstacles.slice().sort((a, b) => b.z - a.z);
+  for (const o of sorted) drawObstacle(o);
+  drawParticles();
+  drawBall();
+
+  // Score overlay
+  scoreEl.textContent = score;
+}
+
+function loop() {
+  if (state === 'playing') update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>

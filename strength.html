@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strength Test — Markus er svag</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background:
+      radial-gradient(ellipse at top, #330000 0%, #000 70%);
+    min-height: 100vh;
+    font-family: 'VT323', monospace;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .back {
+    position: fixed;
+    top: 20px; left: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #fff;
+    background: #ff004d;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(16px, 4vw, 30px);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #ff004d 0%, #ff8500 50%, #ffec27 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow 4s linear infinite;
+  }
+  @keyframes rainbow { to { background-position: 200% center; } }
+
+  .subtitle {
+    font-size: 20px;
+    color: #ff004d;
+    margin-bottom: 18px;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .stats {
+    display: flex;
+    gap: 20px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    margin-bottom: 18px;
+    color: #ff004d;
+  }
+  .stats span { color: #fff; }
+
+  .arena {
+    background: rgba(0,0,0,0.5);
+    border: 3px solid #ff004d;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 18px;
+    box-shadow: 0 0 30px rgba(255,0,77,0.3);
+    text-align: center;
+  }
+
+  .test-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    color: #ffec27;
+    margin-bottom: 6px;
+  }
+  .test-instruction {
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 18px;
+    min-height: 30px;
+  }
+
+  /* Power click bar */
+  .power-bar {
+    width: 100%;
+    height: 50px;
+    background: #1a0014;
+    border: 3px solid #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 18px 0;
+    position: relative;
+  }
+  .power-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff004d, #ff8500, #ffec27);
+    width: 0%;
+    transition: width 0.05s;
+  }
+  .power-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 0 4px #000;
+  }
+
+  /* Reaction circle */
+  .reaction {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 20px auto;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.05s;
+  }
+  .reaction.wait { background: #ff004d; }
+  .reaction.go { background: #00e436; }
+  .reaction.done { background: #ffec27; color: #000; }
+
+  /* Mash button */
+  .mash-btn {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff4477, #aa0033);
+    border: 6px solid #fff;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 8px 0 #660020, 0 0 30px rgba(255,0,77,0.5);
+    transition: transform 0.05s;
+    margin: 20px auto;
+    display: block;
+  }
+  .mash-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 #660020, 0 0 30px rgba(255,0,77,0.5);
+  }
+
+  /* Memory grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 320px;
+    margin: 20px auto;
+  }
+  .cell {
+    aspect-ratio: 1;
+    background: #1a0014;
+    border: 2px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: transparent;
+  }
+  .cell.lit { background: #ffec27; border-color: #ff8500; box-shadow: 0 0 20px #ffec27; }
+  .cell.correct { background: #00e436; border-color: #00ff66; }
+  .cell.wrong { background: #ff004d; border-color: #ff77a8; }
+
+  button.action {
+    background: #ff004d;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 8px;
+  }
+  button.action:hover { background: #ff77a8; }
+
+  .result {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
+    color: #ffec27;
+    margin: 14px 0;
+    min-height: 24px;
+  }
+
+  .rank {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    margin-top: 14px;
+    text-shadow: 0 0 16px currentColor;
+  }
+
+  .test-list {
+    max-width: 700px;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+  .test-list .row { padding: 4px 0; display: flex; justify-content: space-between; }
+  .test-list .row.done { color: #00e436; }
+  .test-list .row.pending { color: #888; }
+  .test-list .row.current { color: #ffec27; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← ARCADE</a>
+
+<h1>Markus er svag</h1>
+<div class="subtitle">★ STRENGTH TEST ★</div>
+
+<div class="stats">
+  TEST: <span id="testNum">1/4</span>
+  TOTAL POWER: <span id="power">0</span>
+</div>
+
+<div class="arena" id="arena">
+  <div class="test-name" id="testName">READY?</div>
+  <div class="test-instruction" id="testInstr">Click START to begin the strength test</div>
+  <div id="content"></div>
+  <div class="result" id="result"></div>
+  <button class="action" id="startBtn">START TEST</button>
+</div>
+
+<div class="test-list">
+  <div class="row" id="r0"><span>1. POWER CLICK</span><span class="status">pending</span></div>
+  <div class="row" id="r1"><span>2. REACTION TIME</span><span class="status">pending</span></div>
+  <div class="row" id="r2"><span>3. BUTTON MASH</span><span class="status">pending</span></div>
+  <div class="row" id="r3"><span>4. MEMORY</span><span class="status">pending</span></div>
+</div>
+
+<script>
+'use strict';
+
+const arena = document.getElementById('arena');
+const testName = document.getElementById('testName');
+const testInstr = document.getElementById('testInstr');
+const content = document.getElementById('content');
+const result = document.getElementById('result');
+const startBtn = document.getElementById('startBtn');
+const testNumEl = document.getElementById('testNum');
+const powerEl = document.getElementById('power');
+
+let state = 'idle';
+let currentTest = 0;
+let totalPower = 0;
+let testScores = [];
+
+const tests = ['POWER CLICK', 'REACTION TIME', 'BUTTON MASH', 'MEMORY'];
+
+function updateList() {
+  for (let i = 0; i < 4; i++) {
+    const r = document.getElementById('r' + i);
+    r.classList.remove('done', 'pending', 'current');
+    const status = r.querySelector('.status');
+    if (i < currentTest) {
+      r.classList.add('done');
+      status.textContent = '✓ ' + (testScores[i] || 0);
+    } else if (i === currentTest && state !== 'idle') {
+      r.classList.add('current');
+      status.textContent = '▶';
+    } else {
+      r.classList.add('pending');
+      status.textContent = 'pending';
+    }
+  }
+}
+
+function startTest() {
+  if (currentTest >= 4) {
+    // Restart
+    currentTest = 0;
+    totalPower = 0;
+    testScores = [];
+    powerEl.textContent = '0';
+  }
+  startBtn.style.display = 'none';
+  result.textContent = '';
+  testNumEl.textContent = (currentTest + 1) + '/4';
+  updateList();
+
+  const t = tests[currentTest];
+  if (t === 'POWER CLICK') startPowerClick();
+  else if (t === 'REACTION TIME') startReaction();
+  else if (t === 'BUTTON MASH') startMash();
+  else if (t === 'MEMORY') startMemory();
+}
+
+startBtn.addEventListener('click', startTest);
+
+function finishTest(score, label) {
+  testScores[currentTest] = score;
+  totalPower += score;
+  powerEl.textContent = totalPower;
+  result.textContent = label;
+  currentTest++;
+  updateList();
+  if (currentTest < 4) {
+    startBtn.textContent = 'NEXT TEST →';
+  } else {
+    showFinal();
+    return;
+  }
+  startBtn.style.display = 'inline-block';
+}
+
+function showFinal() {
+  content.innerHTML = '';
+  testName.textContent = 'FINAL VERDICT';
+  testInstr.textContent = 'Total power: ' + totalPower;
+
+  let rank, color;
+  if (totalPower < 200) { rank = 'TOTAL JOBBER'; color = '#ff004d'; }
+  else if (totalPower < 400) { rank = 'WEAK'; color = '#ff8500'; }
+  else if (totalPower < 600) { rank = 'AVERAGE'; color = '#ffec27'; }
+  else if (totalPower < 800) { rank = 'STRONG'; color = '#00e436'; }
+  else if (totalPower < 1000) { rank = 'BEAST'; color = '#29adff'; }
+  else { rank = 'GIGACHAD'; color = '#ff77a8'; }
+
+  result.innerHTML = `<div class="rank" style="color:${color}">${rank}</div>`;
+  startBtn.textContent = 'RESTART';
+  startBtn.style.display = 'inline-block';
+}
+
+// ========== TEST 1: POWER CLICK ==========
+let powerLevel = 0, powerActive = false, powerTimer = 0;
+function startPowerClick() {
+  testName.textContent = 'POWER CLICK';
+  testInstr.textContent = 'Mash SPACE or click to charge the bar to MAX in 5 seconds!';
+  powerLevel = 0;
+  powerActive = true;
+  powerTimer = 300; // 5 seconds at 60fps
+  content.innerHTML = `
+    <div class="power-bar">
+      <div class="power-fill" id="pfill"></div>
+      <div class="power-label" id="plabel">0%</div>
+    </div>
+    <button class="action" id="powerBtn" style="font-size:22px;padding:24px 60px;">SMASH!</button>
+  `;
+  const fill = document.getElementById('pfill');
+  const label = document.getElementById('plabel');
+  const btn = document.getElementById('powerBtn');
+
+  const tick = () => {
+    if (!powerActive) return;
+    powerTimer--;
+    powerLevel = Math.max(0, powerLevel - 0.8); // decays
+    fill.style.width = Math.min(100, powerLevel) + '%';
+    label.textContent = Math.floor(powerLevel) + '%';
+    if (powerTimer <= 0) {
+      powerActive = false;
+      const score = Math.floor(powerLevel * 3);
+      finishTest(score, `You hit ${Math.floor(powerLevel)}% → ${score} pts`);
+      return;
+    }
+    requestAnimationFrame(tick);
+  };
+  tick();
+
+  const onPress = (e) => {
+    if (!powerActive) return;
+    if (e.type === 'keydown' && e.key !== ' ') return;
+    if (e.type === 'keydown') e.preventDefault();
+    powerLevel = Math.min(100, powerLevel + 3.2);
+  };
+  btn.addEventListener('click', onPress);
+  btn.addEventListener('touchstart', onPress, { passive: false });
+  document.addEventListener('keydown', onPress);
+
+  // Cleanup later
+  const cleanup = setInterval(() => {
+    if (!powerActive) {
+      document.removeEventListener('keydown', onPress);
+      clearInterval(cleanup);
+    }
+  }, 100);
+}
+
+// ========== TEST 2: REACTION TIME ==========
+let reactStart = 0, reactActive = false;
+function startReaction() {
+  testName.textContent = 'REACTION TIME';
+  testInstr.textContent = 'Click the circle when it turns GREEN. Don\'t click early!';
+  content.innerHTML = `<div class="reaction wait" id="rcirc">WAIT...</div>`;
+  const c = document.getElementById('rcirc');
+  reactActive = true;
+  let timedOut = false;
+  const delay = 1500 + Math.random() * 3000;
+  let waitId = setTimeout(() => {
+    if (!reactActive) return;
+    c.classList.remove('wait');
+    c.classList.add('go');
+    c.textContent = 'CLICK!';
+    reactStart = performance.now();
+  }, delay);
+
+  const onClick = () => {
+    if (!reactActive) return;
+    if (c.classList.contains('wait')) {
+      reactActive = false;
+      clearTimeout(waitId);
+      c.classList.remove('wait');
+      c.classList.add('done');
+      c.textContent = 'TOO EARLY';
+      setTimeout(() => finishTest(0, 'Too early — 0 pts'), 800);
+      return;
+    }
+    if (c.classList.contains('go')) {
+      const t = performance.now() - reactStart;
+      reactActive = false;
+      c.classList.remove('go');
+      c.classList.add('done');
+      c.textContent = Math.round(t) + ' ms';
+      // Score: 250 max (at 100ms or less), 0 at 600ms or more
+      const score = Math.max(0, Math.min(250, Math.round((600 - t) / 2)));
+      setTimeout(() => finishTest(score, `${Math.round(t)}ms → ${score} pts`), 800);
+    }
+  };
+  c.addEventListener('click', onClick);
+  c.addEventListener('touchstart', e => { e.preventDefault(); onClick(); }, { passive: false });
+}
+
+// ========== TEST 3: BUTTON MASH ==========
+let mashCount = 0, mashTimer = 0, mashActive = false;
+function startMash() {
+  testName.textContent = 'BUTTON MASH';
+  testInstr.textContent = 'Press the button as many times as you can in 5 seconds!';
+  mashCount = 0;
+  mashTimer = 300;
+  mashActive = true;
+  content.innerHTML = `
+    <div style="font-size:32px;color:#ffec27;font-family:'Press Start 2P',monospace;margin-top:8px;" id="mashCount">0</div>
+    <div style="font-size:18px;color:#fff;margin-top:4px;" id="mashTime">5.0s</div>
+    <button class="mash-btn" id="mashBtn">SMASH</button>
+  `;
+  const cEl = document.getElementById('mashCount');
+  const tEl = document.getElementById('mashTime');
+  const b = document.getElementById('mashBtn');
+
+  const onPress = (e) => {
+    if (!mashActive) return;
+    if (e.type === 'keydown' && e.key !== ' ') return;
+    if (e.type === 'keydown') e.preventDefault();
+    mashCount++;
+    cEl.textContent = mashCount;
+  };
+  b.addEventListener('mousedown', onPress);
+  b.addEventListener('touchstart', e => { e.preventDefault(); onPress(e); }, { passive: false });
+  document.addEventListener('keydown', onPress);
+
+  const tick = () => {
+    if (!mashActive) return;
+    mashTimer--;
+    tEl.textContent = (mashTimer / 60).toFixed(1) + 's';
+    if (mashTimer <= 0) {
+      mashActive = false;
+      document.removeEventListener('keydown', onPress);
+      const score = mashCount * 5;
+      finishTest(score, `${mashCount} clicks → ${score} pts`);
+      return;
+    }
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+// ========== TEST 4: MEMORY ==========
+let memorySeq = [], memoryInput = [], memoryLevel = 0, memoryScore = 0;
+function startMemory() {
+  testName.textContent = 'MEMORY';
+  testInstr.textContent = 'Repeat the pattern. Each round adds one step.';
+  memorySeq = [];
+  memoryInput = [];
+  memoryLevel = 0;
+  memoryScore = 0;
+  content.innerHTML = `<div class="grid" id="grid"></div><div id="memInfo" style="font-size:18px;color:#ffec27;margin-top:8px;">Watch carefully...</div>`;
+  const grid = document.getElementById('grid');
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.idx = i;
+    cell.addEventListener('click', () => onCellClick(i));
+    cell.addEventListener('touchstart', e => { e.preventDefault(); onCellClick(i); }, { passive: false });
+    grid.appendChild(cell);
+  }
+  nextRound();
+}
+
+function nextRound() {
+  memoryLevel++;
+  memoryInput = [];
+  memorySeq.push(Math.floor(Math.random() * 9));
+  document.getElementById('memInfo').textContent = 'Round ' + memoryLevel + ' — watch';
+  playSequence();
+}
+
+function playSequence() {
+  const cells = document.querySelectorAll('.cell');
+  let i = 0;
+  const next = () => {
+    if (i >= memorySeq.length) {
+      document.getElementById('memInfo').textContent = 'Your turn!';
+      return;
+    }
+    const idx = memorySeq[i];
+    cells[idx].classList.add('lit');
+    setTimeout(() => {
+      cells[idx].classList.remove('lit');
+      setTimeout(next, 200);
+    }, 400);
+    i++;
+  };
+  setTimeout(next, 500);
+}
+
+function onCellClick(idx) {
+  if (memoryInput.length >= memorySeq.length) return;
+  const cells = document.querySelectorAll('.cell');
+  const expected = memorySeq[memoryInput.length];
+  if (idx === expected) {
+    memoryInput.push(idx);
+    cells[idx].classList.add('correct');
+    setTimeout(() => cells[idx].classList.remove('correct'), 250);
+    if (memoryInput.length === memorySeq.length) {
+      memoryScore += memoryLevel * 20;
+      if (memoryLevel >= 8) {
+        finishTest(memoryScore, `Round ${memoryLevel} cleared! ${memoryScore} pts`);
+      } else {
+        setTimeout(nextRound, 700);
+      }
+    }
+  } else {
+    cells[idx].classList.add('wrong');
+    document.getElementById('memInfo').textContent = 'WRONG!';
+    setTimeout(() => finishTest(memoryScore, `Failed at round ${memoryLevel} → ${memoryScore} pts`), 800);
+  }
+}
+
+updateList();
+</script>
+
+</body>
+</html>
