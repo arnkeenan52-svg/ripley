@@ -6,6 +6,7 @@
 <title>Slope — Markus er milf enjoyer</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
@@ -15,69 +16,123 @@
     color: #fff;
     overflow: hidden;
   }
+
   body {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 20px; min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    min-height: 100vh;
   }
+
   .back {
-    position: fixed; top: 20px; left: 20px;
+    position: fixed;
+    top: 16px; left: 16px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 11px; color: #000; background: #00e436;
-    padding: 8px 14px; border-radius: 4px; text-decoration: none;
+    font-size: 11px;
+    color: #000;
+    background: #00e436;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
     z-index: 100;
   }
+
   h1 {
     font-family: 'Press Start 2P', monospace;
-    font-size: clamp(18px, 5vw, 38px);
-    margin-bottom: 8px; text-align: center; letter-spacing: 2px;
-    background: linear-gradient(90deg, #00e436 0%, #29adff 50%, #ff77a8 100%);
+    font-size: clamp(14px, 3.5vw, 26px);
+    margin-bottom: 2px;
+    text-align: center;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #00ff44 0%, #29adff 50%, #ff77a8 100%);
     background-size: 200% auto;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     animation: rainbow 4s linear infinite;
   }
   @keyframes rainbow { to { background-position: 200% center; } }
+
   .subtitle {
-    font-size: 20px; color: #00e436; margin-bottom: 12px;
-    letter-spacing: 4px; text-align: center;
+    font-size: 16px;
+    color: #00ff44;
+    margin-bottom: 8px;
+    letter-spacing: 3px;
   }
+
   .hud {
-    display: flex; gap: 30px;
+    display: flex;
+    gap: 22px;
     font-family: 'Press Start 2P', monospace;
-    font-size: 12px; margin-bottom: 10px; color: #00e436;
+    font-size: 11px;
+    margin-bottom: 6px;
+    color: #00ff44;
   }
   .hud span { color: #fff; }
-  canvas {
+
+  #wrap {
+    position: relative;
+    border: 3px solid #00ff44;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,255,68,.5);
     background: #000;
-    border: 4px solid #00e436;
-    border-radius: 8px;
-    box-shadow: 0 0 40px rgba(0,228,54,.6);
-    display: block; max-width: 100%; height: auto;
-    outline: none;
   }
+  canvas { display: block; }
+
+  #hint {
+    position: absolute;
+    top: 14px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    color: #00ff44;
+    text-shadow: 0 0 6px #00ff44, 0 0 12px #00ff44;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.5s;
+  }
+
   .controls {
-    margin-top: 10px; font-size: 18px; color: #aaa; text-align: center;
+    margin-top: 8px;
+    font-size: 16px;
+    color: #aaa;
   }
   .controls kbd {
     background: #222; border: 1px solid #444; border-radius: 4px;
-    padding: 1px 7px; color: #00e436;
+    padding: 1px 7px; color: #00ff44;
   }
+
   #overlay {
-    position: fixed; inset: 0;
+    position: fixed;
+    inset: 0;
     background: rgba(0,0,0,0.85);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 50;
     font-family: 'Press Start 2P', monospace;
+    text-align: center;
+    padding: 20px;
   }
   #overlay h2 {
-    color: #ff004d; font-size: 32px; margin-bottom: 16px;
-    text-shadow: 0 0 20px #ff004d;
+    color: #ff0033;
+    font-size: 28px;
+    margin-bottom: 16px;
+    text-shadow: 0 0 20px #ff0033;
   }
-  #overlay p { color: #fff; font-size: 14px; margin-bottom: 24px; text-align: center; }
+  #overlay p { color: #fff; font-size: 13px; margin-bottom: 20px; }
   #overlay button {
-    background: #00e436; color: #000; border: none;
+    background: #00ff44;
+    color: #000;
+    border: none;
     padding: 14px 28px;
-    font-family: 'Press Start 2P', monospace; font-size: 14px;
-    border-radius: 6px; cursor: pointer;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
   }
   #overlay button:hover { background: #29adff; }
 </style>
@@ -95,452 +150,351 @@
   SPEED: <span id="spd">1.0x</span>
 </div>
 
-<canvas id="game" width="700" height="500" tabindex="0"></canvas>
+<div id="wrap">
+  <div id="hint">steer with arrows, a/d or q/d</div>
+</div>
 
 <div class="controls">
-  <kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> to steer · don't fall off · avoid red blocks
+  <kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd>
 </div>
 
 <div id="overlay">
   <h2>SLOPE</h2>
-  <p>Roll down the slope as far as you can.<br>Don't fall off the edges, don't hit red blocks.</p>
+  <p>Run down the tunnel. Avoid the red wireframes.</p>
   <button id="startBtn">START</button>
 </div>
 
-<script>
-'use strict';
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
 
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
+<script type="module">
+import * as THREE from 'three';
+
+const wrap = document.getElementById('wrap');
 const scoreEl = document.getElementById('score');
 const bestEl = document.getElementById('best');
 const spdEl = document.getElementById('spd');
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startBtn');
+const hint = document.getElementById('hint');
 
-const W = canvas.width;
-const H = canvas.height;
+// === Setup ===
+function getSize() {
+  const w = Math.min(900, window.innerWidth - 30);
+  const h = Math.min(560, Math.max(400, window.innerHeight - 220));
+  return { w, h };
+}
+let { w: W, h: H } = getSize();
 
-// === 3D-ish perspective projection ===
-// World: ball at origin, z increases ahead. Track is along z-axis.
-// Camera is slightly above and behind the ball, looking down the track.
-// We project (x, y, z) to screen using perspective.
-const FOCAL = 320;       // focal length
-const CAM_HEIGHT = 2.2;  // camera height above track
-const CAM_BACK = 2.5;    // camera distance behind ball
-const TRACK_HALF = 4.0;  // half-width of the track in world units
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
+scene.fog = new THREE.Fog(0x000000, 25, 90);
 
-function project(x, y, z) {
-  // Translate world so camera is at origin
-  // Camera at (0, CAM_HEIGHT, -CAM_BACK)
-  const cz = z + CAM_BACK;     // distance ahead of camera
-  const cy = y - CAM_HEIGHT;   // height relative to camera (negative = below)
-  if (cz <= 0.1) return null;
-  const sx = W/2 + (x * FOCAL / cz);
-  const sy = H/2 - (cy * FOCAL / cz);
-  return { sx, sy, scale: FOCAL / cz };
+const camera = new THREE.PerspectiveCamera(75, W / H, 0.1, 200);
+camera.position.set(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(W, H);
+renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+wrap.appendChild(renderer.domElement);
+
+// === Tunnel geometry ===
+// We make a "tunnel" using thick line tubes:
+//  - GREEN rings at regular Z intervals (cross-section octagons)
+//  - GREEN longitudinal lines along the top/bottom of the tunnel
+//  - RED longitudinal "walls" along the left/right sides (these are the obstacles to avoid)
+// Player position = angle around the tunnel. We rotate the tunnel so the player's
+// angle appears at the bottom of the camera view.
+
+const TUNNEL_RADIUS = 6;
+const TUNNEL_LENGTH = 300;
+const RING_SPACING = 3;       // rings every 3 units
+const RING_COUNT = Math.floor(TUNNEL_LENGTH / RING_SPACING);
+const SIDES = 8;              // octagon
+
+const tunnelGroup = new THREE.Group();
+scene.add(tunnelGroup);
+
+// Material: glowing green for tunnel mesh
+const greenMat = new THREE.LineBasicMaterial({ color: 0x00ff44 });
+const redMat = new THREE.LineBasicMaterial({ color: 0xff0033 });
+
+// Build the green octagonal rings + green longitudinal lines along TOP and BOTTOM
+const greenPositions = [];
+
+// Rings — all 8 sides drawn green
+for (let i = 0; i <= RING_COUNT; i++) {
+  const z = -i * RING_SPACING;
+  for (let s = 0; s < SIDES; s++) {
+    const a1 = (s / SIDES) * Math.PI * 2 + Math.PI / SIDES; // offset so flat side is at bottom
+    const a2 = ((s + 1) / SIDES) * Math.PI * 2 + Math.PI / SIDES;
+    const x1 = Math.cos(a1) * TUNNEL_RADIUS;
+    const y1 = Math.sin(a1) * TUNNEL_RADIUS;
+    const x2 = Math.cos(a2) * TUNNEL_RADIUS;
+    const y2 = Math.sin(a2) * TUNNEL_RADIUS;
+    greenPositions.push(x1, y1, z, x2, y2, z);
+  }
 }
 
+// Longitudinal lines — GREEN at top half, RED at bottom-left and bottom-right (the walls)
+const redPositions = [];
+for (let s = 0; s < SIDES; s++) {
+  const a = (s / SIDES) * Math.PI * 2 + Math.PI / SIDES;
+  const x = Math.cos(a) * TUNNEL_RADIUS;
+  const y = Math.sin(a) * TUNNEL_RADIUS;
+  // Determine whether this seam is a "wall" (red) or normal (green)
+  // The bottom of the tunnel is at angle = -PI/2 (south).
+  // The two seams adjacent to the bottom — and the floor itself — should NOT be red.
+  // We'll mark the two side walls (angles closest to ±0 and ±PI) as red.
+  // For an octagon with the offset, seams are at PI/8, 3PI/8, 5PI/8, 7PI/8, 9PI/8, 11PI/8, 13PI/8, 15PI/8
+  // The "side walls" are at angles closest to 0 (right) and PI (left): 15PI/8 (≈ -PI/8) & PI/8 on the right; 7PI/8 & 9PI/8 on the left.
+  // So sides s=0,1 (right) and s=4,5 (left top) should be... let's actually pick by angle:
+  const aMod = ((a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+  // Red if angle is roughly horizontal (near 0 or PI)
+  const distFromHoriz = Math.min(
+    Math.abs(aMod),
+    Math.abs(aMod - Math.PI),
+    Math.abs(aMod - Math.PI * 2)
+  );
+  const isRed = distFromHoriz < Math.PI / 4;
+
+  for (let i = 0; i < RING_COUNT; i++) {
+    const z1 = -i * RING_SPACING;
+    const z2 = -(i + 1) * RING_SPACING;
+    if (isRed) {
+      redPositions.push(x, y, z1, x, y, z2);
+    } else {
+      greenPositions.push(x, y, z1, x, y, z2);
+    }
+  }
+}
+
+const greenGeom = new THREE.BufferGeometry();
+greenGeom.setAttribute('position', new THREE.Float32BufferAttribute(greenPositions, 3));
+tunnelGroup.add(new THREE.LineSegments(greenGeom, greenMat));
+
+const redGeom = new THREE.BufferGeometry();
+redGeom.setAttribute('position', new THREE.Float32BufferAttribute(redPositions, 3));
+tunnelGroup.add(new THREE.LineSegments(redGeom, redMat));
+
+// === Obstacles ===
+// Red wireframe barriers blocking part of the tunnel circumference. Player has to be
+// at a different angle to pass through.
+const obstacles = [];
+
+function makeObstacle(z) {
+  // Place obstacle on the floor area (avoid the side walls) for visibility.
+  // Random angle in the lower half of the tunnel.
+  const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 0.8;
+  const arcWidth = 0.7 + Math.random() * 0.6;
+  const depth = 1.2;
+
+  const positions = [];
+  const segs = 6;
+
+  // Front ring (z = z) — arc segment
+  for (let i = 0; i < segs; i++) {
+    const a1 = angle - arcWidth/2 + (i / segs) * arcWidth;
+    const a2 = angle - arcWidth/2 + ((i + 1) / segs) * arcWidth;
+    const x1 = Math.cos(a1) * TUNNEL_RADIUS;
+    const y1 = Math.sin(a1) * TUNNEL_RADIUS;
+    const x2 = Math.cos(a2) * TUNNEL_RADIUS;
+    const y2 = Math.sin(a2) * TUNNEL_RADIUS;
+    // Front edge
+    positions.push(x1, y1, z, x2, y2, z);
+    // Back edge
+    positions.push(x1, y1, z - depth, x2, y2, z - depth);
+  }
+  // Vertical bars
+  for (let i = 0; i <= segs; i++) {
+    const a = angle - arcWidth/2 + (i / segs) * arcWidth;
+    const x = Math.cos(a) * TUNNEL_RADIUS;
+    const y = Math.sin(a) * TUNNEL_RADIUS;
+    positions.push(x, y, z, x, y, z - depth);
+  }
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  const lines = new THREE.LineSegments(geom, redMat);
+  lines.userData = { angle, arc: arcWidth };
+  scene.add(lines);
+  obstacles.push(lines);
+}
+
+// === Player ball ===
+// Wireframe sphere at the bottom-center of the camera view.
+const ballGeom = new THREE.SphereGeometry(1.0, 16, 10);
+const ballEdges = new THREE.WireframeGeometry(ballGeom);
+const ballWire = new THREE.LineSegments(ballEdges, new THREE.LineBasicMaterial({ color: 0x00ff44 }));
+scene.add(ballWire);
+
 // === Game state ===
-let best = +(localStorage.getItem('slopeBest2') || 0);
+let best = +(localStorage.getItem('slopeBestV3') || 0);
 bestEl.textContent = best;
 
 let state = 'menu';
-let score = 0;
-let speed;
-let ballX, ballVX;
-let frame;
-let obstacles;
-let particles;
-let cameraZ;
-let trackSeed = 0;
+let playerAngle = -Math.PI / 2;   // bottom of tunnel
+let playerAngleV = 0;
+let speed = 0.35;
+let distance = 0;
+let frame = 0;
+let nextObstacleZ = 30;
+let tunnelOffset = 0;             // how far the tunnel has scrolled (mod RING_SPACING)
 
 const keys = {};
 window.addEventListener('keydown', e => {
   keys[e.key.toLowerCase()] = true;
-  if (['arrowleft','arrowright','a','d'].includes(e.key.toLowerCase())) e.preventDefault();
+  if (['arrowleft','arrowright','a','d','q'].includes(e.key.toLowerCase())) e.preventDefault();
 });
 window.addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
 
-let touchSide = 0;
-canvas.addEventListener('touchstart', e => {
-  const r = canvas.getBoundingClientRect();
-  const x = e.touches[0].clientX - r.left;
-  touchSide = x < r.width / 2 ? -1 : 1;
+// Touch — drag left/right to steer
+let touchStartX = null;
+renderer.domElement.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX;
   e.preventDefault();
 }, {passive: false});
-canvas.addEventListener('touchend', () => { touchSide = 0; });
-
-function reset() {
-  score = 0;
-  speed = 0.25;
-  ballX = 0; ballVX = 0;
-  obstacles = [];
-  particles = [];
-  cameraZ = 0;
-  frame = 0;
-  trackSeed = 0;
-  state = 'playing';
-  overlay.style.display = 'none';
-  canvas.focus();
-}
+renderer.domElement.addEventListener('touchmove', e => {
+  if (touchStartX === null) return;
+  const dx = e.touches[0].clientX - touchStartX;
+  playerAngleV += dx * 0.0012;
+  touchStartX = e.touches[0].clientX;
+  e.preventDefault();
+}, {passive: false});
+renderer.domElement.addEventListener('touchend', () => { touchStartX = null; });
 
 startBtn.addEventListener('click', reset);
 
-function spawnObstacles() {
-  // Generate obstacles up to some look-ahead distance
-  while (trackSeed < cameraZ + 50) {
-    const z = trackSeed;
-    const r = Math.random();
-    if (r < 0.55) {
-      // Red block
-      const x = (Math.random() * 2 - 1) * (TRACK_HALF - 0.7);
-      obstacles.push({ type: 'block', x, z, w: 0.6 + Math.random() * 0.3 });
-    } else if (r < 0.85) {
-      // Hole / gap (missing piece of track)
-      const xCenter = (Math.random() * 2 - 1) * (TRACK_HALF - 1);
-      obstacles.push({ type: 'gap', x: xCenter, z, w: 1.0 + Math.random() * 0.8 });
-    }
-    // else nothing — clear stretch
-    trackSeed += 2.5 + Math.random() * 2;
-  }
+function reset() {
+  state = 'playing';
+  playerAngle = -Math.PI / 2;
+  playerAngleV = 0;
+  speed = 0.35;
+  distance = 0;
+  frame = 0;
+  tunnelOffset = 0;
+  nextObstacleZ = 30;
+  for (const o of obstacles) scene.remove(o);
+  obstacles.length = 0;
+  overlay.style.display = 'none';
+  hint.style.opacity = '1';
+  setTimeout(() => { hint.style.opacity = '0'; }, 2500);
+}
+
+function angleDiff(a, b) {
+  let d = a - b;
+  while (d > Math.PI) d -= Math.PI * 2;
+  while (d < -Math.PI) d += Math.PI * 2;
+  return d;
 }
 
 function update() {
   frame++;
 
-  // Steering
+  // Steering input
   let steer = 0;
-  if (keys.arrowleft || keys.a) steer -= 1;
+  if (keys.arrowleft || keys.a || keys.q) steer -= 1;
   if (keys.arrowright || keys.d) steer += 1;
-  steer += touchSide;
+  playerAngleV += steer * 0.009;
+  playerAngleV *= 0.88;
+  if (Math.abs(playerAngleV) > 0.12) playerAngleV = Math.sign(playerAngleV) * 0.12;
+  playerAngle += playerAngleV;
 
-  ballVX += steer * 0.018;
-  ballVX *= 0.88;
-  ballX += ballVX;
+  // Speed and distance
+  speed += 0.0005;
+  distance += speed;
+  tunnelOffset = (tunnelOffset + speed) % RING_SPACING;
 
-  // Off the edge of the track?
-  if (Math.abs(ballX) > TRACK_HALF) {
-    die('fell off');
-    return;
+  // Spawn obstacles ahead
+  while (nextObstacleZ < distance + 60) {
+    // The obstacle Z in world: it's placed far ahead, and as `distance` grows it
+    // moves closer to z=0 (camera position).
+    makeObstacle(-(nextObstacleZ - distance));
+    nextObstacleZ += 8 + Math.random() * 6;
   }
 
-  // Move forward
-  cameraZ += speed;
-  speed += 0.00035; // gradually faster
-  score = Math.floor(cameraZ * 2);
-
-  spawnObstacles();
-
-  // Check obstacles near ball
+  // Move obstacles toward camera
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
-    const dz = o.z - cameraZ;
-    if (dz < -3) { obstacles.splice(i, 1); continue; }
-
-    // Ball is at z=cameraZ + 0 (ball is at origin in our world relative to camera-following)
-    // Actually we're tracking ball at world-z = cameraZ; collision when |dz| small
-    if (Math.abs(dz) < 0.4) {
-      if (o.type === 'block') {
-        if (Math.abs(o.x - ballX) < o.w * 0.5 + 0.4) {
-          die('hit block');
-          return;
-        }
-      } else if (o.type === 'gap') {
-        // If ball x is inside the gap, ball falls through
-        if (Math.abs(o.x - ballX) < o.w * 0.5) {
-          die('fell in hole');
-          return;
-        }
+    o.position.z += speed;
+    if (o.position.z > 5) {
+      scene.remove(o);
+      obstacles.splice(i, 1);
+      continue;
+    }
+    // Collision at z=0
+    if (o.position.z > -0.8 && o.position.z < 0.8) {
+      const diff = Math.abs(angleDiff(playerAngle, o.userData.angle));
+      if (diff < o.userData.arc / 2 + 0.15) {
+        return die();
       }
     }
   }
 
-  // Particle trail
-  if (frame % 2 === 0) {
-    particles.push({
-      x: ballX + (Math.random() - 0.5) * 0.2,
-      z: -0.3 - Math.random() * 0.4,
-      life: 25
-    });
-  }
-  for (let i = particles.length - 1; i >= 0; i--) {
-    particles[i].life--;
-    if (particles[i].life <= 0) particles.splice(i, 1);
-  }
+  // Rotate the tunnel so the player angle appears at the bottom of the view.
+  // We want playerAngle's location to render at world angle = -PI/2.
+  // So we rotate the scene around Z by (-PI/2 - playerAngle).
+  const rotZ = -Math.PI / 2 - playerAngle;
+  tunnelGroup.rotation.z = rotZ;
+  for (const o of obstacles) o.rotation.z = rotZ;
 
-  spdEl.textContent = (speed / 0.25).toFixed(1) + 'x';
+  // Scroll the tunnel: shift it so rings appear to come toward us.
+  // We move tunnelGroup forward, but wrap modulo RING_SPACING so it loops infinitely.
+  tunnelGroup.position.z = tunnelOffset;
+
+  // Camera bob and slight roll for vertigo feel
+  const roll = -playerAngleV * 5;
+  camera.position.set(0, 0, 0);
+  camera.rotation.set(0, 0, roll);
+
+  // Ball: render at the bottom center of view, with a small bounce
+  const bounce = Math.sin(frame * 0.4) * 0.05;
+  ballWire.position.set(0, -TUNNEL_RADIUS + 1.2 + bounce, -5);
+  // Counter-rotate the ball to undo the camera roll so it stays upright visually
+  ballWire.rotation.z = -roll;
+  // Spin the ball for rolling effect
+  ballWire.rotation.x += speed * 0.2;
+
+  // HUD
+  scoreEl.textContent = Math.floor(distance * 5);
+  spdEl.textContent = (speed / 0.35).toFixed(1) + 'x';
 }
 
 function die() {
   state = 'dead';
+  const score = Math.floor(distance * 5);
   if (score > best) {
     best = score;
-    localStorage.setItem('slopeBest2', best);
+    localStorage.setItem('slopeBestV3', best);
     bestEl.textContent = best;
   }
   overlay.style.display = 'flex';
   document.querySelector('#overlay h2').textContent = 'GAME OVER';
-  document.querySelector('#overlay p').innerHTML = `Score: <b>${score}</b><br>Best: <b>${best}</b>`;
+  document.querySelector('#overlay p').textContent =
+    `Score: ${score} — Best: ${best}`;
   startBtn.textContent = 'TRY AGAIN';
-}
-
-// === RENDERING ===
-
-function drawSky() {
-  const g = ctx.createLinearGradient(0, 0, 0, H/2);
-  g.addColorStop(0, '#001122');
-  g.addColorStop(1, '#000');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, W, H/2);
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, H/2, W, H/2);
-}
-
-// Returns true if there's a gap covering x at given z
-function isGapAt(x, z) {
-  for (const o of obstacles) {
-    if (o.type !== 'gap') continue;
-    if (Math.abs(o.z - z) < 0.4) {
-      if (Math.abs(o.x - x) < o.w * 0.5) return true;
-    }
-  }
-  return false;
-}
-
-function drawTrack() {
-  // We draw the track as a series of trapezoidal slices from far to near.
-  // Each slice is a rectangle in world space from z=zNear..zFar, x=-TH..TH, y=0.
-  const NUM_SLICES = 30;
-  const SLICE_DEPTH = 1.5;
-  const farZ = cameraZ + NUM_SLICES * SLICE_DEPTH;
-
-  for (let i = NUM_SLICES - 1; i >= 0; i--) {
-    const zFar = cameraZ + (i + 1) * SLICE_DEPTH;
-    const zNear = cameraZ + i * SLICE_DEPTH;
-
-    // The strip is divided across X to check for gaps
-    // Approach: sample several x positions across the strip, draw rectangles for non-gap segments
-    const SAMPLES = 24;
-    let runStart = null;
-    for (let s = 0; s <= SAMPLES; s++) {
-      const x = -TRACK_HALF + (s / SAMPLES) * (TRACK_HALF * 2);
-      const zMid = (zNear + zFar) / 2;
-      const isGap = isGapAt(x, zMid);
-      if (!isGap && runStart === null) runStart = x;
-      if ((isGap || s === SAMPLES) && runStart !== null) {
-        const runEnd = isGap ? (-TRACK_HALF + ((s - 0.5) / SAMPLES) * (TRACK_HALF * 2)) : TRACK_HALF;
-        // Draw a slice from runStart..runEnd at z zNear..zFar (relative to camera)
-        const relNear = zNear - cameraZ;
-        const relFar = zFar - cameraZ;
-        const p1 = project(runStart, 0, relNear);
-        const p2 = project(runEnd, 0, relNear);
-        const p3 = project(runEnd, 0, relFar);
-        const p4 = project(runStart, 0, relFar);
-        if (p1 && p2 && p3 && p4) {
-          // Stripe pattern
-          const stripeIdx = Math.floor(zNear * 0.6);
-          const dark = stripeIdx % 2 === 0;
-          ctx.fillStyle = dark ? '#1a1a44' : '#26266a';
-          ctx.beginPath();
-          ctx.moveTo(p1.sx, p1.sy);
-          ctx.lineTo(p2.sx, p2.sy);
-          ctx.lineTo(p3.sx, p3.sy);
-          ctx.lineTo(p4.sx, p4.sy);
-          ctx.closePath();
-          ctx.fill();
-        }
-        runStart = null;
-      }
-    }
-  }
-
-  // Glowing edges of the track
-  ctx.shadowColor = '#00e436';
-  ctx.shadowBlur = 18;
-  ctx.strokeStyle = '#00e436';
-  ctx.lineWidth = 3;
-
-  for (let side = -1; side <= 1; side += 2) {
-    ctx.beginPath();
-    const STEPS = 50;
-    for (let i = 0; i <= STEPS; i++) {
-      const z = (i / STEPS) * NUM_SLICES * SLICE_DEPTH;
-      const p = project(side * TRACK_HALF, 0, z);
-      if (!p) continue;
-      if (i === 0) ctx.moveTo(p.sx, p.sy);
-      else ctx.lineTo(p.sx, p.sy);
-    }
-    ctx.stroke();
-  }
-  ctx.shadowBlur = 0;
-}
-
-function drawObstacles() {
-  // Sort back to front by z
-  const sorted = obstacles.slice().sort((a, b) => (b.z - cameraZ) - (a.z - cameraZ));
-  for (const o of sorted) {
-    const dz = o.z - cameraZ;
-    if (dz > 50 || dz < -1) continue;
-    if (o.type === 'block') {
-      drawBlock(o.x, dz, o.w);
-    }
-    // Gaps are rendered by drawTrack via isGapAt — but show a faint red outline so player sees them
-    if (o.type === 'gap') {
-      drawGapMarker(o.x, dz, o.w);
-    }
-  }
-}
-
-function drawBlock(x, z, w) {
-  // Block dimensions
-  const h = 0.8;
-  const halfW = w * 0.5;
-  // 8 corners of the cube (bottom 4, top 4)
-  const bottom = [
-    project(x - halfW, 0, z - halfW),
-    project(x + halfW, 0, z - halfW),
-    project(x + halfW, 0, z + halfW),
-    project(x - halfW, 0, z + halfW)
-  ];
-  const top = [
-    project(x - halfW, h, z - halfW),
-    project(x + halfW, h, z - halfW),
-    project(x + halfW, h, z + halfW),
-    project(x - halfW, h, z + halfW)
-  ];
-  if (top.some(p => !p) || bottom.some(p => !p)) return;
-
-  // Side faces
-  ctx.fillStyle = '#aa0030';
-  ctx.beginPath();
-  ctx.moveTo(bottom[0].sx, bottom[0].sy);
-  ctx.lineTo(bottom[1].sx, bottom[1].sy);
-  ctx.lineTo(top[1].sx, top[1].sy);
-  ctx.lineTo(top[0].sx, top[0].sy);
-  ctx.closePath();
-  ctx.fill();
-
-  // Front face (toward camera)
-  ctx.fillStyle = '#ff004d';
-  ctx.beginPath();
-  ctx.moveTo(bottom[3].sx, bottom[3].sy);
-  ctx.lineTo(bottom[2].sx, bottom[2].sy);
-  ctx.lineTo(top[2].sx, top[2].sy);
-  ctx.lineTo(top[3].sx, top[3].sy);
-  ctx.closePath();
-  ctx.fill();
-
-  // Top face
-  ctx.fillStyle = '#ff5577';
-  ctx.beginPath();
-  ctx.moveTo(top[0].sx, top[0].sy);
-  ctx.lineTo(top[1].sx, top[1].sy);
-  ctx.lineTo(top[2].sx, top[2].sy);
-  ctx.lineTo(top[3].sx, top[3].sy);
-  ctx.closePath();
-  ctx.fill();
-
-  // Glow outline
-  ctx.strokeStyle = '#ff77a8';
-  ctx.lineWidth = 1.5;
-  ctx.shadowColor = '#ff004d';
-  ctx.shadowBlur = 10;
-  ctx.beginPath();
-  ctx.moveTo(bottom[3].sx, bottom[3].sy);
-  ctx.lineTo(bottom[2].sx, bottom[2].sy);
-  ctx.lineTo(top[2].sx, top[2].sy);
-  ctx.lineTo(top[3].sx, top[3].sy);
-  ctx.closePath();
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-}
-
-function drawGapMarker(x, z, w) {
-  // Show a subtle danger outline around the gap edges (close gaps only)
-  if (z > 8 || z < -0.5) return;
-  const halfW = w * 0.5;
-  const p1 = project(x - halfW, 0.01, z - 0.5);
-  const p2 = project(x + halfW, 0.01, z - 0.5);
-  const p3 = project(x + halfW, 0.01, z + 0.5);
-  const p4 = project(x - halfW, 0.01, z + 0.5);
-  if (!p1 || !p2 || !p3 || !p4) return;
-  ctx.strokeStyle = 'rgba(255, 0, 77, 0.6)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(p1.sx, p1.sy);
-  ctx.lineTo(p2.sx, p2.sy);
-  ctx.lineTo(p3.sx, p3.sy);
-  ctx.lineTo(p4.sx, p4.sy);
-  ctx.closePath();
-  ctx.stroke();
-}
-
-function drawBall() {
-  // Ball is at world (ballX, BALL_R, 0)
-  const BALL_R = 0.35;
-  const p = project(ballX, BALL_R, 0);
-  if (!p) return;
-  const r = BALL_R * p.scale;
-
-  // Shadow on track
-  const ps = project(ballX, 0.001, 0);
-  if (ps) {
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.beginPath();
-    ctx.ellipse(ps.sx, ps.sy, r * 1.1, r * 0.35, 0, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // Ball with gradient
-  const grad = ctx.createRadialGradient(p.sx - r*0.4, p.sy - r*0.4, r*0.1, p.sx, p.sy, r*1.2);
-  grad.addColorStop(0, '#ffffff');
-  grad.addColorStop(0.4, '#29adff');
-  grad.addColorStop(1, '#001a44');
-  ctx.fillStyle = grad;
-  ctx.shadowColor = '#29adff';
-  ctx.shadowBlur = 25;
-  ctx.beginPath();
-  ctx.arc(p.sx, p.sy, r, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  // Spinning detail (rolling effect)
-  const roll = cameraZ * 4;
-  ctx.strokeStyle = 'rgba(0, 30, 80, 0.6)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(p.sx, p.sy, r * 0.55, roll, roll + Math.PI * 0.9);
-  ctx.stroke();
-}
-
-function drawParticles() {
-  for (const pt of particles) {
-    const proj = project(pt.x, 0.1, pt.z);
-    if (!proj) continue;
-    ctx.fillStyle = `rgba(0, 228, 54, ${pt.life / 25 * 0.7})`;
-    ctx.beginPath();
-    ctx.arc(proj.sx, proj.sy, 3 * proj.scale * 0.3, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  drawSky();
-  drawTrack();
-  drawObstacles();
-  drawParticles();
-  drawBall();
-  scoreEl.textContent = score;
 }
 
 function loop() {
   if (state === 'playing') update();
-  draw();
+  renderer.render(scene, camera);
   requestAnimationFrame(loop);
 }
 loop();
+
+// Resize
+window.addEventListener('resize', () => {
+  const s = getSize();
+  W = s.w; H = s.h;
+  camera.aspect = W / H;
+  camera.updateProjectionMatrix();
+  renderer.setSize(W, H);
+});
 </script>
 
 </body>
